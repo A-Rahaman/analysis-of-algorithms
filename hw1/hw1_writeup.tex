@@ -134,6 +134,43 @@ either a proof or a counterexample. }
 
 \subsection{$  f(n)^2 = O(g(n)^2)$}
 
+
+log2(f(n)) is O(log2(g(n))).
+Take f(n) = 2 and g(n) = 1. In this case, f(n) is O(g(n)). But, log(1) = 0, and
+log(2) is not O(log(1)) i.e. O(0).
+However, with the assumption that g(n) is not the constant function 1, and that
+g(n) is a non-decreasing function such that g(n) takes values greater than 1
+for large
+enough n, we can prove that log(f(n)) is O(log(g(n))) as:
+f(n) ? C0g(n) 8n > C
+Assuming f(n) and g(n) are positive for large enough n, and taking log on both
+sides for those values of n, (taking log preserves inequality since log is an
+increasing
+function)
+log(f(n)) ? log(C0g(n)) 8n > C
+) log(f(n)) ? log(C0) + log(g(n)) 8n > C
+Now, since g(n) is a non-decreasing function and it takes positive values for
+large
+enough n, let a be the positive integer for which log(g(a)) takes its smallest
+positive
+value (such an a exists, since g(n) > 1 for large enough n). Now, we wish to
+?nd a
+constant C00 such that, for large enough n, :
+log(C0) ? C00: log(g(n))
+i:e: C00 ?
+log(C0)
+log(g(n))
+So, we can choose C00 = log(C0)
+log(g(a)) , since log(g(n)) ? log(g(a)) 8n > C000, where
+C000 > a is some constant. So, we have:
+log(f(n)) ? log(C0) + log\left( g(n)) 8n > C000
+? C00 log(g(n)) + log(g(n)) 8n > C000
+? (C00 + 1) log(g(n)) 8n > C000
+Thus, log(f(n)) is O(log(g(n))) with these assumptions.\right)<++>
+
+
+
+
 \section{ Problem 7-3: Alternative Quicksort analysis}
 
 \section{
@@ -214,7 +251,32 @@ the highest safe rung using $o(n)$ drops. (little o). }
 
 
   \section{ The game of Match. }
+  The game of Match is played with a special deck of 27 cards. Each card has
+  three attributes: color, shape and number. The possible color values are
+  \{red, blue, green\}, the possible shape values are \{square, circle, heart\},
+  and the possible number values are \{1, 2, 3\}. Each of the $3 ∗ 3 ∗ 3 = 27$
+  possible combinations is represented by a card in the deck. A match is a set
+  of 3 cards with the property that for every one of the three attributes,
+  either all the cards have the same value for that attribute or they all have
+  different values for that attribute. For example, the following three cards
+  are a match: (3, red, square), (2, blue, square), (1, green, square).
 
+  \subsection{If we shuffle the deck and turn over three cards, what is the
+	  probability that they form a match? Hint: given the first two cards, what
+  is the probability that the third forms a match?}
+
+  This is a ``simple'' probability problem. 
+
+  $ 27 * 26 * 25 $ 
+
+  should be $Pr(1/25)$
+
+
+
+  \subsection{If we shuffle the deck and turn over n cards where $n ≤ 27$, what
+	  is the expected number of matches, where we count each match separately
+	  even if they overlap? Note: The cards in a match do not need to be
+  adjacent! Is your expression correct for $n = 27?$}
 
 
 
@@ -222,10 +284,26 @@ the highest safe rung using $o(n)$ drops. (little o). }
 
 
   \section{ Drunken Debutants}
+Drunken Debutants: Imagine that there are n debutants, each with her own
+porsche. After a late and wild party, each debutante stumbles into a porsche
+selected independently and uniformly at random (thus, more than one debutant
+may wind up in a porsche). Let X be a random variable giving the number of
+debutants that wind up in their own porsche. Use linearity of expectation to
+compute the expected value of X. Now use Markov’s inequality, to bound the
+probability that X is larger than k for any positive k.
+
+
+
+
 
 
 
   \section{ Pairs on a circle}
-
+Imagine n points are distributed uniformly at random on the perimeter of a
+circle that has circumference 1. Show that the expected number of pairs of
+points that are within distance $\Theta(1/n^2)$ of each other is greater than 1. FYI:
+this problem has applications in efficient routing in peer-to-peer networks.
+Hint: Partition the circle into $n^2/k$ regions of size $k/n^2$ for some constant
+k; then use the Birthday paradox to solve for the necessary k.
 
   \end{document}
