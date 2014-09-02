@@ -1,0 +1,231 @@
+%%%%%latex preamble%%%%%
+
+\documentclass[titlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+  \linewidth
+  \else
+  \Gin@nat@width
+  \fi
+}
+\makeatother
+
+
+\usepackage{listings}
+\lstset{language=Python} 
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{alltt}
+\usepackage[sc]{mathpazo}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=1.5cm,rmargin=1.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+  bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+{hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{tikz}
+ %changes default sectioning commands 
+%\usepackage{breakurl}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+\renewcommand{\thesubsubsection}{\roman{subsection}.}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{\leftmark}
+\rhead{}
+\lfoot{Aaron Gonzales; Algorithms}
+\cfoot{Homework 1}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\begin{document}
+
+\title{Homework 1, CS561, Fall 2014}
+\author{Aaron Gonzales}
+\maketitle
+
+%%%%%%%%knitr option%%%%%%%
+
+
+
+\section{ exercise 3.1-5 CLRS - Prove theorem 3.1}
+
+
+\section{ Let $f(n) and g(n)$ be two functions that take on nonnegative values and
+assume $f(n) = O(g(n))$. Prove that $g(n) =\Omega(f(n))$.}
+
+By definition, $\Omega(g(n)) = \{ f(n) : $ there exist positive constants $c, n_0$
+such that $0 \leq cg(n) \leq f(n) \forall  n \geq n_0\}$.
+
+By definition, $O(g(n)) = \{ f(n) : $ there exist positive constants $c, n_0$
+such that $0 \leq f(n) \leq cg(n) \forall  n \geq n_0\}$.
+
+if $f(n)$ is bounded above by $g(n)$, $g(n)$ must be at least equal to or
+lower than $f(n)$ for all $n \geq n_0$.
+
+
+
+
+
+\section{ Problem 3-2 on Relative asymptotic growths}
+\begin{table}[h]
+  \begin{tabular}{ll|l|l|l|l|l}
+	A & B  & $O$  & $o$  & $\Omega$  & $\omega$  & $\Theta$  \\ \hline	
+	$lg^k $&  $n^\epsilon$   &  &  &  &  &  \\ \hline	
+	$n^k$     & $c^n$  &  &  &  &  &  \\ \hline	
+	$\sqrt{n}$ & $n^{sin n}$     &  &  &  &  &  \\ \hline	
+	$2^n$      & $2^{n/2}$  &  &  &  &  &  \\ \hline	
+	$n^{lg c}$     & $c^{lg n}$  &  &  &  &  &  \\ \hline	
+	$lg(n!)$     &  $lg(n^n)$ &  &  &  &  &  
+  \end{tabular}
+\end{table}
+
+
+\section{ Assume you have functions $f$ and $g$, such that $f(n)$ is $O(g(n))$.
+  for each of the following statements, decide wether you think it is true or false and give
+either a proof or a counterexample. }
+
+\subsection{ $log_2f(n) = O(log_2(g(n))$}
+
+
+
+\subsection{ $2^{ f(n) } = O(2^{ g(n) })$}
+
+\subsection{$  f(n)^2 = O(g(n)^2)$}
+
+\section{ Problem 7-3: Alternative Quicksort analysis}
+
+\section{
+  Imagine you are doing a stress test on a particular model of smart phones. you
+  have a ladder with $n$ rungs. You want ot determine the highest rung from which
+  you cand rop a phone wihtout it breaking and you want to do it iwth the
+smallest number of phone drops. }
+
+\subsection{ Imagine that you have exactly 2 phones. Devise an algorithm that
+  can determine
+the highest safe rung using $o(n)$ drops. (little o). }
+
+  Let it be stated that a ladder must have at least one one rung. If it has
+  one rung, we only need one phone to test and see if that rung is safe (if it
+  breaks, it's unsafe, if not, it's safe).
+
+  If a ladder has $n > 1$ rungs, let us start by dropping the phone on the
+  second rung. If the phone breaks, we drop from the rung below the current
+  rung (in this case, the first rung) and if it doesn't break, we know that it
+  is safe from the current-1 rung.
+
+  Stated in pseudocode:
+  \begin{lstlisting}
+	for each rung on ladder:
+	  drop phone from rung+1
+	  if phone breaks:
+		drop phone from rung
+	  if phone breaks:
+		return current_rung - 2
+	  else return rung
+  \end{lstlisting}
+  we only test at most $n/2+1$ rungs, which dropping the constant is $ n/2 < n
+  \forall n \geq 2$. 
+  By definition, $o(g(n)) = \{ f(n) : $ for any positive constant $c>0$, there
+  exisists a constant $n_0 > 0$ such that $0 \leq f(n) \leq cg(n) \forall n \geq n_0\}$.
+  as such, the algorithm is $o(n)$. 
+
+\subsection{Now suppose you have $k$ phones. Devise an algorithm that can
+  determine the highest safe rung with the smallest number of drops. If
+  $f_k(n)$
+  is the number of drops that your algorithm needs, what is 
+  $f_k(n)$ asymptotically? Hint: you shoudl ensure that 
+  $f_{k+1}(n) = o(f_k(n))$ for any $k$.}
+
+  This is an example of binary search. If we assume that the rungs in the
+  ladder are in a sorted array $rungs[]<++>$, the algorithm could be stated
+  as follows:
+
+  \begin{lstlisting}
+
+	def binary_search(val, left = 0, right = nil)
+	  right = ladder.size - 1 unless right
+	  mid = (left + right) / 2
+ 
+	  if left > right
+	  	return null
+   
+	  if val == ladder[mid]
+		return mid
+	  elif val > ladder[mid]
+		binary_search(val, mid + 1, right)
+	  else
+		binary_search(val, left, mid - 1)
+
+  \end{lstlisting}
+
+  Proof by induction that $f_k(n) = O(log n)$ follows:
+  Let $P(n)$ be the assertion that our binary search of the ladder's rungs
+  works correctly. 
+
+  Our base case is a ladder of size 1: If the ladder has one rung, then
+  $n=1$ and the function returns 1, which is true. 
+  If $P(n)$ works for all $n$, then it works for a ladder of size $n+1$. 
+
+  as we have already assumed a sorted ladder,
+
+
+
+
+  \section{ The game of Match. }
+
+
+
+
+
+
+
+  \section{ Drunken Debutants}
+
+
+
+  \section{ Pairs on a circle}
+
+
+  \end{document}
