@@ -143,55 +143,29 @@ lower than $f(n)$ for all $n \geq n_0$.
 \end{table}
 
 
-\section{ Assume you have functions $f$ and $g$, such that $f(n)$ is $O(g(n))$.
+\section{ True or false }
+\begin{quote}
+	\bf{Assume you have functions $f$ and $g$, such that $f(n)$ is $O(g(n))$.
   for each of the following statements, decide wether you think it is true or false and give
 either a proof or a counterexample. }
+\end{quote}
 
 \subsection{ $log_2f(n) = O(log_2(g(n))$}
-
-counterexample: f(2) g(1).
-
+False only in the following case: $f(2),\, g(1)$.
+\[ f(2) = log_2(2) = 1 \]
+\[ g(1) = log_2(1) = 0 \]
+For large enough $n$, this is true, as this would become $O(log_2(n)) =
+O(log_2(2))$. 
 
 \subsection{ $2^{ f(n) } = O(2^{ g(n) })$}
 False.
 if $f(n) = 2n$ and 
 
+
 \subsection{$  f(n)^2 = O(g(n)^2)$}
 
+For all $n$ we can have $f(n)^2 = g(n)^2$.
 
-%log2(f(n)) is O(log2(g(n))).
-%Take f(n) = 2 and g(n) = 1. In this case, f(n) is O(g(n)). But, log(1) = 0, and
-%log(2) is not O(log(1)) i.e. O(0).
-%However, with the assumption that g(n) is not the constant function 1, and that
-%g(n) is a non-decreasing function such that g(n) takes values greater than 1
-%for large
-%enough n, we can prove that log(f(n)) is O(log(g(n))) as:
-%f(n) ? C0g(n) 8n > C
-%Assuming f(n) and g(n) are positive for large enough n, and taking log on both
-%sides for those values of n, (taking log preserves inequality since log is an
-%increasing
-%function)
-%log(f(n)) ? log(C0g(n)) 8n > C
-%) log(f(n)) ? log(C0) + log(g(n)) 8n > C
-%Now, since g(n) is a non-decreasing function and it takes positive values for
-%large
-%enough n, let a be the positive integer for which log(g(a)) takes its smallest
-%positive
-%value (such an a exists, since g(n) > 1 for large enough n). Now, we wish to
-%?nd a
-%constant C00 such that, for large enough n, :
-%log(C0) ? C00: log(g(n))
-%i:e: C00 ?
-%log(C0)
-%log(g(n))
-%So, we can choose C00 = log(C0)
-%log(g(a)) , since log(g(n)) ? log(g(a)) 8n > C000, where
-%C000 > a is some constant. So, we have:
-%log(f(n)) ? log(C0) + log\left( g(n)) 8n > C000
-%? C00 log(g(n)) + log(g(n)) 8n > C000
-%? (C00 + 1) log(g(n)) 8n > C000
-%Thus, log(f(n)) is O(log(g(n))) with these assumptions.\right)<++>
-%
 
 
 True. 
@@ -223,17 +197,17 @@ The basic quicksort recurrence is taken from equation 7.1:
 
 \[ T(n) = T(Q) + (T(n-q-1) + \Theta(n) \]
 
-if we define 
-\[ Q' = Q + 1 \]
-we can rewrite the recurrence as 
+% if we define 
+% \[ Q' = Q + 1 \]
+%we can rewrite the recurrence as 
 
-\[ T(n) = T(Q+1) + (T(n-Q') + \Theta(n) \]
+%[ T(n) = T(Q+1) + (T(n-Q') + \Theta(n) \]
 
-and with our indicator variables...
+%nd with our indicator variables...
 
-\[ T(n) = \sum_{Q' = 1}^{n} \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \]
+%[ T(n) = \sum_{Q' = 1}^{n} \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \]
 
-\[ E\left[T(n)\right] = E\left[ \sum_{Q' = 1}^{n} X_q \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \right] \]
+%[ E\left[T(n)\right] = E\left[ \sum_{Q' = 1}^{n} X_q \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \right] \]
 
 
 
@@ -259,6 +233,9 @@ show that
 
 Using the bound from equation 7.7, show that the recurrance in equation 7.6 has
 the solution $E[T(n)] = \Theta(n lg n)$. 
+Comparison-based sorting is $\Omega(n lg n)$, and for a function to be
+$\Theta(n lg n)$ it must be both $\Omega(n lg n)$ and $\Omega(n lg n)$, which
+this is. 
 
 
 
@@ -297,10 +274,13 @@ the highest safe rung using $o(n)$ drops. (little o). }
   $f_{k+1}(n) = o(f_k(n))$ for any $k$.}
 
   This is an example of binary search. If we assume that the rungs in the
-  ladder are in a sorted order (and how could they not be?) the algorithm could
+  ladder are in a sorted order (and how could they not be? did my adversary
+  misnumber my rungs?)  the algorithm could
   be stated as follows:
 
-  As before, start with the middle rung of the ladder ($\frac{n}{2}$). If the
+  As before, start with the middle rung of the ladder ($\frac{n}{2}$). (If the
+  ladder has an even number of rungs, choose the $\lfloor
+  \frac{n}{2} \rfloor$ rung). If the
   phone dropped breaks, do the same procedure on the bottom half of the ladder.
   If it doesn't break, do the same procedure on the upper half of the ladder.
   each recursive step reduces the size of our search space by $\frac{1}{2}$. If
@@ -314,32 +294,8 @@ the highest safe rung using $o(n)$ drops. (little o). }
   get our work being done by the algorithm as $o(n)$. 
   
 
-%  And using the master theorem, where 
-
-% Case 2 => T(n) = O(n^[logb a] * (log n)^(k+1)) $ 
-%O(n^[logb a] * (log n)^(k+1))$
-
-%We already showed that n ^(logb a) in our case is n^0, which is 1, so we can make this:
-
-%O(1 * (log n)^(k+1))
-
-%and of course 1 is the multiplicative identity so:
-
-%O((log n)^(k+1))
-
-%and we're using 0 for our little k, so:
-
-%O((log n)^1)
-
-%and 1 is the power identity:
-
-%O(log n)
-
-
-
-
-
   \section{ The game of Match. }
+  \begin{quote}
   The game of Match is played with a special deck of 27 cards. Each card has
   three attributes: color, shape and number. The possible color values are
   \{red, blue, green\}, the possible shape values are \{square, circle, heart\},
@@ -349,7 +305,7 @@ the highest safe rung using $o(n)$ drops. (little o). }
   either all the cards have the same value for that attribute or they all have
   different values for that attribute. For example, the following three cards
   are a match: (3, red, square), (2, blue, square), (1, green, square).
-
+  \end{quote}
 
 \subsection{ If we shuffle the deck and turn over three cards, what is the
 probability that they form a match? Hint: given the first two
@@ -360,8 +316,6 @@ draw two cards, only one more card in the deck can make a match for the prior
 two cards. After drawing two cards, we only have 25 cards left from which we
 can draw, so we get $Pr(match) = \frac{1}{25}$. 
 
-
-
 \subsection{ If we shuffle the deck and turn over $n$ cards where $n \leq 27$, what
 is the expected number of matches, where we count each match
 separately even if they overlap? Note: The cards in a match do
@@ -370,12 +324,13 @@ not need to be adjacent! Is your expression correct for $n = 27$?}
 I believe we can have ${n \choose 3} * \frac{1}{25}$ possible matches, which
 comes to 
 
-\begin{align}
-{n \choose 3} &= \frac{n!}{3!(n-3)!}  \\
-{27 \choose 3} &= \frac{27!}{3!(27-3)!} * \frac{1}{25} \\
-&= \frac{27 * 26 * 25}{6} * \frac{1}{25}  \\
-&= 117  \\
-\end{align}
+\begin{align*}
+	Total Matches &={n \choose 3} * \frac{1}{25} \\
+              &= {27 \choose 3}   * \frac{1}{25} \\
+              &=   \frac{27!}{3!(27-3)!} * \frac{1}{25} \\
+				&= \frac{27 * 26 * 25}{6} * \frac{1}{25}  \\
+				&= 117
+\end{align*}
 
 
 
@@ -388,19 +343,37 @@ debutants that wind up in their own porsche. Use linearity of expectation to
 compute the expected value of X. Now use Markov’s inequality, to bound the
 probability that X is larger than k for any positive k.
 
+We have $n$ debutants and $n$ porsches. 
+$\frac{1}{n}$ is our probability of a debutant getting into her own porche.
 Let $X_i$ be an indicator variable saying 
 
 \[
- X_i =
+	X_i = I[X]
   \begin{cases}
-   1 & \text{if } x = (correct car) \\
-   0       & \text{if } x = (Not correct car)
+   1 & \text{if debutante gets in her own car} \\
+   0       & \text{if not } 
   \end{cases}
 \]
 
-Where $1 = $ gets into her own car and $0=$ does not get into her own car.
+The number of debutants who return to their own can be expressed as:
+\[ X_i = \sum_{i=1}^n X_i \]
+
+and the expected number of debutants can be expressed as:
+
+\[ E [X_i] = E \left[ \sum_{i=1}^n X_i \right] \]
+
+By linearity of expectation we can state it as such:
+
+\begin{align*}
+	E [X_i] &= E \left[ \sum_{i=1}^n X_i \right] \\
+	E [X_i] &=  \sum_{i=1}^n E[X_i] \\ 
+	&=  \sum_{i=1}^n \frac{1}{n} \\ 
+	&=  ln\, n \\ 
+\end{align*}
 
 
+Markov's theorem states:
+\[ \mathbf{Pr} \left[ X \geq t \right] \leq \frac{\mathbf[R]}{t} \]
 
 
 
