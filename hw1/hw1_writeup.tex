@@ -183,7 +183,7 @@ $Pr(X=X_i) = 1/n$
 
 Defining indicator variable $X_i \left[_{0: not pivot}^{1: if pivot}\right.]$
 
-\[ \sum_{1}^{n} E(X_i) = X_i Pr(x=X_i) + X_2Pr(x = X_2) + \dots + X_n
+\[ \sum_{1}^{n} E(X_1) = X_1 Pr(x=X_1) + X_2Pr(x = X_2) + \dots + X_n
 Pr(x=X_n) \]
 
 
@@ -193,21 +193,7 @@ Let $T(n)$ be a random variable denoting the running time of quicksort on an
 array of size $n$. Argue that \\
 \[ E[T(n)] = E \left[ \sum_{q=1}^{n} X_q (T(q-1)) + T(n-q) + \Theta(n))\right] \]
 
-The basic quicksort recurrence is taken from equation 7.1:
 
-\[ T(n) = T(Q) + (T(n-q-1) + \Theta(n) \]
-
-% if we define 
-% \[ Q' = Q + 1 \]
-%we can rewrite the recurrence as 
-
-%[ T(n) = T(Q+1) + (T(n-Q') + \Theta(n) \]
-
-%nd with our indicator variables...
-
-%[ T(n) = \sum_{Q' = 1}^{n} \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \]
-
-%[ E\left[T(n)\right] = E\left[ \sum_{Q' = 1}^{n} X_q \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \right] \]
 
 
 
@@ -217,12 +203,18 @@ Show that we can rewrite equation 7.5 as:
 \[ E[T(n) ] = \frac{2}{n} \sum_{q=2}^{n-1} E[T(q)] + \Theta(n) \].
 
 
+Here is the start of the equation:
 \[ E[T(n)] = E \left[ \sum_{q=1}^{n} X_q (T(q-1)) + T(n-q) + \Theta(n))\right] \]
 
 by LOE, we get
 
-\[ E[T(n)] = E \left[ X_q \sum_{q=1}^{n} (T(q-1)) + T(n-q) + \Theta(n))\right] \]
+\begin{align}
+ E[T(n)] &= E \left[ X_q \sum_{q=1}^{n} (T(q-1)) + T(n-q) + \Theta(n))\right] \\
+         &= E \left[ X_q \sum_{q=1}^{n} (T(q-1))\right] + E\left[ \sum_{q=1}^{n} T(n-q)\right] + \left[ \sum_{q=1}^{n}\Theta(n)\right] 
 
+\end{align}
+
+Expanding the summation, we get:
 
 
 \subsection{}
@@ -368,8 +360,13 @@ By linearity of expectation we can state it as such:
 	E [X_i] &= E \left[ \sum_{i=1}^n X_i \right] \\
 	E [X_i] &=  \sum_{i=1}^n E[X_i] \\ 
 	&=  \sum_{i=1}^n \frac{1}{n} \\ 
-	&=  ln\, n \\ 
+	&=  \frac{1}{n} \sum_{i=1}^n 1 \\
+	&= \frac{n}{n} \\
+	& = 1
 \end{align*}
+We only expect one drunken debutant to get in her own porche. (Note - This presumes
+that all of the debutants made it out of the party and no one passed out
+inside.)
 
 
 Markov's theorem states:
