@@ -128,56 +128,125 @@ either a proof or a counterexample. }
 
 \subsection{ $log_2f(n) = O(log_2(g(n))$}
 
+counterexample: f(2) g(1).
 
 
 \subsection{ $2^{ f(n) } = O(2^{ g(n) })$}
+False.
+if $f(n) = 2n$ and 
 
 \subsection{$  f(n)^2 = O(g(n)^2)$}
 
 
-log2(f(n)) is O(log2(g(n))).
-Take f(n) = 2 and g(n) = 1. In this case, f(n) is O(g(n)). But, log(1) = 0, and
-log(2) is not O(log(1)) i.e. O(0).
-However, with the assumption that g(n) is not the constant function 1, and that
-g(n) is a non-decreasing function such that g(n) takes values greater than 1
-for large
-enough n, we can prove that log(f(n)) is O(log(g(n))) as:
-f(n) ? C0g(n) 8n > C
-Assuming f(n) and g(n) are positive for large enough n, and taking log on both
-sides for those values of n, (taking log preserves inequality since log is an
-increasing
-function)
-log(f(n)) ? log(C0g(n)) 8n > C
-) log(f(n)) ? log(C0) + log(g(n)) 8n > C
-Now, since g(n) is a non-decreasing function and it takes positive values for
-large
-enough n, let a be the positive integer for which log(g(a)) takes its smallest
-positive
-value (such an a exists, since g(n) > 1 for large enough n). Now, we wish to
-?nd a
-constant C00 such that, for large enough n, :
-log(C0) ? C00: log(g(n))
-i:e: C00 ?
-log(C0)
-log(g(n))
-So, we can choose C00 = log(C0)
-log(g(a)) , since log(g(n)) ? log(g(a)) 8n > C000, where
-C000 > a is some constant. So, we have:
-log(f(n)) ? log(C0) + log\left( g(n)) 8n > C000
-? C00 log(g(n)) + log(g(n)) 8n > C000
-? (C00 + 1) log(g(n)) 8n > C000
-Thus, log(f(n)) is O(log(g(n))) with these assumptions.\right)<++>
+%log2(f(n)) is O(log2(g(n))).
+%Take f(n) = 2 and g(n) = 1. In this case, f(n) is O(g(n)). But, log(1) = 0, and
+%log(2) is not O(log(1)) i.e. O(0).
+%However, with the assumption that g(n) is not the constant function 1, and that
+%g(n) is a non-decreasing function such that g(n) takes values greater than 1
+%for large
+%enough n, we can prove that log(f(n)) is O(log(g(n))) as:
+%f(n) ? C0g(n) 8n > C
+%Assuming f(n) and g(n) are positive for large enough n, and taking log on both
+%sides for those values of n, (taking log preserves inequality since log is an
+%increasing
+%function)
+%log(f(n)) ? log(C0g(n)) 8n > C
+%) log(f(n)) ? log(C0) + log(g(n)) 8n > C
+%Now, since g(n) is a non-decreasing function and it takes positive values for
+%large
+%enough n, let a be the positive integer for which log(g(a)) takes its smallest
+%positive
+%value (such an a exists, since g(n) > 1 for large enough n). Now, we wish to
+%?nd a
+%constant C00 such that, for large enough n, :
+%log(C0) ? C00: log(g(n))
+%i:e: C00 ?
+%log(C0)
+%log(g(n))
+%So, we can choose C00 = log(C0)
+%log(g(a)) , since log(g(n)) ? log(g(a)) 8n > C000, where
+%C000 > a is some constant. So, we have:
+%log(f(n)) ? log(C0) + log\left( g(n)) 8n > C000
+%? C00 log(g(n)) + log(g(n)) 8n > C000
+%? (C00 + 1) log(g(n)) 8n > C000
+%Thus, log(f(n)) is O(log(g(n))) with these assumptions.\right)<++>
+%
 
 
+True. 
 
+$O$ is a loose upper bound. $0 \leq f(n) \leq g(n)$. 
 
 \section{ Problem 7-3: Alternative Quicksort analysis}
+\subsection{ 
+Argue that, given an array of size $n$, the probability that any particular element
+is chosen as the pivot is $1/n$. Use this to define indicator random variables
+$X_i = I\{ i$ th smallest element is chosen as the pivot$\}$. What is
+$E[X_i]$?}
 
-\section{
+$Pr(X=X_i) = 1/n$
+
+Defining indicator variable $X_i \left[_{0: not pivot}^{1: if pivot}\right.]$
+
+\[ \sum_{1}^{n} E(X_i) = X_i Pr(x=X_i) + X_2Pr(x = X_2) + \dots + X_n
+Pr(x=X_n) \]
+
+
+
+\subsection{}
+Let $T(n)$ be a random variable denoting the running time of quicksort on an
+array of size $n$. Argue that \\
+\[ E[T(n)] = E \left[ \sum_{q=1}^{n} X_q (T(q-1)) + T(n-q) + \Theta(n))\right] \]
+
+The basic quicksort recurrence is taken from equation 7.1:
+
+\[ T(n) = T(Q) + (T(n-q-1) + \Theta(n) \]
+
+if we define 
+\[ Q' = q +1 \]
+we can rewrite the recurrence as 
+
+\[ T(n) = T(Q+1) + (T(n-Q') + \Theta(n) \]
+
+and with our indicator variables...
+
+\[ T(n) = \sum_{Q' = 1}^{n} \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \]
+
+\[ E\left[T(n)\right] = E\left[ \sum_{Q' = 1}^{n} X_q \left( T(Q+1) + (T(n-Q') + \Theta(n) \right) \right] \]
+
+
+
+\subsection{}
+Show that we can rewrite equation 7.5 as:
+
+\[ E[T(n) ] = \frac{2}{n} \sum_{q=2}^{n-1} E[T(q)] + \Theta(n) \].
+
+
+\[ E[T(n)] = E \left[ \sum_{q=1}^{n} X_q (T(q-1)) + T(n-q) + \Theta(n))\right] \]
+
+by LOE, we get
+
+\[ E[T(n)] = E \left[ X_q \sum_{q=1}^{n} (T(q-1)) + T(n-q) + \Theta(n))\right] \]
+
+
+
+\subsection{}
+show that 
+\[ \sum_{k=2}^{n-1}k\, lg\, k \leq \frac{1}{2} n^2\, lg\, n - \frac{1}{8} n^2 \].
+
+\subsection{}
+
+Using the bound from equation 7.7, show that the recurrance in equation 7.6 has
+the solution $E[T(n)] = \Theta(n lg n)$. 
+
+
+
+
+\section{ Ladders }
   Imagine you are doing a stress test on a particular model of smart phones. you
   have a ladder with $n$ rungs. You want ot determine the highest rung from which
   you cand rop a phone wihtout it breaking and you want to do it iwth the
-smallest number of phone drops. }
+smallest number of phone drops. 
 
 \subsection{ Imagine that you have exactly 2 phones. Devise an algorithm that
   can determine
@@ -187,25 +256,16 @@ the highest safe rung using $o(n)$ drops. (little o). }
   one rung, we only need one phone to test and see if that rung is safe (if it
   breaks, it's unsafe, if not, it's safe).
 
-  If a ladder has $n > 1$ rungs, let us start by dropping the phone on the
-  second rung. If the phone breaks, we drop from the rung below the current
-  rung (in this case, the first rung) and if it doesn't break, we know that it
-  is safe from the current-1 rung.
+  If a ladder has $n > 1$ rungs, we start by dropping the phone from the middle
+  ladder rung ($n/2$). if the phone breaks, we search the bottom half of the
+  ladder iteratively (first rung, second rung, etc.). If it doesn't break, we
+  iteratively search the upper portion of the ladder. 
 
-  Stated in pseudocode:
-  \begin{lstlisting}
-	for each rung on ladder:
-	  drop phone from rung+1
-	  if phone breaks:
-		drop phone from rung
-	  if phone breaks:
-		return current_rung - 2
-	  else return rung
-  \end{lstlisting}
-  we only test at most $n/2+1$ rungs, which dropping the constant is $ n/2 < n
+  We only test at most $\frac{n}{2}$ rungs, which $\frac{n}{2} < n
   \forall n \geq 2$. 
   By definition, $o(g(n)) = \{ f(n) : $ for any positive constant $c>0$, there
-  exisists a constant $n_0 > 0$ such that $0 \leq f(n) \leq cg(n) \forall n \geq n_0\}$.
+  exisists a constant $n_0 > 0$ such that $0 \leq f(n) \leq cg(n) \, \forall \,
+  n \, \geq n_0\}$.
   as such, the algorithm is $o(n)$. 
 
 \subsection{Now suppose you have $k$ phones. Devise an algorithm that can
@@ -216,36 +276,57 @@ the highest safe rung using $o(n)$ drops. (little o). }
   $f_{k+1}(n) = o(f_k(n))$ for any $k$.}
 
   This is an example of binary search. If we assume that the rungs in the
-  ladder are in a sorted array $rungs[]<++>$, the algorithm could be stated
-  as follows:
+  ladder are in a sorted order (and how could they not be?) the algorithm could
+  be stated as follows:
 
-  \begin{lstlisting}
+  As before, start with the middle rung of the ladder ($\frac{n}{2}$). If the
+  phone dropped breaks, do the same procedure on the bottom half of the ladder.
+  If it doesn't break, do the same procedure on the upper half of the ladder.
+  each recursive step reduces the size of our search space by $\frac{1}{2}$. If
+  for some reason we get to $k=1$, then iteratively search the current subarray
+  and return the rung prior to the rung on which the phone broke.
 
-	def binary_search(val, left = 0, right = nil)
-	  right = ladder.size - 1 unless right
-	  mid = (left + right) / 2
- 
-	  if left > right
-	  	return null
-   
-	  if val == ladder[mid]
-		return mid
-	  elif val > ladder[mid]
-		binary_search(val, mid + 1, right)
-	  else
-		binary_search(val, left, mid - 1)
+  %Proof by induction that $f_k(n) = O(log n)$ follows:
+  %Let $P(n)$ be the assertion that our binary search of the ladder's rungs
+  %works correctly for a ladder of size $n$. 
 
-  \end{lstlisting}
+  %%Our base case is a ladder of size 1: If the ladder has 1 rung, we only need
+  %one drop to determine safety. 
+  %If $P(n)$ works for all ladders of size 1, then it should work for a ladder of size $n+1$. 
+%
+  %we have two real cases here:
+  %Case 1: the rung $n+1$ is not safe (phone breaks)
+  	%
+  %Case 2: the rung $n+1$ is safe (phone breaks)
+%
+  %Given that our binary search will always reduce the size of the search space
+  %down to one rung, it will always tell us if 
 
-  Proof by induction that $f_k(n) = O(log n)$ follows:
-  Let $P(n)$ be the assertion that our binary search of the ladder's rungs
-  works correctly. 
+  we can state this recurrence relation as:
 
-  Our base case is a ladder of size 1: If the ladder has one rung, then
-  $n=1$ and the function returns 1, which is true. 
-  If $P(n)$ works for all $n$, then it works for a ladder of size $n+1$. 
+  \[ T(n) = T(n/2) + C \]
 
-  as we have already assumed a sorted ladder,
+  And using the master theorem, where 
+
+$ Case 2 => T(n) = O(n^[logb a] * (log n)^(k+1)) $ 
+%O(n^[logb a] * (log n)^(k+1))
+
+%We already showed that n ^(logb a) in our case is n^0, which is 1, so we can make this:
+
+%O(1 * (log n)^(k+1))
+
+%and of course 1 is the multiplicative identity so:
+
+%O((log n)^(k+1))
+
+%and we're using 0 for our little k, so:
+
+%O((log n)^1)
+
+%and 1 is the power identity:
+
+%O(log n)
+
 
 
 
@@ -277,6 +358,21 @@ the highest safe rung using $o(n)$ drops. (little o). }
 	  is the expected number of matches, where we count each match separately
 	  even if they overlap? Note: The cards in a match do not need to be
   adjacent! Is your expression correct for $n = 27?$}
+
+
+\subsection{ If we shuffle the deck and turn over three cards, what is the
+probability that they form a match? Hint: given the first two
+cards, what is the probability that the third forms a match?}
+
+We know that given any two cards, only one more card can make a match. If we
+draw two cards, only one more card in the deck can make a match for the prior
+two cards, so we get out of our deck of $n=27$ cards, $\frac{1}{25}$.
+
+\subsection{ If we shuffle the deck and turn over n cards where $n ≤ 27$, what
+is the expected number of matches, where we count each match
+separately even if they overlap? Note: The cards in a match do
+not need to be adjacent! Is your expression correct for $n = 27$?}
+
 
 
 
