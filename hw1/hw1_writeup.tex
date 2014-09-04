@@ -158,15 +158,11 @@ For large enough $n$, this is true, as this would become $O(log_2(n)) =
 O(log_2(2))$. 
 
 \subsection{ $2^{ f(n) } = O(2^{ g(n) })$}
-False.
-if $f(n) = 2n$ and 
-
+True. No counterexample can be found that would show $f(n) > g(n)$. 
 
 \subsection{$  f(n)^2 = O(g(n)^2)$}
 
 For all $n$ we can have $f(n)^2 = g(n)^2$.
-
-
 
 True. 
 
@@ -193,8 +189,10 @@ Let $T(n)$ be a random variable denoting the running time of quicksort on an
 array of size $n$. Argue that \\
 \[ E[T(n)] = E \left[ \sum_{q=1}^{n} X_q (T(q-1)) + T(n-q) + \Theta(n))\right] \]
 
-
-
+We would say that $T(q-1)$ and $T(n-q)$ are the work being done on the
+subarrays in quicksort. Probabilistically, we expect them to be roughly equal
+over time. So we would expect that the overall running time of quicksort could
+be the sum of the expected running times of the work done on the subarrays.
 
 
 \subsection{}
@@ -228,15 +226,9 @@ For $q=1, q=2, q=n-1, q=n$:
 	(n-1))
 \]
 
-each term repeats twice, so we can see a factor of 2 can be pulled out:
-
-\[
-	\frac{2}{n} \sum_{q=1}^{n} E \left[ (T(q-1)) + T(n-q)\right]  
-\]
-
-when $q=0$ or $q=1$, these are 'base cases' and can be ignored in the
-summation, changing our q -> n. (and let's bring back $\Theta$.
-
+each term repeats twice, so we can see a factor of 2 can be pulled out 
+and when $q=0$ or $q=1$, these are 'base cases' and can be ignored in the
+summation, changing our q -> n. (and let's bring back $\Theta$.)
 
 \[
 	\frac{2}{n} \sum_{q=2}^{n-1} E \left[ (T(q)\right] + \Theta(n)
@@ -246,6 +238,10 @@ summation, changing our q -> n. (and let's bring back $\Theta$.
 \subsection{}
 show that 
 \[ \sum_{k=2}^{n-1}k\, lg\, k \leq \frac{1}{2} n^2\, lg\, n - \frac{1}{8} n^2 \].
+
+\[ \sum_{k=2}^{n/2}k \, lg\, k  + \sum_{k=n/2}^{n-1} k\,lg\,k \]
+
+
 
 \subsection{}
 
@@ -396,7 +392,12 @@ inside.)
 
 
 Markov's theorem states:
-\[ \mathbf{Pr} \left[ X \geq t \right] \leq \frac{\mathbf[R]}{t} \]
+\[ \mathbf{Pr} \left[ X \geq k \right] \leq \frac{\mathbf E[X]}{k} \]
+
+\[ \mathbf{Pr} \left[ 1 \geq k \right] \leq \frac{1/n}{k} \]
+\[ \mathbf{Pr} \left[ 1 \geq k \right] \leq \frac{1/n}{k} \]
+
+
 
 
 
@@ -407,5 +408,25 @@ points that are within distance $\Theta(1/n^2)$ of each other is greater than 1.
 this problem has applications in efficient routing in peer-to-peer networks.
 Hint: Partition the circle into $n^2/k$ regions of size $k/n^2$ for some constant
 k; then use the Birthday paradox to solve for the necessary k.
+
+Let $X_{i,j}$ be an indicator variable where:
+\[
+	X_{i,j} = I[X]
+  \begin{cases}
+	  1 & \text{if a pair of points (i,j) is within} \Theta(\frac{1}{n^2}) \\
+	   0       & \text{if not } 
+  \end{cases}
+\]
+
+If the generic birthday paradox can have an expected collision of ($p=$ people,
+$b = $ birthdays):
+
+\[ \frac{p(p-1)}{2b} \]
+
+if we have $n^2/k$ regions 
+
+\[ \frac{p(p-1)}{2n^2/k} \]
+
+
 
   \end{document}
