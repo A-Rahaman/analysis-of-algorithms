@@ -90,6 +90,27 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 
 
 \section{ exercise 3.1-5 CLRS - Prove theorem 3.1}
+For any two functions $f(n)$ and $g(n)$, we have $f(n) = \Theta(g(n))$ if and
+only if $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$.
+
+By definition, $\Omega(g(n)) = \{ f(n) : $ there exist positive constants $c, n_0$
+such that $0 \leq cg(n) \leq f(n) \forall  n \geq n_0\}$.
+
+By definition, $O(g(n)) = \{ f(n) : $ there exist positive constants $c, n_0$
+such that $0 \leq f(n) \leq cg(n) \forall  n \geq n_0\}$.
+
+Let f and g be functions, such that $f(n)=\Theta(g(n))$.
+
+By definition of $\Theta$, there exist positive constants $k1$ and $k2$ such
+that, for sufficiently large $n$:
+\[ k_1 * g(n)\leq f(n) \leq k_2* g(n) \]
+Thus, for sufficiently large n:
+\[ f(n) \leq k_2*g(n) \]
+Therefore $f(n)=O(g(n))$ by definition.
+
+And, for sufficiently large n:
+\[ k_1*g(n)\leq f(n)\]
+Therefore $f(n)=\Omega(g(n))$ by definition.
 
 
 \section{ Let $f(n) and g(n)$ be two functions that take on nonnegative values and
@@ -112,12 +133,12 @@ lower than $f(n)$ for all $n \geq n_0$.
 \begin{table}[h]
   \begin{tabular}{ll|l|l|l|l|l}
 	A & B  & $O$  & $o$  & $\Omega$  & $\omega$  & $\Theta$  \\ \hline	
-	$lg^k $&  $n^\epsilon$   &  &  &  &  &  \\ \hline	
-	$n^k$     & $c^n$  &  &  &  &  &  \\ \hline	
-	$\sqrt{n}$ & $n^{sin n}$     &  &  &  &  &  \\ \hline	
-	$2^n$      & $2^{n/2}$  &  &  &  &  &  \\ \hline	
-	$n^{lg c}$     & $c^{lg n}$  &  &  &  &  &  \\ \hline	
-	$lg(n!)$     &  $lg(n^n)$ &  &  &  &  &  
+	$lg^k\,n$ &  $n^\epsilon$   & F  & F  & T   &T  &F  \\ \hline	
+	$n^k$     & $c^n$  & T & T  &F  &F  &F  \\ \hline	
+	$\sqrt{n}$ & $n^{sin n}$  & F  &  F &  F &  F &  F \\ \hline	
+	$2^n$  & $2^{n/2}$   & T &F  & T  & F  & T  \\ \hline	
+	$n^{lg c}$ & $c^{lg n}$ & T  & F & T  & F  & T  \\ \hline	
+	$lg(n!)$ & $lg(n^n)$ &T   & F  &T  &F  & T  
   \end{tabular}
 \end{table}
 
@@ -203,7 +224,7 @@ The basic quicksort recurrence is taken from equation 7.1:
 \[ T(n) = T(Q) + (T(n-q-1) + \Theta(n) \]
 
 if we define 
-\[ Q' = q +1 \]
+\[ Q' = Q + 1 \]
 we can rewrite the recurrence as 
 
 \[ T(n) = T(Q+1) + (T(n-Q') + \Theta(n) \]
@@ -245,7 +266,7 @@ the solution $E[T(n)] = \Theta(n lg n)$.
 \section{ Ladders }
   Imagine you are doing a stress test on a particular model of smart phones. you
   have a ladder with $n$ rungs. You want ot determine the highest rung from which
-  you cand rop a phone wihtout it breaking and you want to do it iwth the
+  you cand rop a phone wihtout it breaking and you want to do it with the
 smallest number of phone drops. 
 
 \subsection{ Imagine that you have exactly 2 phones. Devise an algorithm that
@@ -257,7 +278,7 @@ the highest safe rung using $o(n)$ drops. (little o). }
   breaks, it's unsafe, if not, it's safe).
 
   If a ladder has $n > 1$ rungs, we start by dropping the phone from the middle
-  ladder rung ($n/2$). if the phone breaks, we search the bottom half of the
+  ladder rung ($\frac{n}{2}$). if the phone breaks, we search the bottom half of the
   ladder iteratively (first rung, second rung, etc.). If it doesn't break, we
   iteratively search the upper portion of the ladder. 
 
@@ -272,7 +293,7 @@ the highest safe rung using $o(n)$ drops. (little o). }
   determine the highest safe rung with the smallest number of drops. If
   $f_k(n)$
   is the number of drops that your algorithm needs, what is 
-  $f_k(n)$ asymptotically? Hint: you shoudl ensure that 
+  $f_k(n)$ asymptotically? Hint: you should ensure that 
   $f_{k+1}(n) = o(f_k(n))$ for any $k$.}
 
   This is an example of binary search. If we assume that the rungs in the
@@ -286,30 +307,17 @@ the highest safe rung using $o(n)$ drops. (little o). }
   for some reason we get to $k=1$, then iteratively search the current subarray
   and return the rung prior to the rung on which the phone broke.
 
-  %Proof by induction that $f_k(n) = O(log n)$ follows:
-  %Let $P(n)$ be the assertion that our binary search of the ladder's rungs
-  %works correctly for a ladder of size $n$. 
-
-  %%Our base case is a ladder of size 1: If the ladder has 1 rung, we only need
-  %one drop to determine safety. 
-  %If $P(n)$ works for all ladders of size 1, then it should work for a ladder of size $n+1$. 
-%
-  %we have two real cases here:
-  %Case 1: the rung $n+1$ is not safe (phone breaks)
-  	%
-  %Case 2: the rung $n+1$ is safe (phone breaks)
-%
-  %Given that our binary search will always reduce the size of the search space
-  %down to one rung, it will always tell us if 
-
   we can state this recurrence relation as:
 
   \[ T(n) = T(n/2) + C \]
+  which is $\Theta(log\,n)$. Since our binary search is $\Theta(log\,n)$, we
+  get our work being done by the algorithm as $o(n)$. 
+  
 
-  And using the master theorem, where 
+%  And using the master theorem, where 
 
-$ Case 2 => T(n) = O(n^[logb a] * (log n)^(k+1)) $ 
-%O(n^[logb a] * (log n)^(k+1))
+% Case 2 => T(n) = O(n^[logb a] * (log n)^(k+1)) $ 
+%O(n^[logb a] * (log n)^(k+1))$
 
 %We already showed that n ^(logb a) in our case is n^0, which is 1, so we can make this:
 
@@ -342,23 +350,6 @@ $ Case 2 => T(n) = O(n^[logb a] * (log n)^(k+1)) $
   different values for that attribute. For example, the following three cards
   are a match: (3, red, square), (2, blue, square), (1, green, square).
 
-  \subsection{If we shuffle the deck and turn over three cards, what is the
-	  probability that they form a match? Hint: given the first two cards, what
-  is the probability that the third forms a match?}
-
-  This is a ``simple'' probability problem. 
-
-  $ 27 * 26 * 25 $ 
-
-  should be $Pr(1/25)$
-
-
-
-  \subsection{If we shuffle the deck and turn over n cards where $n ≤ 27$, what
-	  is the expected number of matches, where we count each match separately
-	  even if they overlap? Note: The cards in a match do not need to be
-  adjacent! Is your expression correct for $n = 27?$}
-
 
 \subsection{ If we shuffle the deck and turn over three cards, what is the
 probability that they form a match? Hint: given the first two
@@ -366,16 +357,25 @@ cards, what is the probability that the third forms a match?}
 
 We know that given any two cards, only one more card can make a match. If we
 draw two cards, only one more card in the deck can make a match for the prior
-two cards, so we get out of our deck of $n=27$ cards, $\frac{1}{25}$.
+two cards. After drawing two cards, we only have 25 cards left from which we
+can draw, so we get $Pr(match) = \frac{1}{25}$. 
 
-\subsection{ If we shuffle the deck and turn over n cards where $n ≤ 27$, what
+
+
+\subsection{ If we shuffle the deck and turn over $n$ cards where $n \leq 27$, what
 is the expected number of matches, where we count each match
 separately even if they overlap? Note: The cards in a match do
 not need to be adjacent! Is your expression correct for $n = 27$?}
 
+I believe we can have ${n \choose 3} * \frac{1}{25}$ possible matches, which
+comes to 
 
-
-
+\begin{align}
+{n \choose 3} &= \frac{n!}{3!(n-3)!}  \\
+{27 \choose 3} &= \frac{27!}{3!(27-3)!} * \frac{1}{25} \\
+&= \frac{27 * 26 * 25}{6} * \frac{1}{25}  \\
+&= 117  \\
+\end{align}
 
 
 
@@ -388,7 +388,17 @@ debutants that wind up in their own porsche. Use linearity of expectation to
 compute the expected value of X. Now use Markov’s inequality, to bound the
 probability that X is larger than k for any positive k.
 
+Let $X_i$ be an indicator variable saying 
 
+\[
+ X_i =
+  \begin{cases}
+   1 & \text{if } x = (correct car) \\
+   0       & \text{if } x = (Not correct car)
+  \end{cases}
+\]
+
+Where $1 = $ gets into her own car and $0=$ does not get into her own car.
 
 
 
