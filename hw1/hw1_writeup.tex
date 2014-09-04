@@ -209,12 +209,38 @@ Here is the start of the equation:
 by LOE, we get
 
 \begin{align}
- E[T(n)] &= E \left[ X_q \sum_{q=1}^{n} (T(q-1)) + T(n-q) + \Theta(n))\right] \\
-         &= E \left[ X_q \sum_{q=1}^{n} (T(q-1))\right] + E\left[ \sum_{q=1}^{n} T(n-q)\right] + \left[ \sum_{q=1}^{n}\Theta(n)\right] 
-
+ E[T(n)] &=  X_q \sum_{q=1}^{n} E \left[(T(q-1)) + T(n-q) + \Theta(n))\right] \\
 \end{align}
 
-Expanding the summation, we get:
+\[ 
+	X_q \sum_{q=1}^{n} E \left[ (T(q-1))+ T(n-q)\right] + \left[ \sum_{q=1}^{n}\Theta(n)\right] 
+\]
+We know $X_i$, so :
+
+\[ \frac{1}{n} \sum_{q=1}^{n} E \left[ (T(q-1)) + T(n-q)\right] + \left[ \sum_{q=1}^{n}\Theta(n)\right] 
+\]
+
+If we expand just the summation a bit, (and drop out $\Theta$ for a moment) we can see:
+
+For $q=1, q=2, q=n-1, q=n$:
+\[
+	(T(0) + T(n-1)) + (T(1) + T(n-2)) + \ldots + (T(n-2) + T(1)) + (T(0) +
+	(n-1))
+\]
+
+each term repeats twice, so we can see a factor of 2 can be pulled out:
+
+\[
+	\frac{2}{n} \sum_{q=1}^{n} E \left[ (T(q-1)) + T(n-q)\right]  
+\]
+
+when $q=0$ or $q=1$, these are 'base cases' and can be ignored in the
+summation, changing our q -> n. (and let's bring back $\Theta$.
+
+
+\[
+	\frac{2}{n} \sum_{q=2}^{n-1} E \left[ (T(q)\right] + \Theta(n)
+\]
 
 
 \subsection{}
