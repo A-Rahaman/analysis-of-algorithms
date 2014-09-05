@@ -75,13 +75,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \chead{\leftmark}
 \rhead{}
 \lfoot{Aaron Gonzales; Algorithms}
-\cfoot{Homework X}
+\cfoot{Homework 2}
 \rfoot{Page \thepage\ of \pageref{LastPage}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
 \begin{document}
 
-\title{Homework X, CS561, Fall 2014}
+\title{Homework 2, CS561, Fall 2014}
 \author{Aaron Gonzales}
 \maketitle
 
@@ -141,4 +141,178 @@ inside.)
 
 
 
-  \end{document}
+
+\section{ Skip lists }
+\begin{quote}
+	In this problem you will use Chernoff bounds to show that for most of the levels
+	of a skip list, the size of the level is very tightly bounded around its
+	xpectation. \\
+	Chernoff Bounds: Assume you have n independent, indicator random variables
+	$X_1$,
+	$X_2$, \dots, $X_n$ and let $X = \sum_{i=0}^n X_i $ and $\mu = E(X)$. Then Chernoff bounds tell us
+	that for any $0 \leq \delta \leq 1$: \\
+	$ Pr(X \leq (1 − \delta)\mu) $ or$  X \geq (1 + \delta)\mu) \leq
+	2e^{−\mu\delta^2 / 4} $ \\
+	Use Chernoff and Union bounds to show that with probability at least
+	$1−1/n$, for
+	all $ 0 \leq j \leq log n − log log n-5$ , List j in a skip list contains
+	between $n/2j+1$ 
+	and $ 3n/2j+1$  nodes. Let List 0 be the bottom list, List 1 be the next higher up,
+	etc. You may assume that n is sufficiently large, e.g. n is larger than some
+	constant$n_0$. \\
+	Note: Chernoff bounds are more powerful than bounds on Binomial distributions
+	since X need not be binomially distributed. The only requirement is that the Xi
+	be independent. Hint: Remember that $e^{−x} \leq 2^{−x}$.
+\end{quote}
+
+
+
+
+
+\section{pebbles and graphs}
+
+\begin{quote}
+	You toss m pebbles onto the n nodes of a k-regular undirected graph (recall
+	that a graph is k-regular if every node has degree k). Each pebble lands on
+	a node selected uniformly at random. A pair of pebbles is said to ``collide''
+	if they fall on the same node or on two nodes that are neighbors. What is
+	the expected number of pairs of pebbles that collide? About how large must
+	m be before you would expect at least 1 pair of pebbles to collide?
+\end{quote}
+
+\section{Recurrence}
+
+\begin{quote}
+Consider the Recurrence $f(n) = 3f(n/2) + \sqrt(n)$
+\end{quote}
+
+\subsection{Use the Master method to solve this recurrence}
+
+
+
+\subsection{Now use annihilators (and a transformation) to solve the recur- rence. Show
+your work. (This is perhaps stating the obvious, but please note that your two
+bounds should match)}
+
+
+
+
+\section{Function}
+
+\begin{quote}
+\begin{lstlisting}
+	int f (int n){
+		if (n&=& 0) return 2;
+		else if (n&=& 1) return 5;
+		else{
+			int val = 2*f (n-1);
+			val = val - f (n-2);
+			return val;
+		}
+	}
+\end{lstlisting}
+\end{quote}
+
+\subsection{Write a recurrence relation for the value returned by f. Solve the
+recurrence exactly. (Don’t forget to check it)}
+
+
+
+\subsection{(b) Write a recurrence relation for the running time of f. Get a tight
+upperbound (i.e. big-O) on the solution to this recurrence.}
+
+
+
+\section{Silly-Sort }
+\begin{lstlisting}
+	Silly-Sort(A,i,j):
+		if A[i] > A[j]:
+			then exchange A[i] and A[j]
+		if i+1 >= j:
+			then return
+		k = floor(j-i+1)/3)
+		Silly-Sort(A,i,j-k)
+		Silly-Sort(A,i+k,j)
+		Silly-Sort(A,i,j-k)
+	
+\end{lstlisting}
+
+
+
+\subsection{ Argue (by induction) that if n is the
+length of A, then Silly- Sort(A,1,n)
+correctly sorts the input array
+$A[1\dots n]$}
+
+
+\subsection{ Give a recurrence relation for the worst-case run time of Silly-Sort and a
+tight bound on the worst-case run time}
+
+\subsection{ Compare this worst-case runtime with that of insertion sort,merge
+sort, heapsort and quicksort.}
+
+
+
+
+
+\section{Primes and Probability}
+
+\begin{quote}
+	\textbf{
+In this problem, you will use the following facts. 1) any integer can be
+uniquely factored into primes; 2) the number of primes less than any number m
+is $\Theta(m/ log m)$ (this is the prime number theorem). \\
+We will also make use of the following notation for integers x and y: \\
+1) $x|y$ means that x ``divides'' y, which means that there is no remainder
+when you divide y by x. \\ 
+and 2) $ x = y(modp)$ means that x and y have the same remainder when
+divided by p, or in other words, $p|x−y$ \\
+Show that for any integer x, x factors into at most log x primes. Hint: 2 is
+the smallest prime.}
+\end{quote}
+
+
+\subsection{ Let x be some positive integer and let p be a prime chosen uniformly at
+random from all primes less than or equal to m. Use the prime number theorem to
+show that the probability that $p|x$ is $O\left( log x)(log m)/m\right)$. }
+
+\subsection{ Now let x and y both be positive integers less than n and let p be a prime
+chosen uniformly at random from all primes less than or equal to m. Using the
+previous result, show that the probability that $ x ≡ y (mod p)$  is $ O\left( log
+n)(log m)/m)\right)$ . }
+
+\subsection{ If $ m = log^2 n$  in the previous problem, then what is the probability that
+$x ≡ y (mod p)$. Hint: If you’re on the right track, you should be able to show
+that this probability is ``small'', i.e. it goes to 0 as n gets large. }
+
+\subsection{ Finally, show how to apply this result to the following problem. Alice and
+Bob both have databases x and y where x and y have value no more than n, for n
+a very large number (think terabytes). They want to check to see if their
+databases are consistent (i.e. they want to check if they are the same) but
+Alice does not want to have to send her entire database to Bob. What is an
+algorithm Alice and Bob can use to check consistency with reasonably good
+probability by sending a lot fewer bits? How many bits does Alice need to send
+to Bob as a function of n, and what is the probability of failure, where
+failure means that this algorithm says the databases are the same but in fact
+they are different? }
+
+
+\section{Bad Santa }
+A child is presented with n boxes, one after another. Upon receiving
+a box, the child must decide whether or not to open it. If the child does not
+open a box, he is never allowed to revisit it. Half the
+boxes have presents in them, but the decision about which boxes have presents
+is made by an omniscient and malicious Santa who wants the child to open as
+many empty boxes as possible before finding a present. \\ 
+Devise and analyze a randomized algorithm for the child which minimizes the
+expected number of boxes that need to be opened before the child finds the
+first present. Assume Santa knows your algorithm, but can not predict the
+random choices made by your algorithm. \\ 
+Hint: Birthday paradox. \\
+Note: This problem has applications to wireless networks: basically boxes are
+time-steps, Santa is a jamming adversary, and opening a box means spending
+energy to listen in a time-step.
+
+
+
+\end{document}
