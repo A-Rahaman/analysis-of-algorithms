@@ -86,61 +86,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \maketitle
 
 
-%%%% useful align for this
-\section{Template math}
-\begin{align*}
-	Total Matches &={n \choose 3} * \frac{1}{25} \\
-					&= {27 \choose 3}   * \frac{1}{25} \\
-					&=   \frac{27!}{3!(27-3)!} * \frac{1}{25} \\
-					&= \frac{27 * 26 * 25}{6} * \frac{1}{25}  \\
-					&= 117
-\end{align*}
-
-
-We have $n$ debutants and $n$ porsches. 
-$\frac{1}{n}$ is our probability of a debutant getting into her own porche.
-Let $X_i$ be an indicator variable saying 
-
-\[
-	X_i = I[X]
-	\begin{cases}
-		1 & \text{if debutante gets in her own car} \\
-		0 & \text{if not} 
-	\end{cases}
-\]
-
-The number of debutants who return to their own can be expressed as:
-\[ X_i = \sum_{i=1}^n X_i \]
-
-and the expected number of debutants can be expressed as:
-
-\[ E [X_i] = E \left[ \sum_{i=1}^n X_i \right] \]
-
-By linearity of expectation we can state it as such:
-
-\begin{align*}
-	E [X_i] &= E \left[ \sum_{i=1}^n X_i \right] \\
-	E [X_i] &=  \sum_{i=1}^n E[X_i] \\ 
-	&=  \sum_{i=1}^n \frac{1}{n} \\ 
-	&=  \frac{1}{n} \sum_{i=1}^n 1 \\
-	&= \frac{n}{n} \\
-	& = 1
-\end{align*}
-We only expect one drunken debutant to get in her own porche. (Note - This presumes
-that all of the debutants made it out of the party and no one passed out
-inside.)
-
-
-
-
-
-
-
-
-
-
-
-
 
 \section{ Skip lists }
 \begin{quote}
@@ -151,18 +96,17 @@ inside.)
 	$X_1$,
 	$X_2$, \dots, $X_n$ and let $X = \sum_{i=0}^n X_i $ and $\mu = E(X)$. Then Chernoff bounds tell us
 	that for any $0 \leq \delta \leq 1$: \\
-	$ Pr(X \leq (1 − \delta)\mu) $ or$  X \geq (1 + \delta)\mu) \leq
-	2e^{−\mu\delta^2 / 4} $ \\
+	\[ Pr(X \leq (1 - \delta)\mu)  \text{ or }  X \, \geq (1 + \delta)\mu) \leq 2e^{−\mu \, \frac{\delta^2}{4}} \]
 	Use Chernoff and Union bounds to show that with probability at least
-	$1−1/n$, for
-	all $ 0 \leq j \leq log n − log log n-5$ , List j in a skip list contains
-	between $n/2j+1$ 
-	and $ 3n/2j+1$  nodes. Let List 0 be the bottom list, List 1 be the next higher up,
+	$1 − \frac{1}{n}$, for
+	all $ 0 \leq j \leq log n - log log\, n - 5$ , List j in a skip list contains
+	between $\frac{n}{2^{j+1}}$ 
+	and $ \frac{3n}{2^{j+1}}$  nodes. Let List 0 be the bottom list, List 1 be the next higher up,
 	etc. You may assume that n is sufficiently large, e.g. n is larger than some
 	constant$n_0$. \\
 	Note: Chernoff bounds are more powerful than bounds on Binomial distributions
-	since X need not be binomially distributed. The only requirement is that the Xi
-	be independent. Hint: Remember that $e^{−x} \leq 2^{−x}$.
+	since X need not be binomially distributed. The only requirement is that
+	the $X_i$ be independent. Hint: Remember that $e^{−x} \leq 2^{−x}$.
 \end{quote}
 
 
@@ -179,30 +123,82 @@ inside.)
 	the expected number of pairs of pebbles that collide? About how large must
 	m be before you would expect at least 1 pair of pebbles to collide?
 \end{quote}
+Let $X_i$ be an indicator variable saying 
+
+\[
+	X_i = I[X]
+	\begin{cases}
+		1 & \text{ if pebbles collide} \\
+		0 & \text{if not } 
+	\end{cases}
+\]
+
+
+\[ \sum_{i=1}^{m-1} \sum_{j=i+1}^{m-1} X_{i,j} \] 
+
+\[ {m \choose 2} \frac{k+1}{n} \]
+
+\[ \frac{m!}{2(m-2)!} \]
+
 
 \section{Recurrence}
 
 \begin{quote}
-Consider the Recurrence $f(n) = 3f(n/2) + \sqrt(n)$
+	Consider the Recurrence $f(n) = 3f(\frac{n}{2}) + \sqrt{n}$
 \end{quote}
 
 \subsection{Use the Master method to solve this recurrence}
+The generic form of the Master equation is:
+\[ T(n) = aT\left(\frac{n}{b} + f(n)\right) \text{ where } a\geq 1, b> 1 \]
+where:
+$T(n)$ has the following asymptotic bounds:
+\begin{enumerate}
+	\item if $f(n) = O\left(n^{log_b a-\epsilon}\right)$ for some constast
+		$\epsilon > 0$, then $T(n) = \Theta(n^{log_b a})$
+	\item if $f(n) = \Theta(n^{log_b a}), \text{then} T(n) =
+		\Theta\left(n^{log_b a} lg\,n\right)$. 
+	\item if $f(n) = \Omega\left(n^{log_b a + \epsilon}\right)$ for some
+		constant $c < 1$ and all sufficiently large $n$, then $T(n) =
+		\Theta(f(n))$. 
+\end{enumerate}
 
+in our example, we have $a = 3$, $b = 2$, and $f(n) = \sqrt{n}$. 
 
+\[ n^{log_b a} = n^{log_2 3} = O(n^{1.58}) \]
 
-\subsection{Now use annihilators (and a transformation) to solve the recur- rence. Show
+and $\sqrt{n} = n^{1/2} = O(n^{1.58})$ ,so $T(n) = \Theta(n^{1.58})$.
+
+\subsection{Now use annihilators (and a transformation) to solve the recurrence. Show
 your work. (This is perhaps stating the obvious, but please note that your two
 bounds should match)}
+Our recurrence is: $f(n) = 3f(\frac{n}{2}) + \sqrt{n}$. 
+
+%\[ T(n) = 3T(\frac{n}{2}) + n^{\frac{1}{2}} \] 
+
+and needs a transformation. Let's  let $n = 2^i$ and rewrite $T(n)$ as:
+
+\[ T(2^0) = 1, T(2^i) = 3T(\frac{2^i}{2}) + \sqrt{2^i} \]
+\[ = 3T(2^{i-1}) + 2^{i*1/2} \]
+
+and a new sequence $t$:
+\[ t(i) = T(2^i) \]
+
+\[ t(0) = 1, t(i) = 3t(i-1) + 2^{i*1/2} \]
+
+$(L - 3)$ takes the homogenous part and $(L-2)$ takes the residue
+giving us 
+\[ t(i) = (c_1 i + c_2) 2^{i*1/2} \]
+\[ T(2^i) = (c_1 i + c_2) 2^{i*1/2} \]
+\[ T(n) = (c_1 n + c_2) n^{1/2} \]
 
 
-
-
-\section{Function}
+\section{More recurrence}
 
 \begin{quote}
+consider the following function:
 \begin{lstlisting}
 	int f (int n){
-		if (n&=& 0) return 2;
+		if (n == 0) return 2;
 		else if (n&=& 1) return 5;
 		else{
 			int val = 2*f (n-1);
@@ -214,13 +210,66 @@ bounds should match)}
 \end{quote}
 
 \subsection{Write a recurrence relation for the value returned by f. Solve the
-recurrence exactly. (Don’t forget to check it)}
+recurrence exactly. (Don't forget to check it.)}
+We can state this algorithm as follows:
+\[ f(n) = 2f(n-1) - f(n-2) \]
+with a base case of $f(0) = 2$. For the following values of n, we get:
 
+\begin{align}
+	f(0) &= 2 \\
+	f(1) &= 5 \\
+	f(2) &= 8 \\
+	f(3) &= 11 \\
+	f(4) &= 14
+	\label{eqn:something}
+\end{align}
+
+Formally stating our recurrence as 
+for all values of $n > 0$,  i assume it returns $3n+2$. 
+\begin{proof} By induction: for 
+\[ f(n) = 2f(n-1) - f(n-2) , f(0) = 2,\,\, f(n) = 3n +2 \]
+
+Base case: $f(0) = 2$.  
+Inductive Hypothesis: $\forall j < n, f(j) = 3j + 2 $ \\
+Inductive step: 
+
+\begin{align*}
+	f(n) &= 2f(n-1) - f(n-2) \\
+	&= 2(3n + 2 -1) - 3n+2-2 \text{ by I.H.} \\
+	&= 6n + 2 - 3n \\
+	&= 3n + 2 \qedhere
+\end{align*}
+\end{proof}
 
 
 \subsection{(b) Write a recurrence relation for the running time of f. Get a tight
 upperbound (i.e. big-O) on the solution to this recurrence.}
 
+\[ f(n) = 2f(n-1) - f(n-2)  \]
+
+We can see that this is similar to Fibonacci and use a few annihilators to
+solve this.
+\[ T = \langle T_0, T_1, T_2, T_3, \ldots \rangle \]
+\[ LT = \langle T_1, T_2, T_3, T_4, \ldots \rangle \]
+\[ L^2T = \langle T_2, T_3, T_4, T_5, \ldots \rangle \]
+
+
+
+An annihilator of $(L - 2)(L-1)$ takes care of it, giving us  
+$ L^2 - 2L + 1 $ with the residue annihilated by $L-1$ for a final annihilator
+of
+\[ (L^2 - 2L + 1)(L-1) \]
+
+Factoring we get:
+
+\[ (L-1)^2(L-1) \]
+\[ (L-1)^3 \]
+which annihilates sequences like 
+\[ \left(c_0n^2 + c_1 n + c_2 \right) 1^n \]
+
+solving for the constants:
+
+\[ T(0) = 4, \, T(1) = 7 \]
 
 
 \section{Silly-Sort }
@@ -248,6 +297,13 @@ $A[1\dots n]$}
 \subsection{ Give a recurrence relation for the worst-case run time of Silly-Sort and a
 tight bound on the worst-case run time}
 
+We can define a recurrence relation for the algorithm as 
+\[ T(n) = 3T(\frac{2n}{3}) + \Theta(1) \]
+and solve it by the master method:
+
+$a = 3, \, b = 2/3, \, c=4$ which gives us case 
+
+
 \subsection{ Compare this worst-case runtime with that of insertion sort,merge
 sort, heapsort and quicksort.}
 
@@ -266,11 +322,11 @@ We will also make use of the following notation for integers x and y: \\
 1) $x|y$ means that x ``divides'' y, which means that there is no remainder
 when you divide y by x. \\ 
 and 2) $ x = y(modp)$ means that x and y have the same remainder when
-divided by p, or in other words, $p|x−y$ \\
-Show that for any integer x, x factors into at most log x primes. Hint: 2 is
-the smallest prime.}
+divided by p, or in other words, $p|x−y$} 
 \end{quote}
 
+\subsection{Show that for any integer x, x factors into at most log x primes. Hint: 2 is
+the smallest prime.}
 
 \subsection{ Let x be some positive integer and let p be a prime chosen uniformly at
 random from all primes less than or equal to m. Use the prime number theorem to
@@ -282,7 +338,7 @@ previous result, show that the probability that $ x ≡ y (mod p)$  is $ O\left(
 n)(log m)/m)\right)$ . }
 
 \subsection{ If $ m = log^2 n$  in the previous problem, then what is the probability that
-$x ≡ y (mod p)$. Hint: If you’re on the right track, you should be able to show
+$x ≡ y (mod p)$. Hint: If you're on the right track, you should be able to show
 that this probability is ``small'', i.e. it goes to 0 as n gets large. }
 
 \subsection{ Finally, show how to apply this result to the following problem. Alice and
@@ -298,21 +354,33 @@ they are different? }
 
 
 \section{Bad Santa }
-A child is presented with n boxes, one after another. Upon receiving
-a box, the child must decide whether or not to open it. If the child does not
-open a box, he is never allowed to revisit it. Half the
-boxes have presents in them, but the decision about which boxes have presents
-is made by an omniscient and malicious Santa who wants the child to open as
-many empty boxes as possible before finding a present. \\ 
-Devise and analyze a randomized algorithm for the child which minimizes the
-expected number of boxes that need to be opened before the child finds the
-first present. Assume Santa knows your algorithm, but can not predict the
-random choices made by your algorithm. \\ 
-Hint: Birthday paradox. \\
-Note: This problem has applications to wireless networks: basically boxes are
-time-steps, Santa is a jamming adversary, and opening a box means spending
-energy to listen in a time-step.
+\begin{quote}
+	\textbf{
+		A child is presented with n boxes, one after another. Upon receiving
+		a box, the child must decide whether or not to open it. If the child does not
+		open a box, he is never allowed to revisit it. Half the
+		boxes have presents in them, but the decision about which boxes have presents
+		is made by an omniscient and malicious Santa who wants the child to open as
+		many empty boxes as possible before finding a present. \\ 
+		Devise and analyze a randomized algorithm for the child which minimizes the
+		expected number of boxes that need to be opened before the child finds the
+		first present. Assume Santa knows your algorithm, but can not predict the
+		random choices made by your algorithm. \\ 
+		Hint: Birthday paradox. \\
+		Note: This problem has applications to wireless networks: basically boxes are
+		time-steps, Santa is a jamming adversary, and opening a box means spending
+	energy to listen in a time-step.}
+\end{quote}
 
+Our problem has the following setup:
 
+\begin{itemize}
+	\item $n$ boxes
+	\item $\frac{n}{2}$ boxes have presents
+	\item Birthday paradox tells us that we need $\sqrt{n}$ people to fit
+		$n$ Birthdays. 
+\end{itemize}
+
+If at least $\sqrt{n}$ of the boxes have presents in them\dots
 
 \end{document}
