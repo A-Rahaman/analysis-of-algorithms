@@ -42,30 +42,30 @@ Then E(x+y) = E(x) + E(y)
 ### Birthday Paradox
 
 
-	Awesome little thing that comes up all the time
+Awesome little thing that comes up all the time
 
-	given the following:
+given the following:
 
-	$n = number of people $
-	$ m = number of days in the year $
-	X = random var = number of pairs of people with the same birthday
+$n = number of people $
+$ m = number of days in the year $
+X = random var = number of pairs of people with the same birthday
 
-	What is $E(x)$? 
+What is $E(x)$? 
 
-	If we define an indicator random variable:
+If we define an indicator random variable:
 
-	\[ X_{i,J} =1 \text{if} i,j, \text{ have the same birthday} \]
-	\[ X_{i,J} =0  \text{if not} \]
+\[ X_{i,J} =1 \text{if} i,j, \text{ have the same birthday} \]
+\[ X_{i,J} =0  \text{if not} \]
 
-	\[ X = \sum_{i,j} X_{i,j} \]
-	\[ E(X_{i,j}) = 1 * Pr(X_{i,j} = 1) \]
-	\[ = 1/m \]
-	\[ E(x) = E(\sum_{i,j} X_{i,j} ) \] * By linearity of expectation
-	\[ \sum E(X_{i,j}) \]
-	\[ E(X) = ( n \choose 2 ) * 1/m \]
-	\[ = n(n+1) / 2m \]
-	it follows that:
-	\[ n(n-1) \geq 2m \implies E(X)\geq 1 \]
+\[ X = \sum_{i,j} X_{i,j} \]
+\[ E(X_{i,j}) = 1 * Pr(X_{i,j} = 1) \]
+\[ = 1/m \]
+\[ E(x) = E(\sum_{i,j} X_{i,j} ) \] * By linearity of expectation
+\[ \sum E(X_{i,j}) \]
+\[ E(X) = ( n \choose 2 ) * 1/m \]
+\[ = n(n+1) / 2m \]
+it follows that:
+\[ n(n-1) \geq 2m \implies E(X)\geq 1 \]
 
 
 
