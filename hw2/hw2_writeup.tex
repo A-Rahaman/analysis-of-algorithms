@@ -256,17 +256,23 @@ upperbound (i.e. big-O) on the solution to this recurrence.}
 \[ f(n) = 2f(n-1) - f(n-2) + \Theta(1) \]
 
 We can see that this is similar to Fibonacci and use a few annihilators to
-solve this.
+solve this.For the homogenous parts:
 \[ T = \langle T_0, T_1, T_2, T_3, \ldots \rangle \]
 \[ LT = \langle T_1, T_2, T_3, T_4, \ldots \rangle \]
 \[ L^2T = \langle T_2, T_3, T_4, T_5, \ldots \rangle \]
 
-
-
-An annihilator of $(L - 2)(L-1)$ takes care of it, giving us  
-$ L^2 - 2L + 1 $ with the residue annihilated by $L-1$ for a final annihilator
-of
+\[ 2T_{i+1} - T_i \]
+\[L^2T - 2LT + T \]
+\[ (L-1)(L-1) \]
+\[ (L-1)^2 \]
+for the non homogenous part, we have a constant factor of $\Theta(1) $ and we
+know the annihilator $(L-1)$ takes care of that, so we have a complete
+annihilator of 
 \[ (L^2 - 2L + 1)(L-1) \]
+
+
+
+
 
 in class, we discovered that this comes out to: 
 
