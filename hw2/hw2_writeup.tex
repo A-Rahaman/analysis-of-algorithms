@@ -80,12 +80,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
 \begin{document}
-
 \title{Homework 2, CS561, Fall 2014}
 \author{Aaron Gonzales}
 \maketitle
-
-
 
 \section{ Skip lists }
 \textbf{
@@ -189,16 +186,19 @@ Our recurrence is: $f(n) = 3f(\frac{n}{2}) + \sqrt{n}$.
 
 %\[ T(n) = 3T(\frac{n}{2}) + n^{\frac{1}{2}} \] 
 
-and needs a transformation. Let's  let $n = 2\times3^i$ and rewrite $T(n)$ as:
+and needs a transformation. Let's  let $n = 2^i$ and rewrite $T(n)$ as:
 
-\[ T(2^0) = 1, T(2^i) = 3T(2\times3^i) + \sqrt{2*3^i} \]
-\[ = 3T(2\times3^i) + 2*3^{i/2} \]
+\[ T(2^i) = 3T(\frac{2^i}{2}) + 2^{i/2} \]
+\[ T(2^i) = 3T(2^{i-1}) + 2^{i/2} \]
+let $t(2^i)$ = $t(i)$
+\[ t(i) = 3T(i-1) + \frac{i}{2} \]
 
-and a new sequence $t$:
-\[ t(i) = T(2\times3^i) \]
+Using annhilators, we can eliminate the sequence $ t = \langle t_i \rangle $. 
 
-\[ t(0) = 1, t(i) =  \]
+\[ (L-3)   \]
 
+From the lookup table $(L-3) (L-1)^2$ will annihilate relations with the form
+of $c_0*3^i + c_1i + c_2$
 
 \section{More recurrence}
 
@@ -261,28 +261,14 @@ solve this.For the homogenous parts:
 \[ LT = \langle T_1, T_2, T_3, T_4, \ldots \rangle \]
 \[ L^2T = \langle T_2, T_3, T_4, T_5, \ldots \rangle \]
 
-\[ 2T_{i+1} - T_i \]
-\[L^2T - 2LT + T \]
-\[ (L-1)(L-1) \]
-\[ (L-1)^2 \]
-for the non homogenous part, we have a constant factor of $\Theta(1) $ and we
-know the annihilator $(L-1)$ takes care of that, so we have a complete
-annihilator of 
-\[ (L^2 - 2L + 1)(L-1) \]
+\[ (L^2 - L - 1) \] 
+In class, we learned that this factors to \[ (L	 - \phi)(L - \hat{\phi} ) \]
 
+And our sequence must have the form 
 
-
-
-
-in class, we discovered that this comes out to: 
-
-PHI STUFF
-
-which annihilates sequences like 
-
-
-
-
+\[ O(\phi^n + \hat{\phi}^n) \]
+and reduces to 
+\[ O(\phi^n) \]
 \section{Silly-Sort }
 \begin{lstlisting}
 	Silly-Sort(A,i,j):
@@ -313,6 +299,25 @@ We can define a recurrence relation for the algorithm as
 and solve it by the master method:
 
 $a = 3, \, b = 2/3, \, c=4$ which gives us case 
+
+Using an annihilator, we can elimiatesolve the recurrance by:
+
+let $i = 2\times3^i$
+\[ T(2*3^i) = 3T(2*\frac{3^i}{3}) + 4 \]
+\[ T(2*3^i = 6T(3^{i-1}) + 4 \]
+\[ T(i) = 6T(i-1) + 4 \]
+\[ (L-6)(L-1) \]
+\[ c_16^i + c_21^i \]
+
+back substituting we get:
+
+\[ 6^{2*3^i} + 1^{2*3^i} \]
+
+
+
+
+
+
 
 
 \subsection{ Compare this worst-case runtime with that of insertion sort,merge
