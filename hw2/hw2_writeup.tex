@@ -108,6 +108,37 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \end{quote}
 }
 
+Our first steps are to find both $\delta$ and $\mu$. 
+
+We know that the probability of a node landing on a layer $j$ in the skip list
+is $Pr(\frac{1}{2^j)} $. 
+\[ \mu = \sum_{i=n}^n \frac{1}{2^j} = \frac{n}{2^j} \]
+
+$\delta$ we need to find an upper and lower bound:
+
+Upper:
+\begin{align*}
+	(1-\delta)\mu &= \frac{n}{2^{j+1}} \\
+	(1-\delta)\frac{n}{2^j} &= \frac{n}{2{^j+1}} \\
+	1-\delta &= \frac{1}{2} \\
+	\delta &= \frac{1}{2}
+\end{align*}
+
+lower :
+\begin{align*}
+	(1+\delta)\mu &= \frac{3n}{2^{j+1}} \\
+	(1+\delta)\frac{n}{2^j} &= \frac{3n}{2{^j+1}} \\
+	1+\delta &= \frac{3}{2} \\
+	\delta &= \frac{3}{2}
+\end{align*}
+
+plugging these into our Chernoff bounds:
+
+	\[ Pr(X \leq (1 - \delta)\mu)  \text{ or }  X \, \geq (1 + \delta)\mu) \leq 2e^{−\mu \, \frac{\delta^2}{4}} \]
+	\[ Pr\left(X \leq \frac{n}{2^{j+1}} \text{ or }  X \, \geq \frac{3n}{2{^j+1}} \right)  \leq 2e^{−\mu \, \frac{\delta^2}{4}} \]
+	\[ Pr\left(X \leq \frac{n}{2^{j+1}} \text{ or }  X \, \geq \frac{3n}{2{^j+1}} \right)  \leq 2e^{1-\frac{n}{16*2^j}} \]
+
+
 
 
 
@@ -141,7 +172,7 @@ and for all pairs of pebbles $i,j$ the probability of a collision is
 $\frac{K+1}{n}$.
 
 
-\[ \sum_{i=1}^{m} X_{i,j} \] 
+\[ \sum_{i=1}^{m}\sum_{j+1}^m X_{i,j} \] 
 
 \[ {m \choose 2} \frac{k+1}{n} = \frac{m(m-1)(k+1)}{2(n)} \]
 
@@ -186,14 +217,27 @@ and needs a transformation. Let's  let $n = 2^i$ and rewrite $T(n)$ as:
 \[ T(2^i) = 3T(\frac{2^i}{2}) + 2^{i/2} \]
 \[ T(2^i) = 3T(2^{i-1}) + 2^{i/2} \]
 let $t(2^i)$ = $t(i)$
-\[ t(i) = 3T(i-1) + \frac{i}{2} \]
+\[ t(i) = 3T(i-1) + \sqrt{2^i} \]
 
-Using annhilators, we can eliminate the sequence $ t = \langle t_i \rangle $. 
+Using annhilators, we can eliminate the sequence $ t = \langle t_i \rangle $,
+eliminating the homogenous parts seperately from the recursive parts.
 
-\[ (L-3)   \]
+\[ (L-3)(L-\sqrt{2})   \]
 
-From the lookup table $(L-3) (L-1)^2$ will annihilate relations with the form
-of $c_0*3^i + c_1i + c_2$
+From the lookup table $(L-3) (L-\sqrt{2})$ will annihilate relations with the form
+of $c_0*3^i + c_1^i $
+
+back transformation gives us:
+
+\[ lg n = i \]
+\[ 3^{lg n} + \sqrt(2)^{lg n} \]
+\[ n^{lg 3} + \sqrt{n} \]
+
+\[ = O(n^{lg 3}) \]
+where $lg 3 = lob_2 3$.
+
+
+
 
 \section{More recurrence}
 
@@ -301,43 +345,48 @@ tight bound on the worst-case run time}
 
 We can define a recurrence relation for the algorithm as 
 \[ T(n) = 3T(\frac{2n}{3}) + \Theta(1) \]
-%and solve it by the master method:
+and solve it by the master method:
 
-%$a = 3, \, b = 2/3, \, c=4$ which gives us case 
+$a = 3, \, b = 2/3, \, c=\Theta$ which gives us case 
 
-Using an annihilator, we can elimiatesolve the recurrance by:
+%Using an annihilator, we can elimiatesolve the recurrance by:
 
-let $n = 2\times3^i$
-\[ T(2*3^i) = 3T(2*\frac{3^i}{3}) + 4 \]
-\[ T(2*3^i = 6T(3^{i-1}) + 4 \]
-let $t(i) = 3^i$
-\[ t(i) = 6t(i-1) + 4 \]
-\[ (L-6)(L-1) \]
-\[ c_16^i + c_21^i \]
+%let $n = 2\times3^i$
+%\[ T(2*3^i) = 3T(2*\frac{3^i}{3}) + 4 \]
+%\[ T(2*3^i = 6T(3^{i-1}) + 4 \]
+%let $t(i) = 3^i$
+%\[ t(i) = 6t(i-1) + 4 \]
+%\[ (L-6)(L-1) \]
+%\[ c_16^i + c_21^i \]
+%
+%\[ n = 2\times3^i \]
+%\[ lg n = lg2 + i lg3 \] 
+%back substituting we get:
+%\[ lg n - lg 2 = i lg3 \]
+%\[ \frac{lg n - lg 2}{lg 3} = i \]
+%
+%\[ 6^i + 1^i \]
+%and reducing we get:
+%\[ 6^{\frac{lg n - lg 2}{lg 3}}  \]
 
-\[ n = 2\times3^i \]
-\[ lg n = lg2 + i lg3 \] 
-back substituting we get:
-\[ lg n - lg 2 = i lg3 \]
-\[ \frac{lg n - lg 2}{lg 3} = i \]
+	if $f(n) = O\left(n^{log_b a-\epsilon}\right)$ for some constast
+		$\epsilon > 0$, then $T(n) = \Theta(n^{log_b a})$
 
-\[ 6^{3^i} + 1^{3^i} \]
-and reducing we get:
+in our example, we have $a = 3$, $b = 3/2$, and $f(n) = \sqrt{n}$. 
 
-\[ 3^i + 3^i \]
-\[ 3^i \]
+\[ n^{log_b a} = n^{log_\frac{3}{2} 3} = O(n^{2.7}) \]
 
   
 \subsection{ Compare this worst-case runtime with that of insertion sort,merge
 sort, heapsort and quicksort.}
 
-\begin{listing}
+\begin{itemize}
 \item Insertion sort: $O(n^2)$
 \item Merge sort: $O(nlgn)$
 \item heapsort: $O(n lg n)$
 \item quicksort: $O(n^2)$ (Worst case, average is $O(n lg n)$
 \item Silly Sort: 
-\end{listing}
+\end{itemize}
 
 
 \section{Primes and Probability}
@@ -380,9 +429,17 @@ Let $X_i$ be an indicator variable saying
 	0 & \text{if not } 
   \end{cases}
 \]
+Our random variable is 
+\[ X = Ex\left(\sum_{i=1}^{logx}(X_i) \right) \]
+	\[ X = \sum_{i=1}^{logx}Ex(X_i) \]
 
 The probability of $X_{i,p}$ $\leq \frac{\frac{1}{m}}{\Theta log m} = \Theta
 \frac{log m}{m} $
+
+and as such we get:
+
+\[ X = \sum_{i=1}^{logx} \frac{log m}{m} \]
+\[  = \frac{log x\times log m}{m} \]
 
 
 \subsection{ Now let x and y both be positive integers less than n and let p be a prime
@@ -431,7 +488,7 @@ Our problem has the following setup:
 	\item $n$ boxes
 	\item $\frac{n}{2}$ boxes have presents
 	\item Birthday paradox tells us that we need $\sqrt{n}$ pebbles to fit
-		$n$ bins. 
+		expect a ``collision'' in $n$ bins. 
 \end{itemize}
 
 If we naively pick boxes in order, santa will obviously put the boxes in the
@@ -439,13 +496,23 @@ last half of our 'box array'. if this is true, we will have to pick
 $\frac{n}{2} + 1 = O(n)$ boxes to get a gift. 
 
 Randomization helps us greatly here as Santa cannot account for our random
-choices. If we divide the array in half we can find a lower bound than $O(n)$
+choices, though his placements will probably not be random. If we divide the array in half we can find a lower bound than $O(n)$
 for our number of opened boxes. 
 As the birthday paradox was discussed in class, we can expect that given n bins
-and p pebbles tossed randomly into bins, $\sqrt(n)$ tosses gives us an
+and p pebbles tossed randomly into bins, $\sqrt{ n }$ tosses gives us an
 expectation of 1 ``collision'' or two pebbles going into the same bin. If we
 think of our pick of a box as a pebble and santa's placement of a box as a
-pebble, 
+pebble, a ``collision'' is us picking a box with a gift. 
+
+If we split the array in half and choose $\sqrt{ n } + \epsilon$ (where
+$\epsilon$ is some arbitrary constant) boxes from the
+first subarray, we would exect a collision if there were at a handful of gift
+s in the first array. If we do not get a gift, we know that there are likely to be
+more gifts in the second have of the array, and as such, we can start choosing
+linearly from that array. 
+Even if santa loads the back half of the array with gifts, we are still going
+to be picking $O(\sqrt{n+\epsilon} + C) = O(\sqrt{n+\epsilon})$. 
+
 
 
 
