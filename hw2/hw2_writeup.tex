@@ -430,11 +430,16 @@ Our problem has the following setup:
 
 If we naively pick boxes in order, santa will obviously put the boxes in the
 last half of our 'box array'. if this is true, we will have to pick
-$\frac{n}{2} + 1$ boxes to get a gift. 
+$\frac{n}{2} + 1 = O(n)$ boxes to get a gift. 
 
 Randomization helps us greatly here as Santa cannot account for our random
 choices. If we divide the array in half we can find a lower bound than $O(n)$
 for our number of opened boxes. 
+As the birthday paradox was discussed in class, we can expect that given n bins
+and p pebbles tossed randomly into bins, $\sqrt(n)$ tosses gives us an
+expectation of 1 ``collision'' or two pebbles going into the same bin. If we
+think of our pick of a box as a pebble and santa's placement of a box as a
+pebble, 
 
 
 
