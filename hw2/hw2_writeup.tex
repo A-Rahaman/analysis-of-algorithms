@@ -141,15 +141,12 @@ and for all pairs of pebbles $i,j$ the probability of a collision is
 $\frac{K+1}{n}$.
 
 
-\[ \sum_{i=1}^{m-1} \sum_{j=i+1}^{m-1} X_{i,j} \] 
+\[ \sum_{i=1}^{m} X_{i,j} \] 
 
-\[ {n \choose 2} \frac{k+1}{n} \]
+\[ {m \choose 2} \frac{k+1}{n} = \frac{m(m-1)}{2} \]
 
-\[ \frac{n!}{2(n-2)!} \]
+\[ \frac{m(m-1)(k+1)}{2(n)} \]
 
-\[ \frac{n!(k+1)}{2(n-2)} \]
-
-\[ \frac{(n-2)!(k+1)}{-4} \]
 
 
 \section{Recurrence}
@@ -283,12 +280,22 @@ and reduces to
 	
 \end{lstlisting}
 
-
-
 \subsection{ Argue (by induction) that if n is the
 length of A, then Silly- Sort(A,1,n)
 correctly sorts the input array
-$A[1\dots n]$}
+$A[1\dots n]$.}
+
+We can see that Silly-Sort is sorting $2/3$ of the list on each recursive call.
+If we define a base case of a list where $n=3$, and the list is $\{ 2,3,1 \} $ the array will be sorted as
+such:
+
+\[ \{ 2, 3, 1 \} \] 
+  \[ \{ 1, 3, 2 \} \]
+  \[ \{ 1, 2, 3 \} \]
+Inductive Hypothesis: Silly sort sorts any array length $j<n$, and knowing that
+Silly-Sort will always eventually divide the list into length 3, by the base
+case we can see that if the sublists of length three are sorted, the full list
+would be sorted as well. 
 
 
 \subsection{ Give a recurrence relation for the worst-case run time of Silly-Sort and a
@@ -302,18 +309,27 @@ $a = 3, \, b = 2/3, \, c=4$ which gives us case
 
 Using an annihilator, we can elimiatesolve the recurrance by:
 
-let $i = 2\times3^i$
+let $n = 2\times3^i$
 \[ T(2*3^i) = 3T(2*\frac{3^i}{3}) + 4 \]
 \[ T(2*3^i = 6T(3^{i-1}) + 4 \]
-\[ T(i) = 6T(i-1) + 4 \]
+let $t(i) = 3^i$
+\[ t(i) = 6t(i-1) + 4 \]
 \[ (L-6)(L-1) \]
 \[ c_16^i + c_21^i \]
 
+\[ n = 2\times3^i \]
+\[ lg n = lg2 + i lg3 \] 
 back substituting we get:
+\[ lg n - lg 2 = i lg3 \]
+\[ \frac{lg n - lg 2}{lg 3} = i \]
 
-\[ 6^{2*3^i} + 1^{2*3^i} \]
+\[ 6^{3^i} + 1^{3^i} \]
+and reducing we get:
 
+\[ 3^i + 3^i \]
+\[ 3^i \]
 
+  
 
 
 
@@ -343,10 +359,25 @@ divided by p, or in other words, $p|x−y$}
 
 \subsection{Show that for any integer x, x factors into at most log x primes. Hint: 2 is
 the smallest prime.}
+Possible counterexample based on the previous section?
 
 \subsection{ Let x be some positive integer and let p be a prime chosen uniformly at
 random from all primes less than or equal to m. Use the prime number theorem to
 show that the probability that $p|x$ is $O\left( log x)(log m)/m\right)$. }
+
+Let $X_i$ be an indicator variable saying 
+
+\[
+	X_i = I[X]
+  \begin{cases}
+	1 & \text{if prime factor } i \text{ of } x = p \\
+	0 & \text{if not } 
+  \end{cases}
+\]
+
+The probability of $X_{i,p}$ $\leq \frac{\frac{1}{m}}{\Theta log m} = \Theta
+\frac{log m}{m} $
+
 
 \subsection{ Now let x and y both be positive integers less than n and let p be a prime
 chosen uniformly at random from all primes less than or equal to m. Using the
@@ -394,9 +425,18 @@ Our problem has the following setup:
 	\item $n$ boxes
 	\item $\frac{n}{2}$ boxes have presents
 	\item Birthday paradox tells us that we need $\sqrt{n}$ pebbles to fit
-		$n$ boxes. 
+		$n$ bins. 
 \end{itemize}
 
-We have $n/2$ bins and 
+If we naively pick boxes in order, santa will obviously put the boxes in the
+last half of our 'box array'. if this is true, we will have to pick
+$\frac{n}{2} + 1$ boxes to get a gift. 
+
+Randomization helps us greatly here as Santa cannot account for our random
+choices. If we divide the array in half we can find a lower bound than $O(n)$
+for our number of opened boxes. 
+
+
+
 
 \end{document}
