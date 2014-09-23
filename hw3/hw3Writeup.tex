@@ -1,0 +1,284 @@
+%%%%%latex preamble%%%%%
+\documentclass[titlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+  \linewidth
+  \else
+  \Gin@nat@width
+  \fi
+}
+\makeatother
+
+
+\usepackage{listings}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{alltt}
+\usepackage[sc]{mathpazo}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=1.5cm,rmargin=1.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+  bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+{hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{tikz}
+ %changes default sectioning commands -> 1,a, etc.
+%\usepackage{breakurl}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+\renewcommand{\thesubsubsection}{\roman{subsection}.}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%%% Header and Footer %%% 
+\lhead{}
+\chead{\leftmark}
+\rhead{}
+\lfoot{Aaron Gonzales; Algorithms}
+\cfoot{Homework 2}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\begin{document}
+\title{Homework 2, CS561, Fall 2014}
+\author{Aaron Gonzales}
+\maketitle
+
+
+\section{Chip Testing }
+
+\begin{quote}
+\textbf{Professor Diogenes has $n$ supposedly identical integrated-circuit chips that
+in principle are capable of testing each other. The professor's test jib
+accommodates two chips at a time. When the jig is loaded, each chip tests the
+other and reports whether it is good or bad. A good chip always reports
+accurately whether the other chip is good or bad, but the professor cannot
+trust the answer of a bad chip. Thus the following possible outcomes of a test
+are as follows:}
+
+\begin{table}[h]
+  \begin{tabular}{lll}
+	\hline
+	\multicolumn{1}{|l|}{Chip A Says} & \multicolumn{1}{l|}{Chip B Says} & \multicolumn{1}{l|}{Conclusion} \\ \hline
+	B is good                         & A is good                        & both are good, or both are bad  \\ \hline
+	B is good                         & A is bad                         & at least one is bad             \\ \hline
+	B is bad                          & A is good                        & at least one is bad             \\ \hline
+	B is bad                          & A is bad                         & at least one is bad             \\ \hline
+	\end{tabular}
+  \end{table}
+
+\end{quote}
+
+
+\subsection{}
+  \begin{quote}
+\textbf{show that if more than $n/2$ chips are bad, the professor cannot
+	necessarily determine which chips are good using any strategy based on this
+	kind of pairwise test. Assume that the bad chips can conspire to fool the
+	professor. }
+  \end{quote}
+
+
+  \subsection{ }
+  \begin{quote}
+  \textbf{consider the problem of finding a signle good chip from among $n$ chips,
+	assuming that more than $n/2$ of the chips are good. Show that $\lfloor [n/2] \rfloor$ 
+	pairwise tests are sufficient to reduce the problem to one of nearly
+	half the size.}
+  \end{quote}
+
+  \subsection{}
+  \begin{quote}
+  \textbf{show that the good chips can be identified with $\Theta(n)$ pairwise tests,
+	assuming that more than $n/2$ chips are good. Give and solve the recurrence
+	that describes the number of tests. }
+  \end{quote}
+
+
+
+\section{Parenthesization }
+\textbf{
+  \begin{quote}
+	Show via induction that a full Parenthesization of an $n$ element expression
+	has exactly $n-1$ pairs of parenthesis. 
+  \end{quote}
+}
+
+\section{h trees }
+\begin{quote}
+\textbf{ An h-tree is a rooted binary tree that is useful for designing self-healing
+  networks (since they can be merged quickly). let $\ell$ be a postive integer.
+  For $\ell$ a power of 2, the complete tree with $\ell$ leaf nodes is the
+  unique h-tree with $\ell$ leaf nodes. For $\ell$ not a power of 2, a tree
+  with $\ell$ leaf nodes is an h-tree if and only if (1) the root node, $r$,
+  has two children; (2) the left subtree of $r$ is the root of a complete
+  binary containing $2^{\lfloor log \ell \rfloor}$ leaf nodes; and (3) the
+  right subtree of $r$ is an h-tree. Recall that a complete binary tree is one
+  where every internal node has two children and every leaf node has the same
+  depth. \\
+Show the following by indcution:}
+
+  \begin{enumerate}
+	\item\textbf{ For all postive $\ell$ there is an unique h-tree with $\ell $ leaf
+	  nodes.}
+	\item \textbf{Call the h-tree with $\ell$ leaf nodes h-tree$(\ell)$. Then, the
+	  height of h-tree$(\ell)$ is $\lceil log \ell \rceil$}.
+  \end{enumerate}
+\end{quote}
+
+\section{Parenthesization - again }
+\begin{quote}
+ \textbf{ Find the optimal Parenthesization for a matrix-chain product whose sequence
+  of dimensions is: $(3,2,4,1,2)$. (Don't forget to include the table used to
+computer your result.)}
+\end{quote}
+
+
+
+\section{A bakery }
+\begin{quote}
+  \textbf{A bakery sells donuts in boxes of three different quantities, $x_1, x_2,
+  x_3$. In the Donut Buying problem, you are given the numbers $x_1, x_2,
+x_3$, and an integer $n$ and you should return either }
+  \begin{enumerate}
+	\item \textbf{the minimum number of boxes needed to obtain exactly $n$ donuts if
+	this is possible, along with a set of boxes that obtains this minimum}
+	  \item ``DOH'' if it is not possible to obtain exactly $n$ donuts. 
+  \end{enumerate}
+  \textbf{For example, if $x+1 = 4, x_2 =6, x_3 = 9, \text{and } n=17$, then you should
+  return that 3 boxes suffices, with 2 boxes of size 4, and 1 box of size 9.
+  However, if n=11, you should return DOH! since it is not possible to buy
+exactly 11 donuts with these box sizes. }
+\end{quote}
+
+\subsection{For any positive $x$, let $m(x)$ be the minimum number of boxes
+  needed to buy $x$ donuts if this is possible, or INFINITY $\infty$
+  otherwise. Write a recurrence relation for the value of $m(x)$. Don't forget
+the base case(s)!}
+
+
+
+\subsection{ Give an efficient algorithm for solving Donut Buying. How does its
+  running time dpeend on $x_1, x_2, x_3,\text{ and } n$? Is it an algorithm
+that runs in polynomial time in the input sizes?} 
+
+
+
+
+\section{Problem 15-5 (2nd) / 15-7 (3rd) Viterbi Algorthm. }
+\begin{quote}
+  \textbf{Not in this problem, a label can appear on more than one edge in the graph
+  and can even appear on more than one edge leaving a given node in the graph.
+  \\
+  We can use dynamic programming on a directed graph $G = (V,E)$ for speech
+  recognition. Each edge $(u,v) \subset E$ is labeled with a sound
+  $\sigma(u,v)$ from a finite set $\Sigma$ of sounds. The labeldd graph is a
+  form odel of a person speaking a restricted language. Each path in the graph
+  starting from a distinguised vertex $v_0 \subset V$ corresponds to a possible
+  sequence of sounds produced by the model. We define the label of a directed
+path to be the concatenation of the labels of the edges on that path. }
+\end{quote}
+\subsection{ Describe an efficient algorithm that, given an edge-labeld graph
+  $G$ with distinguised vertex $v_0$ and a sequence $s = \langle \sigma_1,
+  \sigma_2, \dots, \sigma_k \rangle$ of sounds from $\Sigma$, returns a path in
+  $G$ that begins at $v_0$ and has $s$ as its label, if any such path exists.
+  Otherwise, the algorithm should return \textsc{no-such-path}. Analyze the
+  running time of your algorithm. (Hint: you may find conceps from Chapter 22
+useful.)}
+
+  \begin{quote}
+	\textbf{Now, suppose that every edge $(u,v) \subset E$ has an associated
+	nonnegative probabilty $(p(u,v)$ of traversing the edge $(u,v)$ from
+	vertex $u$ and thus producing the corresponding sound. The sum of the
+	probabilities of the edges leaving any vertex equas 1. The probabilty of
+	a path is defined to be the product of the probabilities of its edges. We
+	can view the problem of a path beginning at $v_0$ as the probabilty that a
+	``random walk'' beginning at $v_0$  will follow the specified path, where
+	we randomly choose which edge to take leaving a vertex  $u$ according to
+  the probabilities of the available edges leaving $u$. }
+	\subsection{Extend your answer to part (a) so that if a path is returned,
+	  it is a most probable path starting at $v_0$ and having label s. Analyze
+	the running time of your algorithm. }
+  \end{quote}
+
+
+
+
+
+\section{The Chicken Brothers} 
+\begin{quote}
+Gus wants to open franchises of his restuarant, Los Pollos Hermanos,
+along Central Avenue. There are $n$ possible locations for franchises where
+location $i$ is at mile $i$ on Central. Each location $i>1$, is thus a distance
+of 1 mile from the previous one. There are two rules.
+\begin{itemize}
+\item At each location there can be at most one restaurant, and the profit of a
+  restaurant at location $i$ is $p_i$. 
+  \item Any two restaurants must be at least 2 miles apart.
+\end{itemize}
+\end{quote}
+\subsection{ Jesse proposed the following algorithm: Sort the locations by
+  decreasing $p_i$ values, then greedily choose the next possible location,
+  provided that it doesn't conflict with previously choses locations. Show that
+Jesse's algorithm doesn't always give maximum profit.}
+
+
+
+\subsection{Now consider a dynamic programming approach to this problem. For
+  $i\geq 0 \text{let } m(i)$ be the maximum profit obtainable by using
+  locations 1 throught $i$. Write a recurrence relation for $m(i)$. Don't
+forget the base case(s).}
+
+
+\subsection{Describe how you would create a dynamic program using the previous
+recurrence. What is the run time of your algorithm?} 
+
+\subsection{now Gus wants to solve a generalization of the problem. There are
+  two changes. First, for $1 < i \leq n$, location $i$, is now distance $d_i$
+  from location $i-1$. Second, any two restaurants must now be distance $k$
+  appart for some parameter $k$. Write a new recurrence relation for this
+problem. Don't forget the base case(s).}
+
+
+
+\end{document}
