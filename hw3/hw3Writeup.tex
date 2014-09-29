@@ -13,6 +13,9 @@
 \makeatother
 
 
+\usepackage{fancybox}
+
+
 \usepackage{listings}
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -44,6 +47,14 @@
   tabsize=2,                       % sets default tabsize to 2 spaces
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
+\usepackage{tikz}
+\usetikzlibrary{external}
+\usetikzlibrary{through}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{plothandlers}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
 \usepackage{alltt}
 \usepackage[sc]{mathpazo}
 \usepackage{amsmath, amsthm, amssymb}
@@ -79,8 +90,28 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \rfoot{Page \thepage\ of \pageref{LastPage}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
+\usetikzlibrary{arrows}
+
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+	font=\sffamily},
+	arn_n/.style = {treenode, circle, white,
+		font=\sffamily\bfseries, draw=black,
+	fill=black, text width=1.5em},% arbre rouge noir, noeud
+	noir
+	arn_r/.style = {treenode, circle, red, draw=red, 
+	text width=1.5em, very thick},% arbre rouge
+	noir, noeud rouge
+	arn_x/.style = {treenode, rectangle,
+		draw=black,
+		minimum width=0.5em, minimum
+	height=0.5em}% arbre rouge noir, nil
+}
+
+
+
 \begin{document}
-\title{Homework 2, CS561, Fall 2014}
+\title{Homework 3 - dynamic programming and other such things, CS561, Fall 2014}
 \author{Aaron Gonzales}
 \maketitle
 
@@ -97,6 +128,7 @@ trust the answer of a bad chip. Thus the following possible outcomes of a test
 are as follows:}
 
 \begin{table}[h]
+\centering
   \begin{tabular}{lll}
 	\hline
 	\multicolumn{1}{|l|}{Chip A Says} & \multicolumn{1}{l|}{Chip B Says} & \multicolumn{1}{l|}{Conclusion} \\ \hline
@@ -117,7 +149,11 @@ are as follows:}
 	kind of pairwise test. Assume that the bad chips can conspire to fool the
 	professor. }
   \end{quote}
-
+\subsubsection{Answer}
+The key assumption here is that the bad chips can conspire to fool the professor.
+Here, let $B$ be the set of bad chips and $A$ be the set of good chips. Any
+pairwise test made by the professor will fail if the bad chips always decide to
+report a good chip as bad and their fellow bad chips as good. 
 
   \subsection{ }
   \begin{quote}
@@ -126,6 +162,9 @@ are as follows:}
 	pairwise tests are sufficient to reduce the problem to one of nearly
 	half the size.}
   \end{quote}
+
+  \subsubsection{Answer}
+
 
   \subsection{}
   \begin{quote}
@@ -166,6 +205,87 @@ Show the following by indcution:}
   \end{enumerate}
 \end{quote}
 
+\subsubsection{Answer}
+an h-tree has two base forms:
+
+
+\begin{center}
+%%%% l = 1 
+\ovalbox{
+\begin{tikzpicture}[level/.style={sibling distance=60mm/#1}]
+\node [circle,draw] (z){$root$}
+;
+\end{tikzpicture}}
+\\
+%%%% l = 2 
+\ovalbox{
+\begin{tikzpicture}[level/.style={sibling distance=60mm/#1}]
+\node [circle,draw] (z){$root$}
+  child {node [circle,draw] (a) {1} }
+  child {node [circle,draw] (b) {2} }
+;
+\end{tikzpicture}}
+
+%%%% l = 3
+\ovalbox{
+\begin{tikzpicture}[level/.style={sibling distance=60mm/#1}]
+\node [circle,draw] (z){$root$}
+  child {node [circle,draw] (a) {L}
+  	child {node [circle,draw] (aa) {1}}
+    child {node [circle,draw] (ab) {2}}
+  }
+  child {node [circle,draw] (b) {3} }
+;
+\end{tikzpicture}}
+
+%%%% l = 4
+\ovalbox{
+\begin{tikzpicture}[level/.style={sibling distance=60mm/#1}]
+\node [circle,draw] (z){$root$}
+  child {node [circle,draw] (a) {L}
+  	child {node [circle,draw] (aa) {1}}
+    child {node [circle,draw] (ab) {2}}
+  }
+  child {node [circle,draw] (b) {r} 
+  	child {node [circle,draw] (ba) {3}}
+    child {node [circle,draw] (bb) {4}}
+    }
+;
+\end{tikzpicture}}
+
+\ovalbox{
+\begin{tikzpicture}[level/.style={sibling distance=60mm/#1}]
+\node [circle,draw] (z){$root$}
+  child {node [circle,draw] (a) {L}
+  	child {node [circle,draw] (aa) {L}
+    	child {node[circle,draw] (aaa) {1}}
+		child {node[circle,draw] (aab) {2}}
+        }
+    child {node [circle,draw] (ab) {L}
+   		child {node[circle,draw] (baa) {3}}
+		child {node[circle,draw] (bab) {4}}
+    }
+  }
+  child {node [circle,draw] (b) {r} 
+  	child {node [circle,draw] (ba) {r}
+    	child {node[circle,draw] (bbb) {5}}
+        child {node[circle,draw] (bba) {6}}
+    }
+    child {node [circle,draw] (bb) {7}}
+    }
+;
+\end{tikzpicture}}
+\end{center}
+
+
+Proof by induction:
+\begin{proof}
+
+
+
+\end{proof}
+
+
 \section{Parenthesization - again }
 \begin{quote}
  \textbf{ Find the optimal Parenthesization for a matrix-chain product whose sequence
@@ -173,21 +293,71 @@ Show the following by indcution:}
 computer your result.)}
 \end{quote}
 
+First diagonal:
+\[ m_1 * m_2 = min \left( M(1,1) + m(2,2) + 24\right); k=1 \]
+\[ m_2 * m_3 = min \left( m(2,2) + m(3,3) + 8 \right); k=2 \]
+\[ m_3 * m_4 = min \left( m(3,3) + m(4,4) + 8 \right) k =3 \]
 
 
-\section{A bakery }
+Second Diagonal:
+
+\begin{align*}
+	m_1 * m_2;\, (i = 2, j=4)\, min =  \begin{cases} 
+				m(1,1) + m(2,3) + 6 \\
+				m(1,2) + m(3,3) + 24 \\ 
+			\end{cases} \\
+	m_1 * m_4 , (i=1, j=4)\, min = \begin{cases}
+				m(2,2) + m(3,4) + 2 \\
+				m(2,3) + m(4,4) + 24 \\
+			\end{cases} \\
+	m_1 * m_4, (i =1, j=4 )\, min = \begin{cases}
+				m(1,1) + m(2,4) + 12 \\
+				m(1,2) + m(3,4) + 24 \\
+				m(1,3) m(4,4) + 6  \\
+			\end{cases} \\
+\end{align*}
+
+tables:
+\begin{table}[h]
+	\caption{scalar values}
+	\label{tab:mylabel}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		0 & 24 & 14 & 20 \\ \hline
+		- & 0  & 8  & 24 \\ \hline
+		- & -  & 0  & 8  \\ \hline
+		- & -  &    & 0  \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[h]
+	\caption{k values}
+	\label{tab:kval}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		0 & 1 & 1 & 3 \\ \hline
+		- & 0  & 2  & 3 \\ \hline
+		- & -  & 0  & 3  \\ \hline
+		- & -  &    & 0  \\ \hline
+	\end{tabular}
+\end{table}
+
+final parentization:
+\[ \left( (m_1 (m_2 m_3)) m_4 \right)\]
+
+\section{Donut buying problem}
 \begin{quote}
-  \textbf{A bakery sells donuts in boxes of three different quantities, $x_1, x_2,
-  x_3$. In the Donut Buying problem, you are given the numbers $x_1, x_2,
-x_3$, and an integer $n$ and you should return either }
-  \begin{enumerate}
-	\item \textbf{the minimum number of boxes needed to obtain exactly $n$ donuts if
-	this is possible, along with a set of boxes that obtains this minimum}
-	  \item ``DOH'' if it is not possible to obtain exactly $n$ donuts. 
-  \end{enumerate}
-  \textbf{For example, if $x+1 = 4, x_2 =6, x_3 = 9, \text{and } n=17$, then you should
-  return that 3 boxes suffices, with 2 boxes of size 4, and 1 box of size 9.
-  However, if n=11, you should return DOH! since it is not possible to buy
+	\textbf{A bakery sells donuts in boxes of three different quantities, $x_1, x_2,
+		x_3$. In the Donut Buying problem, you are given the numbers $x_1, x_2,
+		x_3$, and an integer $n$ and you should return either }
+	\begin{enumerate}
+		\item \textbf{the minimum number of boxes needed to obtain exactly $n$ donuts if
+			this is possible, along with a set of boxes that obtains this minimum}
+		\item \textbf{``DOH'' if it is not possible to obtain exactly $n$ donuts. }
+	\end{enumerate}
+	\textbf{For example, if $x+1 = 4, x_2 =6, x_3 = 9, \text{and } n=17$, then you should
+	return that 3 boxes suffices, with 2 boxes of size 4, and 1 box of size 9.
+	However, if n=11, you should return DOH! since it is not possible to buy
 exactly 11 donuts with these box sizes. }
 \end{quote}
 
@@ -196,7 +366,10 @@ exactly 11 donuts with these box sizes. }
   otherwise. Write a recurrence relation for the value of $m(x)$. Don't forget
 the base case(s)!}
 
+Change making problem.
 
+possible relation = 
+\[ T(n) = T(n-x_3) + T(n-x_2) + T(n- x_1) \]
 
 \subsection{ Give an efficient algorithm for solving Donut Buying. How does its
   running time dpeend on $x_1, x_2, x_3,\text{ and } n$? Is it an algorithm
@@ -205,41 +378,50 @@ that runs in polynomial time in the input sizes?}
 
 
 
-\section{Problem 15-5 (2nd) / 15-7 (3rd) Viterbi Algorthm. }
+\section{Viterbi Algorthm}
+	\subsection{efficient algorithm}
 \begin{quote}
-  \textbf{Not in this problem, a label can appear on more than one edge in the graph
-  and can even appear on more than one edge leaving a given node in the graph.
-  \\
-  We can use dynamic programming on a directed graph $G = (V,E)$ for speech
-  recognition. Each edge $(u,v) \subset E$ is labeled with a sound
-  $\sigma(u,v)$ from a finite set $\Sigma$ of sounds. The labeldd graph is a
-  form odel of a person speaking a restricted language. Each path in the graph
-  starting from a distinguised vertex $v_0 \subset V$ corresponds to a possible
-  sequence of sounds produced by the model. We define the label of a directed
-path to be the concatenation of the labels of the edges on that path. }
+	\textbf{Note in this problem, a label can appear on more than one edge in the graph
+		and can even appear on more than one edge leaving a given node in the graph.
+		\\
+		We can use dynamic programming on a directed graph $G = (V,E)$ for speech
+		recognition. Each edge $(u,v) \subset E$ is labeled with a sound
+		$\sigma(u,v)$ from a finite set $\Sigma$ of sounds. The labeldd graph is a
+		form odel of a person speaking a restricted language. Each path in the graph
+		starting from a distinguised vertex $v_0 \subset V$ corresponds to a possible
+		sequence of sounds produced by the model. We define the label of a directed
+		path to be the concatenation of the labels of the edges on that path. 
+		Describe an efficient algorithm that, given an edge-labeld graph
+		$G$ with distinguised vertex $v_0$ and a sequence $s = \langle \sigma_1,
+		\sigma_2, \dots, \sigma_k \rangle$ of sounds from $\Sigma$, returns a path in
+		$G$ that begins at $v_0$ and has $s$ as its label, if any such path exists.
+		Otherwise, the algorithm should return \textsc{no-such-path}. Analyze the
+		running time of your algorithm. (Hint: you may find conceps from Chapter 22
+	useful.)}
 \end{quote}
-\subsection{ Describe an efficient algorithm that, given an edge-labeld graph
-  $G$ with distinguised vertex $v_0$ and a sequence $s = \langle \sigma_1,
-  \sigma_2, \dots, \sigma_k \rangle$ of sounds from $\Sigma$, returns a path in
-  $G$ that begins at $v_0$ and has $s$ as its label, if any such path exists.
-  Otherwise, the algorithm should return \textsc{no-such-path}. Analyze the
-  running time of your algorithm. (Hint: you may find conceps from Chapter 22
-useful.)}
 
-  \begin{quote}
+\subsubsection{Answer}
+Breadth-frist search to $v_0$, bfs on subgraph, etc.
+$O(|V|+|E|)$
+
+
+
+\subsection{Extending\dots}
+
+\begin{quote}
 	\textbf{Now, suppose that every edge $(u,v) \subset E$ has an associated
-	nonnegative probabilty $(p(u,v)$ of traversing the edge $(u,v)$ from
-	vertex $u$ and thus producing the corresponding sound. The sum of the
-	probabilities of the edges leaving any vertex equas 1. The probabilty of
-	a path is defined to be the product of the probabilities of its edges. We
-	can view the problem of a path beginning at $v_0$ as the probabilty that a
-	``random walk'' beginning at $v_0$  will follow the specified path, where
-	we randomly choose which edge to take leaving a vertex  $u$ according to
-  the probabilities of the available edges leaving $u$. }
-	\subsection{Extend your answer to part (a) so that if a path is returned,
-	  it is a most probable path starting at $v_0$ and having label s. Analyze
+		nonnegative probabilty $(p(u,v)$ of traversing the edge $(u,v)$ from
+		vertex $u$ and thus producing the corresponding sound. The sum of the
+		probabilities of the edges leaving any vertex equas 1. The probabilty of
+		a path is defined to be the product of the probabilities of its edges. We
+		can view the problem of a path beginning at $v_0$ as the probabilty that a
+		``random walk'' beginning at $v_0$  will follow the specified path, where
+		we randomly choose which edge to take leaving a vertex  $u$ according to
+		the probabilities of the available edges leaving $u$. 
+		Extend your answer to part (a) so that if a path is returned,
+		it is a most probable path starting at $v_0$ and having label s. Analyze
 	the running time of your algorithm. }
-  \end{quote}
+\end{quote}
 
 
 
