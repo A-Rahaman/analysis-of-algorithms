@@ -115,11 +115,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \vspace{7 cm}
 
 \begin{itemize}
-  \item Choose an activity that ends latest, discard all
-	conflicting activities and recurse
+  \item Choose an activity that conflicts with the fewest other activities,
+	  discard all conflicting activities and recurse
 \end{itemize}
 \subsubsection{answer:}
-\vspace{7 cm}
+\vspace{9 cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Weighted Activity Selection}
@@ -154,6 +154,7 @@ Drawn below:
   compatible with job $j$. Then when computing $m(j)$ consider that the optimal
 schedule could either include job $j$ or not include job $j$.}
 \end{quote}
+\subsubsection{Answer: }
 
 Let the set of scheduled items be $A = \{ a_1, \dots a_j\}$ and sort the
 items by finish time. 
@@ -177,7 +178,6 @@ $a_i \in A'$. We can define two cases for $a_n$:
   \[ m(j) = max \left( w(a_n + m(p(n)), m(n-1) \right) \]
 
 
-\subsubsection{Answer: }
 
 
 \section{chessboards}
@@ -258,12 +258,18 @@ If the number of items in the table before a resize is $\frac{3/4}n$ and after a
 in the new table is $\frac{3/4 *n}{2}$, and the free space in the new table is
 $\frac{5}{8} $, $3 * \frac{5}{8} \geq \frac{3}{4}$. 
 
-For the case of deletions, we can see that if a table is at most $3/4$ full adn
-we resize on the $1/4$ full step, we require $1/2$ deletions before resizing
-the table. taxing each deletion \$1 will pay for the reallocation of the
-elements in the new table, as $1/2 > 1/4$. 
+For the case of deletions, we can see that if a table is resized
+$1/4$ full step, taxing each deletion \$3 will pay for the reallocation of the
+elements in the new table. In our worst case, when we delete an item
+immeidately after resizing the table to handle an insertion expansion when the
+table is of size 4 -> 8 -> 4, if there are $3/8$ items in the new table and we
+delete 1, charging \$3, we halve the size of the table and reinsert the
+remaining two items, with the taxation operation covering the resize. In this
+worst-case, we only delete $1/8$ of the table before a contraction, but taxing
+\$3 $ 3* \frac{1}{8}$ is still enough money to cover the remaining
+$\frac{2}{8}$ items being resized into the smaller table.
 
-The amortized cost of any operation in the table is $O(3) = O(1)$.  
+The amortized cost of any operation in the table is $3 = O(1)$.  
 %\[ \sum_{i=0}^{log k}  \leq \sum_{i=0}^k \^]
 
 
