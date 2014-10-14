@@ -92,29 +92,34 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 	activity selection problem disdussed in class. For each algorithms, either
   prove or disprove that it constructs an optimal schedule. }
 \end{quote}
-\begin{enumerate}
+
+\begin{itemize}
   \item Choose an activity with shortest duration, discard all
 	conflicting activities and recurse
-\end{enumerate}
+\end{itemize}
 \subsubsection{answer:}
+\vspace{7 cm}
 
-\begin{enumerate}
+\begin{itemize}
   \item Choose an activity that starts first, discard all conflicting
 	activities and recurse
-\end{enumerate}
-
+\end{itemize}
 \subsubsection{answer:}
-\begin{enumerate}
+\vspace{9 cm}
+
+\begin{itemize}
   \item Choose an activity that ends latest, discard all conflicting
 	activities and recurse
-\end{enumerate}
-
+\end{itemize}
 \subsubsection{answer:}
-\begin{enumerate}
+\vspace{7 cm}
+
+\begin{itemize}
   \item Choose an activity that ends latest, discard all
 	conflicting activities and recurse
-\end{enumerate}
-\subsubsection{Answer:}
+\end{itemize}
+\subsubsection{answer:}
+\vspace{7 cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Weighted Activity Selection}
@@ -130,17 +135,47 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   activity that ends first and recurse - does not always return an optimal
 schedule for this problem}
 \subsubsection{Answer: }
+Drawn below:
+\vspace{7 cm}
 
 
-\subsection{Describe an algorithm to compute the optimal schedule in $O(n^2)$
-  time. Hint: 1) Sort the activities by finish times. 2) Let $m(j)$ be the
+\subsection{algorithm}
+  
+\begin{quote}
+  
+  \textbf{Describe an algorithm to compute the optimal schedule in $O(n^2)$
+  time. \\
+  Hint: 1) Sort the activities by finish times. 2) Let $m(j)$ be the
   maximum weight achievable from activites $a_1, a_2, \dots a_j$. 3) Come up
-  with a recursive formulation for $m(j)$ and use dynamic programming. Hint 2:
-  In the recursive formulation for $m(j)$ and use dynamic programming. Hint 2:
+  with a recursive formulation for $m(j)$ and use dynamic programming. \\
+  Hint 2:
   In the recursion in step 3, it'll help if you precompute for each job $j$ the
-  value $x_j$ which is the largest index $i < j$ such taht job $i$ is
+  value $x_j$ which is the largest index $i < j$ such that job $i$ is
   compatible with job $j$. Then when computing $m(j)$ consider that the optimal
-schedule could either include job $j$ or not include job $j$. }
+schedule could either include job $j$ or not include job $j$.}
+\end{quote}
+
+Let the set of scheduled items be $A = \{ a_1, \dots a_j\}$ and sort the
+items by finish time. 
+
+We know that an optimal solution can either contain an activity or not, and if
+we define $A'$ as the set of activities that make up $m(j)$ so 
+$a_i \in A'$. We can define two cases for $a_n$:
+
+  \begin{align*}
+	  \begin{cases}
+		  1: a_n \in A' \\
+		  2: a_n \text{not part of the optimal solution } 
+	  \end{cases}
+  \end{align*}
+
+  If $x_j$ is computed as stated in Hint 2 as $p(n)$, then if case 1 is true, then $A'$,
+  cannot contain any other activity with an index larger than $x_j$. If we have
+  case two, then we can can discard $a_n$ and go to $a_{n-1}$. 
+
+  To state it recursively, 
+  \[ m(j) = max \left( w(a_n + m(p(n)), m(n-1) \right) \]
+
 
 \subsubsection{Answer: }
 
@@ -170,27 +205,66 @@ schedule could either include job $j$ or not include job $j$. }
 \section{Hash Tables}
 \begin{quote}
   \textbf{Suppose we can insert or delete an element into a hash table in
-	$O(1)$ time. In order to ensure that our has h table is always big enough,
+	$O(1)$ time. In order to ensure that our hash table is always big enough,
 	without wasting a lot of memory, we will use the following global
   rebuilding rules:}
 \end{quote}
 
 \begin{itemize}
-  \item \textbf{After an insertion, if the table is more than 3/4 full, we
-	  allocate a new table twice as big as our current table, insert
-	everything into the new table, and then free the old table.}
-  \item \textbf{ after a deletion, if the table is less than 1/4 full, we
-	  allocate a new table half as big as our current table, insert
-	everythign into the new table, and then free the old table.}
+	\item \textbf{After an insertion, if the table is more than 3/4 full, we
+			allocate a new table twice as big as our current table, insert
+		everything into the new table, and then free the old table.}
+	\item \textbf{ after a deletion, if the table is less than 1/4 full, we
+			allocate a new table half as big as our current table, insert
+		everythign into the new table, and then free the old table.}
 \end{itemize}
 \begin{quote}
-  \textbf{Show that for any sequence of insertions and deletions, the
-	amortized time per operation is still $O(1)$. Hint: Do not use
-  potential functions.}
+	\textbf{Show that for any sequence of insertions and deletions, the
+		amortized time per operation is still $O(1)$. Hint: Do not use
+	potential functions.}
 \end{quote}
 
-\subsubsection{Answer: }
+\subsubsection{Answer:}
+On an insertion or deletion that triggers a resize operation, we know that the
+cost of that particular insertion or deletion will be more than constant time,
+as it involves re-inersting all of the previous $n'$ items (defining $n'$ as
+the number of items in the table of size $n$). A key observation here is that
+by expanding and contracting the table geometrically (each new table is either 
+twice as big and half as big as the table prior to the resize operation), for
+any series of $k$ operations, we will avoid resizing the table more than $log k$ 
+times. 
 
+If we define a taxation scheme on the operations, we can show that each
+insertion and deletion have amortized $O(1)$ time. 
+
+There are two cases to consider, insertions and deletions. We also assume that
+reallocating and deallocating the table is a single operation. If we tax an
+insertion \$3, we can see the scheme in action below:
+
+For a table of size $n=1$ , any insertion will automatically trigger a resize.
+if we charge this operation \$3, the reinsertion of the item into the new table
+will be covered by the extra \$2 stored in the bank and we will be left with 
+\$1 in the bank. Similarly, for the next insertion, it will automatically
+be taxed giving us \$3 in the bank, trigger a resize operation and its tax will
+pay for the reinsertion of both items into the new table, giving us \$1 in the
+bank. A new insertion charged on an insertion gives us \$3 in the bank, givin
+us enough to pay for the reinsertion of the items into the new table, and each
+of the remaining 3 insertions into the new table will give us a total of \$6,
+and with the number of items in the table = 6, this covers the resize
+operation. This continues, as the number of new insertions into the table after
+a resize gives us more money in the bank than number of itmes in the table. 
+
+If the number of items in the table before a resize is $\frac{3/4}n$ and after a resize
+in the new table is $\frac{3/4 *n}{2}$, and the free space in the new table is
+$\frac{5}{8} $, $3 * \frac{5}{8} \geq \frac{3}{4}$. 
+
+For the case of deletions, we can see that if a table is at most $3/4$ full adn
+we resize on the $1/4$ full step, we require $1/2$ deletions before resizing
+the table. taxing each deletion \$1 will pay for the reallocation of the
+elements in the new table, as $1/2 > 1/4$. 
+
+The amortized cost of any operation in the table is $O(3) = O(1)$.  
+%\[ \sum_{i=0}^{log k}  \leq \sum_{i=0}^k \^]
 
 
 \section{some random data structure}
@@ -201,12 +275,28 @@ For each of the following functions $f$, determine the resulting amortized cost
 of a single operation.}
 \end{quote}
 
-\begin{itemize}
+\begin{enumerate}
   \item \textbf{ $f(n) = n$ if n is a power of 2, and $f(n) = 1$ otherwise}
   \item \textbf{ $f(n) = n^2$ if n is a power of 2, and $f(n) = 1$ otherwise}
-\end{itemize}
+\end{enumerate}
 
 \subsubsection{Answer: }
+In case one, this is very similar to the hash table analysis from the lecture
+notes and lecture. For every n that is a power of two, we double the size of a
+hash table and insert all the items in the old table in to the new table. We've
+already determined that the amortized cost of a single insertion is $O(1)$ as
+the cost of n operations on the structure is $T(n)/n = 1$. 
+
+\[ \sum_{i=1}^n c_i \leq n + \sum_{j=0}^{\lfloor log n \rfloor} 2^j \]
+\[ < n + 2^{\lfloor log n \rfloor} +1 \]
+\[ = n + 2 * 2^{\lfloor log n \rfloor} \] 
+\[\leq n + 2n \]
+\[ = 3n \]
+
+Likeywise, for case two, if the same definition follows (From CLRS) that any
+sequence of $n$ operations on a structure takes $\leq T(n)$ time, the amortized
+time per operation is $T(n)/n$. In this case, $T(n^2)/n = n$ and our amortized
+cost of a single operation is $O(n)$. 
 
 
 \section{Extendable arrays}
@@ -229,7 +319,65 @@ of a single operation.}
   sequence.}
 \end{quote}
 
-\subsubsection{Answer: }
+\subsubsection{Answer:}
+This is a similar data structure as a double-ended queue, or dequeue, and the
+analysis will be somewhat similar to the hash table example from earlier. 
+
+Inside of our array-backed dequeue, we can have an array $A$ of size $n$, a pointer
+$A_h$ that points to the first spot in $A$, a pointer $V_{p_h}$ that points to
+the first \textit{item} in $A$, and a pointer $V_{p_t}$ that points to the last
+item in $A$. The key to this structure will be that the items inserted into $A$
+will not start at the actual front of $A$ but at a predefined spot where
+$V_{p_H}$ is within the limits of the array $A$. We can think of $V_{p_h},
+V_{p_t}$ as the virtual pointers that track the head and tail of the dequeue,
+and when the number of items $k$ in the dequeue reaches a certain threshold of
+$n$, we resize $A$. 
+
+To illustrate this, see Figure \ref{fig:deque} below.
+
+\begin{figure}
+	\label{fig:deque}
+
+\end{figure}
+An ADDTOFRONT operation into the deque puts the inserted item immediately left of
+$V_{p_h}$ and likewise, an ADDTOBACK operation puts the inserted item
+immediately right of $V_{p_t}$. Insertion into an array is $O(1)$ and likewise,
+lookup from an array is $O(1)$. A call to LOOKUP[0] (i.e, get the front of the
+queue) returns the value from $V_{p_h}$, a call to LOOKUP[i] returns the value
+at $V_{p_h}[a+i]$, where $a$ is the virtual pointer's current position.
+
+If the number of items in the dequeue $k$ ever reaches $ k \geq \frac{3/4}n$,
+OR we ever have $V_{p_h} = A_h$ or $V_{p_t} = A_t$ we trigger a resize
+operation and double the size of $A$, similarly to the hash table. In the new
+array, items from the deque are inserted into the ``middle'' of the new array
+$A$. We can define the beginning of the middle of $A$ as location
+$A\lceil sizeof(A)/3 \rceil $ and start re-inserting the previous items into that location,
+rebuilding the new backing array such that there is room at both the front
+and back of the new array. Note that operations to determine the new
+locations for beginning insertion are $O(1)$.
+
+Similarly, if the number of items in the deque after a deletion $k$ 
+ever reaches $ k \geq \frac{1/4}n$, we trigger a resize
+operation and halve the size of $A$. 
+
+As we saw in the previous problem, a taxation scheme of \$3 on each insertion
+and deletion operation will ensure that we have enough money in the bank for
+any operation $i$ that triggers a resizing of $A$. Note that turing this into a
+circular queue and only resizing when the current array is full works in a
+similar fashion. See the below diagram for an example of taxation and insertion
+in the worst case, where you always insert items into the front or rear of the
+new array.
+
+\begin{verbatim}
+                     _1_                $3  
+
+                    _1_ _               $2 > 1
+
+                _2_ _1_ _ _             $1 + $3 > 2
+
+          _ _ _ _2_ _1_ _x_ _y_ _z_     $2 + $9 > 5
+            
+\end{verbatim}
 
 \section{optimizing a data structure}
 \begin{quote}
@@ -250,6 +398,8 @@ of a single operation.}
 \end{quote}
 
 \subsubsection{Answer: }
+
+
 
 
 
