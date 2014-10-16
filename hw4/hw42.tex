@@ -1,0 +1,419 @@
+%%%%%latex preamble%%%%%
+\documentclass[titlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+  \linewidth
+  \else
+  \Gin@nat@width
+  \fi
+}
+\makeatother
+
+
+\usepackage{listings}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{alltt}
+\usepackage[sc]{mathpazo}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=1.5cm,rmargin=1.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+  bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+{hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{tikz}
+ %changes default sectioning commands -> 1,a, etc.
+%\usepackage{breakurl}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+\renewcommand{\thesubsubsection}{\roman{subsection}.}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%%% Header and Footer %%% 
+\lhead{}
+\chead{\leftmark}
+\rhead{}
+\lfoot{Aaron Gonzales; Algorithms}
+\cfoot{Homework 4}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\begin{document}
+
+\title{Homework 4 \\ CS561 Fall 2014}
+\author{Aaron Gonzales}
+\maketitle
+
+
+\section{Activity Selection}
+\begin{quote}
+  \textbf{ Consider the following alternative greedy algorithms for the
+	activity selection problem disdussed in class. For each algorithms, either
+  prove or disprove that it constructs an optimal schedule. }
+\end{quote}
+
+\begin{itemize}
+  \item Choose an activity with shortest duration, discard all
+	conflicting activities and recurse
+\end{itemize}
+\subsubsection{answer:}
+\vspace{7 cm}
+
+\begin{itemize}
+  \item Choose an activity that starts first, discard all conflicting
+	activities and recurse
+\end{itemize}
+\subsubsection{answer:}
+\vspace{9 cm}
+
+\begin{itemize}
+  \item Choose an activity that ends latest, discard all conflicting
+	activities and recurse
+\end{itemize}
+\subsubsection{answer:}
+\vspace{7 cm}
+
+\begin{itemize}
+  \item Choose an activity that conflicts with the fewest other activities,
+	  discard all conflicting activities and recurse
+\end{itemize}
+\subsubsection{answer:}
+\vspace{9 cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Weighted Activity Selection}
+\begin{quote}
+  \textbf{ Now consider a weighted version of the activity selection problem. Imagine
+	that each activity, $a_i$ has a \textit{weight}, $w(a_i)$ (weights are
+	totally unrelated to activity duration). Your goal is now to choose a set of
+	non coinciting activites that give you the largest possible sum of weights,
+  given an array of start times, end times, and values as input.}
+\end{quote}
+
+\subsection{Prove that the greedy algorithm described in class - Choose the
+  activity that ends first and recurse - does not always return an optimal
+schedule for this problem}
+\subsubsection{Answer: }
+Drawn below:
+\vspace{7 cm}
+
+
+\subsection{algorithm}
+  
+\begin{quote}
+  
+  \textbf{Describe an algorithm to compute the optimal schedule in $O(n^2)$
+  time. \\
+  Hint: 1) Sort the activities by finish times. 2) Let $m(j)$ be the
+  maximum weight achievable from activites $a_1, a_2, \dots a_j$. 3) Come up
+  with a recursive formulation for $m(j)$ and use dynamic programming. \\
+  Hint 2:
+  In the recursion in step 3, it'll help if you precompute for each job $j$ the
+  value $x_j$ which is the largest index $i < j$ such that job $i$ is
+  compatible with job $j$. Then when computing $m(j)$ consider that the optimal
+schedule could either include job $j$ or not include job $j$.}
+\end{quote}
+\subsubsection{Answer: }
+
+Let the set of scheduled items be $A = \{ a_1, \dots a_j\}$ and sort the
+items by finish time. 
+
+We know that an optimal solution can either contain an activity or not, and if
+we define $A'$ as the set of activities that make up $m(j)$ so 
+$a_i \in A'$. We can define two cases for $a_n$:
+
+  \begin{align*}
+	  \begin{cases}
+		  1: a_n \in A' \\
+		  2: a_n \text{not part of the optimal solution } 
+	  \end{cases}
+  \end{align*}
+
+  If $x_j$ is computed as stated in Hint 2 as $p(n)$, then if case 1 is true, then $A'$,
+  cannot contain any other activity with an index larger than $x_j$. If we have
+  case two, then we can can discard $a_n$ and go to $a_{n-1}$. 
+
+  To state it recursively, 
+  \[ m(j) = max \left( w(a_n + m(p(n)), m(n-1) \right) \]
+
+
+
+
+\section{chessboards}
+
+\begin{quote}
+  \textbf{Consider the following problem: \\
+	INPUT: Positive integers $r_1, \dots , r_n \text{and} c_1, \dots , c_n$. \\
+	OUTPUT: An $n$ by $n$ matrix $A$ with 0/1 entries such that for all $i$ the
+	sum of the ith row in A is $r_i$ and the sum of the ith column in A is
+	$c_i$ if such a matrix exists. \\
+	Think about the problem this way. You want to put pawns on an n by n
+	chessboard so that the ith row has $r_i$ pawns and the ith column has $c_i$
+	pawns. Consider the following greedy algorithm that constructs A row by
+	row. Assume that the first $i - 1$ rows have been constructed. Let $a_j$ be
+	the number of 1s in the jth column of in the first $i-1$ rows. Now the
+	$r_i$ columns with maximum $c_j - a_j$ are assigned 1s in row i and thre
+	rest of the columns are assigned 0s. That is, the columns that still need
+	the most 1s are given 1s. Formally prove that this algorithm is correct
+  using an exchange argument.}
+\end{quote}
+
+
+\subsubsection{Answer: }
+
+\section{Hash Tables}
+\begin{quote}
+  \textbf{Suppose we can insert or delete an element into a hash table in
+	$O(1)$ time. In order to ensure that our hash table is always big enough,
+	without wasting a lot of memory, we will use the following global
+  rebuilding rules:}
+\end{quote}
+
+\begin{itemize}
+	\item \textbf{After an insertion, if the table is more than 3/4 full, we
+			allocate a new table twice as big as our current table, insert
+		everything into the new table, and then free the old table.}
+	\item \textbf{ after a deletion, if the table is less than 1/4 full, we
+			allocate a new table half as big as our current table, insert
+		everythign into the new table, and then free the old table.}
+\end{itemize}
+\begin{quote}
+	\textbf{Show that for any sequence of insertions and deletions, the
+		amortized time per operation is still $O(1)$. Hint: Do not use
+	potential functions.}
+\end{quote}
+
+\subsubsection{Answer:}
+On an insertion or deletion that triggers a resize operation, we know that the
+cost of that particular insertion or deletion will be more than constant time,
+as it involves re-inersting all of the previous $n'$ items (defining $n'$ as
+the number of items in the table of size $n$). A key observation here is that
+by expanding and contracting the table geometrically (each new table is either 
+twice as big and half as big as the table prior to the resize operation), for
+any series of $k$ operations, we will avoid resizing the table more than $log k$ 
+times. 
+
+If we define a taxation scheme on the operations, we can show that each
+insertion and deletion have amortized $O(1)$ time. 
+
+There are two cases to consider, insertions and deletions. We also assume that
+reallocating and deallocating the table is a single operation. If we tax an
+insertion \$3, we can see the scheme in action below:
+
+For a table of size $n=1$ , any insertion will automatically trigger a resize.
+if we charge this operation \$3, the reinsertion of the item into the new table
+will be covered by the extra \$2 stored in the bank and we will be left with 
+\$1 in the bank. Similarly, for the next insertion, it will automatically
+be taxed giving us \$3 in the bank, trigger a resize operation and its tax will
+pay for the reinsertion of both items into the new table, giving us \$1 in the
+bank. A new insertion charged on an insertion gives us \$3 in the bank, givin
+us enough to pay for the reinsertion of the items into the new table, and each
+of the remaining 3 insertions into the new table will give us a total of \$6,
+and with the number of items in the table = 6, this covers the resize
+operation. This continues, as the number of new insertions into the table after
+a resize gives us more money in the bank than number of itmes in the table. 
+
+If the number of items in the table before a resize is $\frac{3/4}n$ and after a resize
+in the new table is $\frac{3/4 *n}{2}$, and the free space in the new table is
+$\frac{5}{8} $, $3 * \frac{5}{8} \geq \frac{3}{4}$. 
+
+For the case of deletions, we can see that if a table is resized
+$1/4$ full step, taxing each deletion \$3 will pay for the reallocation of the
+elements in the new table. In our worst case, when we delete an item
+immeidately after resizing the table to handle an insertion expansion when the
+table is of size 4 -> 8 -> 4, if there are $3/8$ items in the new table and we
+delete 1, charging \$3, we halve the size of the table and reinsert the
+remaining two items, with the taxation operation covering the resize. In this
+worst-case, we only delete $1/8$ of the table before a contraction, but taxing
+\$3 $ 3* \frac{1}{8}$ is still enough money to cover the remaining
+$\frac{2}{8}$ items being resized into the smaller table.
+
+The amortized cost of any operation in the table is $3 = O(1)$.  
+%\[ \sum_{i=0}^{log k}  \leq \sum_{i=0}^k \^]
+
+
+\section{some random data structure}
+\begin{quote}
+  \textbf{Suppose we are maintaining a data structure under a series of
+  operations. Let $f(n)$ denote the actual running time of the nth operation.
+For each of the following functions $f$, determine the resulting amortized cost
+of a single operation.}
+\end{quote}
+
+\begin{enumerate}
+  \item \textbf{ $f(n) = n$ if n is a power of 2, and $f(n) = 1$ otherwise}
+  \item \textbf{ $f(n) = n^2$ if n is a power of 2, and $f(n) = 1$ otherwise}
+\end{enumerate}
+
+\subsubsection{Answer: }
+In case one, this is very similar to the hash table analysis from the lecture
+notes and lecture. For every n that is a power of two, we double the size of a
+hash table and insert all the items in the old table in to the new table. We've
+already determined that the amortized cost of a single insertion is $O(1)$ as
+the cost of n operations on the structure is $T(n)/n = 1$. 
+
+\[ \sum_{i=1}^n c_i \leq n + \sum_{j=0}^{\lfloor log n \rfloor} 2^j \]
+\[ < n + 2^{\lfloor log n \rfloor} +1 \]
+\[ = n + 2 * 2^{\lfloor log n \rfloor} \] 
+\[\leq n + 2n \]
+\[ = 3n \]
+
+Likeywise, for case two, if the same definition follows (From CLRS) that any
+sequence of $n$ operations on a structure takes $\leq T(n)$ time, the amortized
+time per operation is $T(n)/n$. In this case, $T(n^2)/n = n$ and our amortized
+cost of a single operation is $O(n)$. 
+
+We can see below that the amortized cost of operations is indeed $O(n)$.
+\[ \sum_{i=1}^n c_i \leq n + \sum_{j=0}^{\lfloor log n \rfloor} (2^j)^2 \]
+\[ < n + 2^{ \lfloor 2log n \rfloor +1 }\]
+\[ = n + 2 * 2^{\lfloor 2 log n \rfloor} \] 
+\[\leq n + 2n^2 \]
+\[ = 1 + 2n \]
+
+
+\section{Extendable arrays}
+\begin{quote}
+  \textbf{An extendable array is a data structure that stores a sequence of
+  items and supports the following operations.}
+\end{quote}
+
+\begin{itemize}
+  \item \textbf{AddToFront(x) adds x to the beginning of the sequence.}
+  \item \textbf{AddToEnd(x) adds x to the end of the sequence.}
+  \item \textbf{LookUp(k) returns the kth item in the sequence or NULL if the
+	current length of the sequence is less than k. }
+\end{itemize}
+\begin{quote}
+  \textbf{Describe a simple data structre that implements an extendable array.
+	Your AddToFront and AddToBack algorithms should take $O(1)$ amortized time
+	and your LOOKUP algorithm should take $O(1)$ worst-case time. The data
+	structure should use $O(n)$ space, where n is the current length of the
+  sequence.}
+\end{quote}
+
+\subsubsection{Answer:}
+This is a similar data structure as a double-ended queue, or dequeue, and the
+analysis will be somewhat similar to the hash table example from earlier. 
+
+Inside of our array-backed dequeue, we can have an array $A$ of size $n$, a pointer
+$A_h$ that points to the first spot in $A$, a pointer $V_{p_h}$ that points to
+the first \textit{item} in $A$, and a pointer $V_{p_t}$ that points to the last
+item in $A$. The key to this structure will be that the items inserted into $A$
+will not start at the actual front of $A$ but at a predefined spot where
+$V_{p_H}$ is within the limits of the array $A$. We can think of $V_{p_h},
+V_{p_t}$ as the virtual pointers that track the head and tail of the dequeue,
+and when the number of items $k$ in the dequeue reaches a certain threshold of
+$n$, we resize $A$. 
+
+To illustrate this, see Figure \ref{fig:deque} below.
+
+\begin{figure}
+	\label{fig:deque}
+
+\end{figure}
+An ADDTOFRONT operation into the deque puts the inserted item immediately left of
+$V_{p_h}$ and likewise, an ADDTOBACK operation puts the inserted item
+immediately right of $V_{p_t}$. Insertion into an array is $O(1)$ and likewise,
+lookup from an array is $O(1)$. A call to LOOKUP[0] (i.e, get the front of the
+queue) returns the value from $V_{p_h}$, a call to LOOKUP[i] returns the value
+at $V_{p_h}[a+i]$, where $a$ is the virtual pointer's current position.
+
+If the number of items in the dequeue $k$ ever reaches $ k \geq \frac{3/4}n$,
+OR we ever have $V_{p_h} = A_h$ or $V_{p_t} = A_t$ we trigger a resize
+operation and double the size of $A$, similarly to the hash table. In the new
+array, items from the deque are inserted into the ``middle'' of the new array
+$A$. We can define the beginning of the middle of $A$ as location
+$A\lceil sizeof(A)/3 \rceil $ and start re-inserting the previous items into that location,
+rebuilding the new backing array such that there is room at both the front
+and back of the new array. Note that operations to determine the new
+locations for beginning insertion are $O(1)$.
+
+Similarly, if the number of items in the deque after a deletion $k$ 
+ever reaches $ k \geq \frac{1/4}n$, we trigger a resize
+operation and halve the size of $A$. 
+
+As we saw in the previous problem, a taxation scheme of \$3 on each insertion
+and deletion operation will ensure that we have enough money in the bank for
+any operation $i$ that triggers a resizing of $A$. Note that turing this into a
+circular queue and only resizing when the current array is full works in a
+similar fashion. See the below diagram for an example of taxation and insertion
+in the worst case, where you always insert items into the front or rear of the
+new array.
+
+\begin{verbatim}
+                     _1_                $3  
+
+                    _1_ _               $2 > 1
+
+                _2_ _1_ _ _             $1 + $3 > 2
+
+          _ _ _ _2_ _1_ _x_ _y_ _z_     $2 + $9 > 5
+            
+\end{verbatim}
+
+\section{optimizing a data structure}
+\begin{quote}
+  \textbf{Describe and analyze a data structure to support the following
+	operations on an array $A[1\dots n]$ as quickly as possible. Initially, $A[i]
+  = 0 \forall i$.}
+\end{quote}
+
+\begin{itemize}
+  \item \textbf{SetToOne(i) Given an index i such that $A[i] = 0$, set $A[i]$ to 1.}
+  \item \textbf{GetValue(i) Given an index i, return $A[i]$. }
+  \item \textbf{GetClosestRightZero(i) Given an index $i$, return the smallest
+	index $j \geq i$ such that $A[j] = 0$ or report that no such index exists.}
+\end{itemize}
+\begin{quote}
+  \textbf{The first two operations should run in worst-case constant time, and
+  the amortized cost of the third operation should be as small as possible.}
+\end{quote}
+
+\subsubsection{Answer: }
+
+
+
+
+
+\end{document}
