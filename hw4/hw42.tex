@@ -98,27 +98,36 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 	conflicting activities and recurse
 \end{itemize}
 \subsubsection{answer:}
-\vspace{7 cm}
+Counterexample: If there are three activites $(A, B, C) $ so that $A, C$ do not
+conflict with each other. If $B$ is shorter in duration than both $A, C$, $B$
+will get chosen when $A,C$ is the optimal selection.
 
 \begin{itemize}
   \item Choose an activity that starts first, discard all conflicting
 	activities and recurse
 \end{itemize}
 \subsubsection{answer:}
-\vspace{9 cm}
+Counterexample:
+If the activity that starts first ($a$)also ends after every other event (note that
+this can be any number of events $n > 1$ that don't overlap), then $a$ will get chosen and the
+optimal solution is in the set of other events.
 
 \begin{itemize}
   \item Choose an activity that ends latest, discard all conflicting
 	activities and recurse
 \end{itemize}
 \subsubsection{answer:}
-\vspace{7 cm}
+Counterexample:
+If the activity that ends latest $a$ also starts before every other activity
+where $n > 1$ that don't conflict. Clearly, the optimal solution is chosing
+from the set of non conflicting activities instead of $a$.
 
 \begin{itemize}
   \item Choose an activity that conflicts with the fewest other activities,
 	  discard all conflicting activities and recurse
 \end{itemize}
 \subsubsection{answer:}
+Easier to draw this out than describe it. 
 \vspace{9 cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,9 +144,12 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   activity that ends first and recurse - does not always return an optimal
 schedule for this problem}
 \subsubsection{Answer: }
-Drawn below:
-\vspace{7 cm}
+Counterexample:
 
+If there is one activity with the weight greater than the rest of the actvities
+combined that starts before any other activity (one or more ) and ends after
+all the rest of the activites, the any activity or combination of activities
+other than this one will get selected and this is not optimal.
 
 \subsection{algorithm}
   
@@ -195,17 +207,28 @@ $\{a_1, a_2, \dots, a_j$.
   \[ m(j) = max \left( v_j + m(x_j), m(x_{j-1}) \right) \]
 
 As in our dynamic programming section, we should take this recursion and store
-the calculated subproblems to get the optimal solution for the problem. 
+the calculated subproblems to get the optimal solution for the problem. Storing
+the results of each recursive step in a table and moving forward only
+requires $O(n^2)$ as we may have to move through the values twice if all
+activites are conflicting with other activities. With precomputed $x[j]$ values
+and sorted activties assumed, here is a possible implementation of the method.
 
 \begin{lstlisting}
-def WeightedActivitySelector(j):
+
+final_activites = []
+def max(j):
 	if j== 0:
 		W=[]
 		W.append(0]
 		return 0
-	if W[j] = 
-
-
+	if W[j] == None:
+		val_j = val_j + max(x[j])
+		val_i = max(x[j-1])
+		if val_j > val_i:
+			W[j] = val_j
+			final_activities.append(j)
+		else:
+			W[j] = val_i
 \end{lstlisting}
 
 
@@ -441,7 +464,20 @@ new array.
 \end{quote}
 
 \subsubsection{Answer: }
+In class and in CLRS, we discussed the Union-Find data structure and determined
+that over a sequence of $n$ operations, Union-Find has $O(n lg^* n)$
+operations. By previous analysis, we show that any sequence of $n$ operations
+on a structure takes $\leq T(n)$ time, the amortized time per operation is
+$T(n)/n$. In this case, $T(n lg^* n)/n = n$ for all reasonable input sizes
+(e.g, $log^* 2^{65536} = 5$ and our amortized cost of an operation is essentially 
+$O(1)$. 
+If we can represent our problem in such a way that we can use a union-find
+operation to get the closest right zero, we can give all operations for this
+structure as $O(1)$ as discussed above. 
 
+A tree can be represented in memory as an array. Suppose we have our array of
+integers $\{ 0, 1\}$ $A$ such that an parent array $P[]$ has the property that
+$P[i]$ is the element that is the parent of element $i$.  
 
 
 

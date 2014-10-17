@@ -170,14 +170,31 @@ $a_i \in A'$. We can define two cases for $a_n$:
 	  \end{cases}
   \end{align*}
 
+
   If $x_j$ is computed as stated in Hint 2 as $p(n)$, then if case 1 is true, then $A'$,
   cannot contain any other activity with an index larger than $x_j$. If we have
   case two, then we can can discard $a_n$ and go to $a_{n-1}$. 
 
-  To state it recursively, 
-  \[ m(j) = max \left( w(a_n + m(p(n)), m(n-1) \right) \]
+Let $w_i$ = weight at $ith$ job. 
+let $x_j = $ largest index $i < j $ such that job $i$ doesn't conflict with
+$j$. 
+let $m(j)$ be the function that returns the maximum of value from a set of
+activities
+$\{a_1, a_2, \dots, a_j$. 
+	Let $W[]$ be the array with the optimal set of activities. 
+
+  We ultimatly want to compute $W(i) = \{ 1,2,\dotsi\}, 0
+  \leq i < n$, with the last element being the largest weight we can get from
+  activites is $W(n)$. 
+  
+  If $1\leq i < n$ and 
+  recursively, $m(j)$  is:
 
 
+  \[ m(j) = max \left( v_j + m(x_j), m(x_{j-1}) \right) \]
+
+As in our dynamic programming section, we should take this recursion and store
+the calculated subproblems to get the optimal solution for the problem. 
 
 
 \section{chessboards}
