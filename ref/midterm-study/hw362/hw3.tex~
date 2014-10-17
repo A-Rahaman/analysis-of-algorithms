@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\input{preamble}
+  
+%\newcommand{\ans}[1]{\emph{Solution: #1}}
+
+\newcommand{\ans}[1]{}
+
+\begin{document}
+
+\title{CS 362, HW3}
+
+\author {Prof. Jared Saia, University of New Mexico}
+
+\date{\emph{Due: October 12th, 2003}}
+\maketitle
+
+\begin{enumerate}
+
+%\item Exercise 16.1-1
+
+\item Exercise 16.1-2
+
+\item Exercise 16.1-4
+
+\item Exercise 16.2-3
+
+%\item Exercise 16.2-4
+
+\item Exercise 16.2-5
+
+\item Exercise 17.1-1
+
+\item Exercise 17.1-2
+
+\item Exercise 17.1-3
+
+%\item Exercise 17.2-2
+
+\item Exercise 17.2-3
+
+\item Exercise 17.3-2
+
+\item Exercise 17.3-7 - Make sure you \emph{prove} that your data
+structure takes $O(m)$ time on any sequence of $m$ operations.  Hint
+for this problem: recall that you can find the median of a set of $n$
+numbers in $O(n)$ time (see Chapter 9)
+
+%\item Exercise 17.4-3
+
+\item Extra Credit: Problem 16-1
+
+\item Extra Credit Problem 17-2
+
+\end{enumerate}
+
+\end{document}
+
+% \item Exercise 16.2-2 (hint: reread the second to last paragraph on p. 382)
+
+
+% \item Exercise 16.2-3
+

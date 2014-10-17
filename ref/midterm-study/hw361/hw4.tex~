@@ -1,0 +1,84 @@
+\documentclass[11pt]{article}
+\input{preamble}
+  
+%\newcommand{\ans}[1]{\emph{Solution: #1}}
+
+\newcommand{\ans}[1]{}
+
+\begin{document}
+
+\title{CS 461, HW2}
+
+\author {Prof. Jared Saia, University of New Mexico}
+
+\date{\emph{Due: February 17th, 2004}}
+\maketitle
+
+\begin{enumerate}
+
+\item 
+Consider the recurrence $T (n) = 2T (n/4) + n^{2}$
+\begin{enumerate}
+\item Use the recursion tree method to get a tight upper bound
+(i.e. big-O) on the solution to this recurrence
+\item Now use annihilators (and a transformation) to get a tight upper
+bound on the solution to this recurrence.  Show your work.  (Note that
+your two bounds should match)
+\end{enumerate}
+
+\item 
+Consider the recurrence $T (n) = 2T (n/2) + \log^{2} n$
+\begin{enumerate}
+\item Use the Master method to get a general solution to this
+recurrence.
+\item Now use annihilators (and a transformation) to get a tight upper
+bound on the solution to this recurrence.  Show your work.  (Note that
+your two bounds should match)
+\end{enumerate}
+
+\item Consider the following function:
+\begin{verbatim}
+int f (int n){
+  if (n==0) return 0;
+  else if (n==1) return 1;
+  else{
+    int val = 6*f (n-1);
+    val = val - 9*f (n-2);
+    return val;
+  }
+}
+\end{verbatim}
+
+\begin{enumerate}
+\item Write a recurrence relation for the \emph{value} returned by
+$f$.  Solve the recurrence exactly.  (Don't forget to check it)
+\item Write a recurrence relation for the \emph{running time} of $f$.
+Get a tight upperbound (i.e. big-O) on the solution to this
+recurrence. 
+\end{enumerate}
+
+
+\item Consider the following function:
+\begin{verbatim}
+int f (int n){
+  if (n==0) return 0;
+  else if (n==1) return 1;
+  else{
+    int val = 4*f (n-1);
+    val = val - 4*f (n-2);
+    return val;
+  }
+}
+\end{verbatim}
+
+\begin{enumerate}
+\item Write a recurrence relation for the \emph{value} returned by
+$f$.  Solve the recurrence exactly.  (Don't forget to check it)
+\item Write a recurrence relation for the \emph{running time} of $f$.
+Get a tight upperbound (i.e. big-O) on the solution to this
+recurrence. 
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}

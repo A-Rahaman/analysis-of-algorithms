@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+\input{preamble}
+  
+%\newcommand{\ans}[1]{\emph{Solution: #1}}
+
+\newcommand{\ans}[1]{}
+
+\begin{document}
+
+\title{CS 362, HW5}
+
+\author {Prof. Jared Saia, University of New Mexico}
+
+\date{\emph{Due: November 23rd}}
+\maketitle
+
+\emph{``Our greatest weariness comes from work not done'' - Eric Hoffer} \\
+
+\begin{enumerate}
+
+%sqr of graph
+%\item Exercise 22.1-5 
+
+%linear alg to determine if graph is bipartite
+\item Exercise 22.2-6 (note: this type of graph is called bipartite)
+
+%compute a path that traverses each edge in E exactly once in each direction
+\item Exercise 22.2-8 (hint: Compute the BFS tree and think about how
+you can handle the tree edges.  Now figure out how you can also handle
+the edges that are not in the BFS tree)
+
+%how can vertex u wind up in dfs tree itself even with incoming and
+%outgoing edges
+%\item Exercise 22.3-10
+
+\item Exercise 24.1-1
+
+\item Exercise 24.3-1
+
+%\item Prove Claim 1 made about GenericSSSP in Lecture 20
+
+\item Prove Claim 2 made about GenericSSSP in Lecture 20.  Let $l$ be
+the number of edges in the path.  Your goal is to show that: ``For all
+$l\geq 0$, if any path $s \leadsto v$ has $l$ edges then $dist(v) \leq
+w(s \leadsto v)$ when the algorithm halts''.  Do this by induction on
+$l$.  Show the base case (i.e. the goal holds when $l=0$).  Write down
+the inductive hypothesis (i.e. for all $j<l$, \dots ) and then show
+the inductive step.
+%\item Exercise 24.3-2
+
+\item Exercise 24.3-6 (hint: review the solutions from the last hw)
+
+\item Extra Credit: Problem 22-3
+
+%Arbitrage
+\item Extra Credit: Problem 24-3
+
+
+\end{enumerate}
+
+\end{document}
+
+% \item Exercise 16.2-2 (hint: reread the second to last paragraph on p. 382)
+
+
+% \item Exercise 16.2-3
+

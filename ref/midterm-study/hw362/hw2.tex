@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+\input{preamble}
+  
+%\newcommand{\ans}[1]{\emph{Solution: #1}}
+
+\newcommand{\ans}[1]{}
+
+\begin{document}
+
+\title{CS 362, HW2}
+
+\author {Prof. Jared Saia, University of New Mexico}
+
+\date{\emph{Due: February 16th}}
+\maketitle
+
+If you have an older version of the book, check with a friend to make
+sure you get the right numbers for exercises (the numbers are
+different for the first and second editions)
+
+\begin{enumerate}
+
+\item 
+Consider the recurrence $T (n) = 2T (n/3) + n^{2}$
+\begin{enumerate}
+\item Use the recursion tree method to get a tight upper bound
+(i.e. big-O) on the solution to this recurrence
+\item Now use annihilators (and a transformation) to get a tight upper
+bound on the solution to this recurrence.  Show your work.  (Note that
+your two bounds should match)
+\end{enumerate}
+
+\item 
+Consider the recurrence $T (n) = 2T (n/2) + \log^{2} n$
+\begin{enumerate}
+\item Use the Master method to get a general solution to this
+recurrence.
+\item Now use annihilators (and a transformation) to get a tight upper
+bound on the solution to this recurrence.  Show your work.  (Note that
+your two bounds should match)
+\end{enumerate}
+
+\item Consider the following function:
+\begin{verbatim}
+int f (int n){
+  if (n==0) return 3;
+  else if (n==1) return 5;
+  else{
+    int val = 2*f (n-1);
+    val = val - f (n-2);
+    return val;
+  }
+}
+\end{verbatim}
+
+\begin{enumerate}
+\item Write a recurrence relation for the \emph{value} returned by
+$f$.  Solve the recurrence exactly.  (Don't forget to check it)
+\item Write a recurrence relation for the \emph{running time} of $f$.
+Get a tight upperbound (i.e. big-O) on the solution to this
+recurrence. 
+\end{enumerate}
+
+\item Give the table for the optimal string alignment of the strings
+``abbbaa'' and ``ababbab''.  Make sure you include arrows in your
+table the same way we did in the table given in lecture, these arrows
+will help you reconstruct the solution.  List all optimal alignments
+of these two strings.
+
+\item Find the optimal parenthesization for a matrix-chain product
+whose sequence of dimensions is: $(2,3,2,2,1)$.  (Don't forget to
+include the table used to compute your result)
+
+\item Exercise 15.2-3
+
+\item Exercise 15.2-5 (hint: use proof by induction)
+
+\item Exercise 15.4-1
+
+\item Exercise 15.4-5 (note: monotonically increasing means
+non-decreasing, e.g. 1, 2, 2, 4, 5, 5, 7)
+
+\item Extra Credit: Exercise 15.4-6
+
+\item Extra Credit: Problem 15-2
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,272 @@
+%\newcommand{\ans}[1]{}
+\documentclass[11pt]{article}
+\usepackage{fullpage,pst-all,epsfig}
+
+\newcommand{\comment}[1]{}
+\newcommand{\Le}{\textbf{L}}
+
+\newcommand{\ans}[1]{\emph{Solution: #1}}
+%\newcommand{\ans}[1]{}
+
+\newcommand{\seq}[1]{ \langle #1,\cdots \, \rangle}
+\newcommand{\seqi}[1]{ \langle #1 \rangle}
+	
+	
+\newcommand{\vC}{{\bf C}}
+	
+	
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+\def\handout{Midterm Examination}
+\vspace*{-.75in}
+{\large University of New Mexico}\\
+{\large Department of Computer Science}\\
+\vspace*{0.5in}
+{\LARGE {\bf \handout}}\\
+\vspace*{0.1in}
+{\large CS 561 Data Structures and Algorithms}\\
+{\large Fall, 2010}\\ [0.3in]
+\end{center}
+ 
+\vfill
+
+\makeatletter
+\long\def\hint#1{({\em Hint\/}: #1)}
+% \def\@oddhead{\rm\makebox[0in][l]{CS 461 Midterm ---Fall,
+% 2003}\hfil\thepage\hfil\makebox[0in][r]{Name:\rule[-0.1in]{2in}{.5pt}}}
+\let\@evenhead\@oddhead
+\def\@oddfoot{}
+\let\@evenfoot\@oddfoot
+
+\def\problem#1{\def\problemheading{#1}\clearpage\item{\bf #1}}
+
+% Comment out the above 'problem' def and use the one below to get
+% all the problems on a single page, instead of page break each time.
+%\def\problem#1{\def\problemheading{#1}\item{\bf #1}}
+
+\def\extrapage{\addtocounter{enumi}{-1}\clearpage\item{\bf \problemheading, continued.}}
+
+\let\part\item
+\renewcommand{\theenumii}{\alph{enumii}}
+\makeatother
+\parindent 0pt
+
+\vfill
+\centerline{
+\Large
+\begin{tabular}{|l|}  \hline
+Name: \hspace*{2in} \\ \hline
+Email: \hspace*{2in}\\ \hline
+\end{tabular}
+}
+\vfill
+
+\hrule
+\begin{itemize}
+
+\item \emph{``Nothing is true.  All is permitted''} - Friedrich Nietzsche.  Well, not exactly.  \emph{\bf{You are not permitted to discuss this exam with any other person.}}  If you do so, you will surely be smitten: collusion on any problem will result in a $0$ on the entire exam.  However, you may consult any non-human sources including books, papers, web pages, computational devices, animal entrails, seraphim, cherubim, etc. in your quest for truth and solutions.  Please acknowledge your sources.
+
+\item {\em Show your work!}  You will not get full credit if we cannot figure out how you arrived at your answer.  A numerical solution obtained via a computer program is unlikely to get much credit, if any, without a correct mathematical derivation.
+
+\item Write your solution in the space provided for the corresponding problem.
+
+\item If any question is unclear, ask for clarification.
+
+\end{itemize}
+\hrule
+\vfill
+\centerline{
+\Large
+\begin{tabular}{|c|c|c|c|}  \hline
+Question & Points & Score & Grader \\  \hline\hline
+1 & 25 & & \\  \hline
+2 & 25 & & \\  \hline
+3 & 25 & & \\  \hline
+4 & 25 & & \\  \hline
+\hline Total & 100 & & \\  \hline
+\end{tabular}
+}
+\vfill
+
+\newpage
+
+\begin{enumerate}
+ 
+ 
+ \problem{Recurrences}
+ 
+ Remember that when the base case for a recurrence is not explicitly given, assume that it is constant for inputs of constant size.
+ 
+ \begin{enumerate}
+ 
+ \item (4 points) Solve the following recurrence using annihilators: $f(n) = 3f(n-1) - 2f(n-2) + n$.  Do not solve for the constant coefficients
+\ans{$(L^{2}-3L+2) = (L-2)(L-1)$ annihilates the homogeneous part and $(L-1)^{2}$ annihilates the non-homogeneous part.  So the annihilator is $(L-2)(L-1)^{3}$ and hence the solution is $(c_{1}2^{n} + c_{2} n^{2} + c_{3}n + c_{4})$}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+\item (4 points) Solve the following recurrence using a transformation and the Master method: $f(n) = 4f(\sqrt{n}) + \log n$.  Do not solve for the constant coefficients.  If an algorithms runtime is given by this recurrence, how would it compare with algorithms with runtimes of $\theta(2^{n})$, $\theta(n)$, $\theta(\sqrt{n})$, $\theta(\log n)$?
+
+ \ans{Let $2^{i}=n$ and $F(i) = f(2^{i})$.  Then we get a transformed recurrence: $F(i) = 4F(i/2) + i$.  Using the Master method, we can see that the solution to this is $F(i) = \theta(i^{2})$ (the leaf nodes dominate).   
+  Reverse transforming this solution, and using the fact that $i = \lg n$ we get  
+ $f(n) = \log^{2} n $.  This runtime is better than $\log n$ but worse than the other runtimes.}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+\pagebreak
+
+ 
+ How many ways can you tile a $n$ by $1$ rectangle if you have an infinite supply of dominoes of size $x$ by $1$ for each $x$, $1 \leq x \leq n$?  Assume dominoes of the same size are indistinguishable.
+ 
+ \item (4 points) Let $f(n)$ be the number of unique tilings of a $n$ by $1$ rectangle.  Write a recurrence relation for $f(n)$.  Include the base case(s).
+ \ans{$f(n) = \sum_{i=0}^{n} f(i)$, $f(0) = 1$.} \\ \ \\ \ \\ \ \\
+ 
+ \item (5 points) Now guess an exact solution for this recurrence relation and prove your solution is correct using proof by induction.
+\ans{The solution is $f(n) = 2^{n-1}$ for all $n \geq 1$.\\ B.C.:  $f(1) = 1 = 2^{0}$ \\ I.H.: $\forall_{1 \leq j < n} f(j) = 2^{j-1}$.\\  I.S.: $f(n) = \sum_{i=1}^{n} f(i) =  \sum_{i=1}^{n-1} 2^{i-1} + 1 = 2^{n-1}$, where the second to last step holds through repeated application of the I.H.}  
+
+\pagebreak
+
+\item (8 points) Now what if the dominoes can be red or black?  Write down the recurrence, and an inductive proof of the solution.
+\ans{$f(0) = 1$, For $n>0$, $f(n) = 2 \sum_{i=0}^{n-1} f(i)$.  The solution to this is $f(0) = 1$, and for $n \geq 1$, $f(n) = 2*3^{n-1}$. 
+B.C.: $f(1) = 2*f(0) = 2 = 2*3^{0}$\\
+I.H.: $\forall_{1 \leq j < n} f(j) = 2*3^{j-1}$\\
+I.S.: $f(n) = 2 \sum_{i=0}^{n-1} f(i) = 2 (1 + \sum_{i=1}^{n-1} 2*3^{i-1})$ by the I.H.  This last step is $2 + 4\sum_{i=0}^{n-2} 3^{i} = 2 + 2*3^{n-1} - 2 = 2*3^{n-1} $}
+
+
+ \end{enumerate}
+
+ 
+ \problem{Probability}
+ 
+ The following two problems are similar to a problem in homework $1$, although note that the cards now have an additional attribute.
+ 
+ Imagine a card game where each card has $4$ attributes: number, shape, color and shading; and each attribute has three possible values: number is $1$, $2$ or $3$; shape is circle, square or triangle; color is red, green or blue; and shading is none, dashed or solid.  Each card in the deck is unique, so there is a total of $3*3*3*3 = 81$ cards.
+ 
+ A \emph{match} is a set of $3$ cards where for each of the $4$ attributes, the $3$ cards either all have the same value for that attribute, or they all have different values for that attribute.  For example the following set of cards is a match: ($1$, circle, red, none), ($2$, square, red, dashed), ($3$, triangle, red, solid)
+ 
+ \begin{enumerate}
+ \item (4 points) If I lay out $n$ cards on a table where $n \leq 81$, what is the expected number of sets of $3$ cards that will form matches?  Show that your answer makes sense for the boundary conditions ($n=3$ and $n=81$)?
+ \ans{The probability that a set of $3$ cards form a match is $1/79$.  To see this, note that if the first two cards are fixed, there is exactly one card in the remaining deck that will complete the match.  If there are $n$ cards on the table, there are exactly $n \choose 3$ possible sets, so by linearity of expectation, the expected number of matches is ${n \choose 3}*(1/79)$.  When $n=3$, this predicts the correct expected number. When all cards are on the table, $n=81$, this predicts ${81 \choose 3}*(1/79) = {81 \choose 2}/3$.  This makes sense since any pair of cards on the table will form a match with another card, and this match will be counted $3$ times if we iterate over all pairs.}
+  \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+ 
+ \item (4 points) Now, use Markov's inequality to bound the probability that there are at least $k$ matches for any $k$, when $n$ cards are laid on the table.  In particular, what does this say about the probability that there is at least one match?
+ 
+ \ans{Let $X$ be a random variable giving the number of matches on the table.  Then by Markov's we know that $Pr(X \geq k) \leq E(X)/k$ or in other words,  $Pr(X \geq 1) \leq {n \choose 3}*(1/k*79)$}
+ 
+ 
+ \pagebreak
+ 
+ Consider a wireless network consisting of $n^{2}$ nodes laid out on a $n$ by $n$ grid.  A pair of nodes are said to be \emph{neighbors} if they are immediately adjacent either horizontally or vertically on the grid (thus a node has at most $4$ neighbors).  For some number $\ell$, each node chooses a channel uniformly at random from $1$ to $\ell$.  Two nodes are said to \emph{collide} if they are neighbors and they have both chosen the same channel.
+ 
+ Note: The events that collisions occur are \emph{not} independent.  In particular, consider 4 nodes on a square: a and b on the left and c and d on the right.   If a and b, b and c, and c and d collide, then a and d {\bf must} collide.
+ 
+ \item (6 points) Use a union bound to get an upperbound on the probability that there are \emph{any} collisions.  How large must $\ell$ be to ensure that this probability is less than $1/2$?
+ \ans{Each edge gives a collision with probability $1/\ell$.  The total number of edges is $2n(n-1)$.  Thus the probability there is no collision is at most $2n(n-1)/\ell$ and $\ell$ must be greater than $4n(n-1)$ to get a probability less than $1/2$}
+  \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+ 
+ \item (5 points) Now use Markov's inequality to bound the probability that $n$ pairs of nodes collide.
+ \ans{By linearity of expectation, the expected number of collisions is $2n(n-1)/\ell$.  Let $X$ be a random variable giving the number of collisions.  By Markov's, $Pr(X \geq n) \leq 2(n-1)/\ell$.}
+ 
+ \pagebreak
+ 
+ \item (6 points) Imagine that the purpose of the wireless network is to convey messages from the top to bottom where the same message is sent redundantly along each column; and to convey messages from left to right, where the same message is sent redundantly along each row.  Thus, we want to ensure that there is some column where each pair of neighboring nodes in that column does not collide, and some row with the same property.  Using your work from above, determine how large $\ell$ must be to ensure that this property holds with probability at least $9/10$.  (Remember: the collisions are \emph{not} independent!)\\
+\ans{To ensure this property, it suffices that the random variable $X$ from above is less than $n$.  By the previous answer,  $Pr(X \geq n) \leq 2(n-1)/\ell$, so $Pr(X < n) \geq 1- 2(n-1)/\ell$.  Setting $\ell = 20(n-1)$ gives the desired result.}
+
+\end{enumerate}
+
+ 
+ \problem{Data Structures}
+ 
+ \begin{enumerate}
+ 
+Your colleague wants to change the rules of red-black trees to the following:
+ \begin{itemize}
+\item The root node must be red
+\item All other nodes, including leaf nodes (NIL) can be either red or black
+\item If a node is red and not a leaf node, both of its children are black
+\item If a node is black and not a leaf node, both of its children are red
+\item For each node, all paths from the node to descendant leaves contain the same number of black nodes
+\end{itemize}
+\item (6 points) Is it possible to use these rules to create a balanced BST data structure?  If so, sketch your solution.  If not, show how things can go wrong with a minimum size counter-example.
+ 
+ \ans{This fails.  Consider a tree of size $n=4$.  There is no way to color it to satisfy the first three rules without violating the fourth one.  Note I wound up throwing out this problem because the original specifications were incomplete.}
+ 
+ \pagebreak
+
+\item (5 points) Your boss wants to create the following data structure in the comparison model and to name it after himself, the \emph{Merkle}.  A Merkle has the following operations and properties on it.  BuildMerkle takes an arbitrary array and builds a Merkle from it in $O(n)$ time.  The resulting Merkle will provide the following operations.  FindMin (resp. FindMax) will return the minimum (resp. maximum) element and run in $O(\log n)$ time.  Successor(x) (resp. Predecessor(x)) return the next largest (resp. smallest) element in the Merkle after the element $x$, and both of these operations run in $O(1)$ time.  Intuitively, your boss wants you to combine the nice properties of the heap with the nice properties of a data structure like skip lists.  Can you immortalize your boss's name in CS textbooks by creating this data structure?
+
+\ans{No.  This would allow sorting in $O(n)$ time.  To show this, first build the Merkle from an unsorted array, then find the minimum element and keep calling successor}
+
+
+
+\pagebreak
+
+In this problem, you will modify count-min sketches so that they handle negative counts.  As in class, assume you are presented with a stream of tuples of the form $(i_{t},c_{t})$, except now $c_{t}$ may be either a negative or positive integer.  The data structure you will use will consist of two count-min sketches, a positive count-min sketch for positive counts and a negative count-min sketch for negative counts.  In particular, each of the two sketches will use $m$ counters and $k$ hash functions, where all hash functions can be assumed to be independent.  If $c_{t}$ is positive, in the positive count-min sketch (positive sketch for short),  for each $1 \leq a \leq k$, $C_{a,h_{a}(i)}$ will be incremented by $c_{t}$.  If $c_{t}$ is negative, in the negative sketch, for each $1 \leq a \leq k$, $C_{a,h_{a}(i)}$ will be incremented by $-c_{t}$.   The estimate of the count of an item, $i$ at time $T$ is $m^{+}(i,T) - m^{-}(i,T$, where $m^{+}(i,T)$ is the value of the smallest counter associated with $i$ in the positive sketch and $m^{-}(i,T)$ is the value of the smallest counter associated with $i$ in the negative sketch.  As in class, let $Count(i,T)$ be the true count of item $i$ in the stream up to time $T$.  Also assume that $k = m \epsilon/e$ for the positive sketch and for the negative sketch.
+ 
+ \item (7 points) Give a good bound on the probability that the following holds:\\
+ $$ Count(i,T) - \epsilon \sum_{i=1}^{T} |c_{i}| \leq m(i,T) \leq Count(i,T) + \epsilon \sum_{i=1}^{T} |c_{i}| $$
+ Please prove your bound.
+ 
+ 
+ \ans{Let $S^{+}_{T}$ be the sum of all the positive counts in the stream up to time $T$.  For the positive sketch, we know that $Pr(Z_{j}> \epsilon S^{+}_{T}) \leq e^{-m\epsilon/e}$, where $Z_{j}$ is the amount the min counter associated with $i$ in the positive sketch is incremented by items other than $i$.  Let $S^{-}_{T}$ be the sum of the absolute values of the negative counts in the stream up to time $T$.  Then we also know using the analysis in class that for the negative sketch, $Pr(Z'_{j}> \epsilon S^{-}_{T}) \leq e^{-m\epsilon/e}$, where $Z'_{j}$ is the amount the min counter associated with $i$ in the negative sketch is incremented by items other than $i$.   A simple union bound on these two inequalities shows that $Pr(Z_{j}> \epsilon S^{+}_{T} \textrm{ or } Z'_{j}> \epsilon S^{-}_{T}) \leq 2 e^{-m\epsilon/e}$.  Thus, we can see that $Pr(Z_{j} + Z'_{j} > \epsilon \sum_{i=1}^{T} |c_{i}|) \leq  2 e^{-m\epsilon/e}$.  Thus the probability the approximation bound given holds is at least $1 - 2 e^{-m\epsilon/e}$. }
+
+\pagebreak
+
+\item  (7 points) Now imagine you are given a constant number of data streams $D_{1}, D_{2}, \ldots, D_{c}$ and weights associated with them $w_{1}, w_{2}, \ldots w_{c}$ that may be positive or negative real numbers.  For each item $i$, at time $T$, define $Count(i,T)$ to be the weighted sum of the count values seen in all data streams up to time $T$, where a count value seen in stream $i$ is weighted by $w_{i}$.  Assume now that all count values seen are positive.  Describe a data structure based on count-min sketches that can approximate $Count(i,T)$.  How much memory does your data structure use? How closely can you approximate $Count(i,T)$ and with what probability?  Please justify your answers.  For consistency in notation, please let $S(j,T)$ be the sum of the counts of all items in stream $j$ up to time $T$.
+
+\ans{The basic idea is to use $c$ different count min-sketches and let $m(i,T)$ be the weighted sum of the min value in each of them associated with the item $i$.  The total memory used is $cm$.  A union bound over the $c$ different data streams can establish the following guarantee with probability $1-c e^{-m\epsilon/e}$:
+ $$ Count(i,T) - \epsilon \sum_{j=1}^{c} |w_{j}| S(j,T) \leq m(i,T) \leq Count(i,T) + \epsilon \sum_{j=1}^{c} |w_{j}| S(j,T) $$}
+
+
+\end{enumerate}
+ 
+ 
+ 
+ \problem{Dynamic Programming}
+
+Consider a collection of $n$ nodes aligned on a line, numbered $1$ to $n$.  Two nodes are connected by an edge if they are adjacent on the line, e.g. nodes $i$ and $i+1$ are neighbors.  For each pair $i$, $i+1$ of neighboring nodes, there is a weight $w_{i,i+1}$ associated with the pair, which may be either positive or negative.
+
+In this problem, each node will be colored with one of two colors, red or blue.  If a pair $(i,i+1)$ of neighboring nodes are colored the same, the cost associated with that pair is $w_{i,i+1}$; if the pair are colored differently, the cost associated with that pair is $-w_{i,i+1}$.   The total cost of a coloring is the sum of the costs of all neighboring pairs.
+
+\begin{enumerate}
+
+\item (10 points) Describe a dynamic program to output the minimum cost of any coloring, when given all edge weights.  Hint: Let $c(i,r)$ be the minimum cost of coloring nodes $1$ through $i$ when node $i$ is colored red.  Let $c(i,b)$ be the minimum cost of coloring nodes $1$ through $i$ when node $i$ is colored blue.
+
+\ans{The recurrence relation is the following:\\
+$c(1,r) = c(1,b) = 0$\\
+$c(i,b) = \textrm{min } (c(i-1, r) - w(i-1,i), c(i-1, b) + w(i-1,i))$\\
+$c(i,r) = \textrm{min } (c(i-1, r) + w_(i-1,i), c(i-1, b) - w(i-1,i))$
+The dynamic program just keeps an array of size $n$ with all these values and fills it in from left to right.  The final value returned is the minimum of $c(n,b)$ and $c(n,r)$.
+}
+
+    
+
+\pagebreak
+
+Now imagine that the nodes are connected in a $n$ by $n$ grid, and that each node can be colored with $m$ possible colors.  There is an edge between a pair of nodes on the grid if they are immediately adjacent either horizontally or vertically; again, each edge has a weight associated with it that may be either positive or negative.  (For example neighboring nodes $(i,j)$ and $(i+1,j)$ would have an edge with weight $w((i,j),(i+1,j))$) 
+
+\item (15 points) Describe a dynamic program to output the minimum cost of any coloring, when given all edge weights for a grid.  What is the runtime of your algorithm?
+
+%\footnote{One motivation for this problem could be finding the best k clustering of people in a grid-like social network when given information about the strength of positive and negative social interactions (these would correspond to the edge weights) and the colors would correspond to clusters.}
+
+\ans{Let $x$ be a particular node in the grid and let $prev(x)$ be the node that is previous to $x$ moving right to left and down to up.  In particular, if $x$ is the leftmost node in its row, then $prev(x)$ is the rightmost node in the row above $x$; if $x$ is not the leftmost node in its row, then $prev(x)$ is the node to the left of $x$ in the same row as $x$.  For any number $\ell$, we will define the previous $\ell$ nodes to $x$ as those nodes found by iteratively calling the previous function $\ell$ times, starting with $x$.
+For a vector $\vC$ of $n$ colors and a node $x$, we define $M(x,\vC)$ to be the minimum cost of coloring the node $x$ and the previous $n-1$ nodes according to the colors in $\vC$.\\
+For $x$ the $n$-th node in the first row, we first compute $M(x,\vC)$ for all $m^{n}$ possible settings of $\vC$.  This takes $O(nm^{n})$ time.\\
+Next, we move $x$ from left to right and top down and for each fixed value of $x$, we compute $M(x,\vC)$ for all $m^{n}$ possible settings of $\vC$ as follows.  For notational convenience, we let $\vC = c'\vC'$ where $c'$ is a single color and $\vC'$ is a vector of $n-1$ colors. We will be taking the minimum over all colorings $C'c$ of the previous $n$ nodes from $x$, where $x$ is colored with color $c'$ (note that $c$ and $c'$ may be different colors; $c$ corresponds to the color given $x$ and $c'$ is the color given to the node that is $n$ nodes previous to $x$).  Our recurrence is then defined as follows: \\
+$M(x,c'\vC') = \min_{\vC'c} \{M(prev(x), \vC'c) +\\ \textrm{ cost of up edge from $x$, if any, when $x$ is colored $c'$ and previous $n$ nodes are colored via $\vC'c$} +
+ \textrm{ cost of left edge from $x$, if any, when $x$ is colored $c'$ and previous $n$ nodes are colored via $\vC'c$}\}$}\\
+The final value returned is $min_{\vC} M(x,\vC)$ where $x$ is the right and bottommost node in the grid and $\vC$ ranges over all vectors of $n$ colors.\\
+The runtime of the algorithm is $O(n^{2}m^{n})$, which is exponential.  However it is asymptotically {\bf much} better than the brute force algorithm which computes the cost of every assignment of colors to the $n^{2}$ nodes and thus takes $O(m^{n^{2}})$ time.  For example, when $m = 2$ and $n=10$, the dynamic program has runtime about $100,000$, which is tractable.  However, the brute force algorithm has runtime about $10^{30}$ which is not.
+ \end{enumerate}
+
+\pagebreak
+
+ 
+
+
+ \end{enumerate}
+ 
+  \end{document}
+ 
+ 
+ 

@@ -1,0 +1,5 @@
+561 midterm
+
+- imagine height balanced binary tree is now such that height of smaller subtree is 2 or more less than other.  what can be computed now?
+
+- walk through proof of chernoff bounds?

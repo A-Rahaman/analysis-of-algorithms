@@ -1,0 +1,616 @@
+%\newcommand{\ans}[1]{}
+\documentclass[11pt]{article}
+\usepackage{fullpage,pst-all,epsfig}
+
+\newcommand{\comment}[1]{}
+\newcommand{\Le}{\textbf{L}}
+
+%\newcommand{\ans}[1]{\emph{Solution: #1}}
+\newcommand{\ans}[1]{}
+
+\newcommand{\seq}[1]{ \langle #1,\cdots \, \rangle}
+\newcommand{\seqi}[1]{ \langle #1 \rangle}
+	
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+\def\handout{Midterm Examination}
+\vspace*{-.75in}
+{\large University of New Mexico}\\
+{\large Department of Computer Science}\\
+\vspace*{0.5in}
+{\LARGE {\bf \handout}}\\
+\vspace*{0.1in}
+{\large CS 561 Data Structures and Algorithms}\\
+{\large Fall, 2011}\\ [0.3in]
+\end{center}
+ 
+\vfill
+
+\makeatletter
+\long\def\hint#1{({\em Hint\/}: #1)}
+% \def\@oddhead{\rm\makebox[0in][l]{CS 461 Midterm ---Fall,
+% 2003}\hfil\thepage\hfil\makebox[0in][r]{Name:\rule[-0.1in]{2in}{.5pt}}}
+\let\@evenhead\@oddhead
+\def\@oddfoot{}
+\let\@evenfoot\@oddfoot
+
+\def\problem#1{\def\problemheading{#1}\clearpage\item{\bf #1}}
+
+% Comment out the above 'problem' def and use the one below to get
+% all the problems on a single page, instead of page break each time.
+%\def\problem#1{\def\problemheading{#1}\item{\bf #1}}
+
+\def\extrapage{\addtocounter{enumi}{-1}\clearpage\item{\bf \problemheading, continued.}}
+
+\let\part\item
+\renewcommand{\theenumii}{\alph{enumii}}
+\makeatother
+\parindent 0pt
+
+\vfill
+\centerline{
+\Large
+\begin{tabular}{|l|}  \hline
+Name: \hspace*{2in} \\ \hline
+Email: \hspace*{2in}\\ \hline
+\end{tabular}
+}
+\vfill
+
+\hrule
+\begin{itemize}
+
+\item \emph{``Nothing is true.  All is permitted''} - Friedrich Nietzsche.  Well, not exactly.  \emph{\bf{You are not permitted to discuss this exam with any other person.}}  If you do so, you will surely be smitten: collusion on any problem will result in a $0$ on the entire exam.  However, you may consult any non-human sources including books, papers, web pages, computational devices, animal entrails, etc. in your quest for truth.  Please acknowledge your sources.
+
+\item {\em Show your work!}  You will not get full credit if we cannot figure out how you arrived at your answer.  A numerical solution obtained via a computer program is unlikely to get much credit, if any, without a correct mathematical derivation. 
+
+\item Write your solution in the space provided for the corresponding problem.
+
+\item If any question is unclear, ask for clarification.
+
+\end{itemize}
+\hrule
+\vfill
+\centerline{
+\Large
+\begin{tabular}{|c|c|c|c|}  \hline
+Question & Points & Score & Grader \\  \hline\hline
+1 & 20 & & \\  \hline
+2 & 20 & & \\  \hline
+3 & 15 & & \\  \hline
+4 & 20 & & \\  \hline
+5 & 25 & & \\  \hline
+\hline Total & 100 & & \\  \hline
+\end{tabular}
+}
+\vfill
+
+\newpage
+
+\begin{enumerate}
+ 
+
+\problem{Recurrences}
+ 
+ Remember that when the base case for a recurrence is not explicitly given, assume that it is constant for inputs of constant size.
+ 
+ \begin{enumerate}
+ 
+ \item (5 points) Solve the following recurrence using annihilators: $f(n) = 5f(n-1) - 6f(n-2) + 2^{n}$.  Do not solve for the constant coefficients
+\ans{$(L^{2}-5L+6) = (L-2)(L-3)$ annihilates the homogeneous part and $(L-2)$ annihilates the non-homogeneous part.  So the annihilator is $(L-3)(L-2)^{2}$ and hence the solution is $c_{1}3^{n} +(c_{2}n + c_{3})2^{n}$}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+\item (5 points) Solve the following recurrence using a transformation and the Master method: $f(n) = 10f(\sqrt{n}) + n$.  Do not solve for the constant coefficients.  If an algorithm's runtime is given by this recurrence, how would it compare with algorithms with runtimes of $\theta(2^{n})$, $\theta(n)$, $\theta(\sqrt{n})$, $\theta(\log n)$?
+
+ \ans{Let $2^{i}=n$ and $F(i) = f(2^{i})$.  Then we get a transformed recurrence: $F(i) = 10F(i/2) + 2^{i}$.  Using the Master method, we can see that the solution to this is $F(i) = \theta(2^{i})$ (the root node dominates).   
+  Reverse transforming this solution, and using the fact that $i = \lg n$ we get  
+ $f(n) = n $.}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+\pagebreak
+
+Imagine that there is a computer virus where infected machines slowly ramp up the rate at which they infect other machines.  In particular, in a given round, all machines that have been infected for exactly $i$ rounds infect exactly $i-1$ new machines.  Let $f(n)$ be the number of machines infected at round $n$ - the base case is $f(1) = 1$.  One of your coworkers claims that the recurrence relation for $f(n)$ is $f(n) = \sum_{i=1}^{n-1} f(i)$.  Another coworker claims that the correct recurrence relation is $f(n) = \sum_{i=1}^{n-1} i*f(i)$.  
+  
+ \item (3 points) Which coworker is correct and why?
+ \ans{The first coworker is correct.  There are exactly $f(n-1)$ machines infected in previous rounds.  Then, this relation counts each machine infected for $i$ rounds exactly $i-1$ times.} \\ \ \\ \ \\ \ \\
+ 
+ \item (7 points) Find an exact solution to the first recurrence relation.  Prove your answer is correct via induction.  
+\ans{The solution is $f(n) = 2^{n-1}$ for all $n \geq 1$.\\ B.C.:  $f(1) = 1 = 2^{0}$ \\ I.H.: $\forall_{1 \leq j < n} f(j) = 2^{j-1}$.\\  I.S.: $f(n) = \sum_{i=1}^{n} f(i) =  \sum_{i=1}^{n-1} 2^{i-1} + 1 = 2^{n}$, where the second to last step holds through repeated application of the I.H.}  
+
+ \end{enumerate}
+
+\problem{Data Structures}
+
+\begin{enumerate}
+
+\item (4 points) Imagine that you are storing $n$ items in a Bloom Filter with $m$ bits.  You want the probability of a false positive to be less than $1/10000$.  Approximately how large must $m$ be as a function of $n$?  Approximately how many hash functions will you need (i.e. how big is $k$).  Show your work!
+\ans{The false positive rate is about $.62^{m/n}$.  Setting $.62^{m/n} = 1/10000$, and taking the log of both sides, we see that we need for $m$ to be at least $19.3*n$ and for $k$, the number of hash functions, to bigger than $13.4$ or $14$.}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+\item (8 points) Now imagine that you are keeping a blacklist of $n$ items and you want to determine quickly if any given item is in this blacklist.  However, you need the false positive rate to be no more than $1/n$ (i.e. the probability of a false positive must quickly go to $0$ as $n$ gets large).  If you use a Bloom filter to store the blacklist, what are the approximate values of $m$ and $k$ you need as a function of $n$?  What is the time and space cost of using a Bloom filter with this error rate?  Is there any other data structure we've discussed in class that would have asymptotically the same time and space costs as a Bloom filter, and perhaps smaller error probability for this problem?
+\ans{To get a false positive rate of $1/n$, you need $.62^{m/n}=1/n$, which occurs when $m/n = \log_{.62} 1/n$ or $m = O(n \log n)$.  The number of hash functions needed $k$ is also $O(log n)$.}
+
+\pagebreak
+
+\item (8 points) Imagine that in a red-black tree, each internal node has exactly $3$ children.  All rules for red-black trees remain the same, so for example each red node must have all black children;  for each node, all paths from that node to all descendant leaves must contain the same number of black nodes; all leaf nodes (NIL) are black; etc.  Recall that for standard red-black trees, we proved that: ``The subtree rooted at the node x contains at least $2^{bh(x)} ? 1$ internal nodes'' (Lecture 5).  Show that the number of nodes (not just internal) in the subtree rooted at $x$ is now at least $3^{bh(x)}$.  Prove this bound via induction - don't forget to include the BC, IH and I.S.
+
+\ans{We'll show this by induction on the height of $x$ BC: if the height of $x$ is $0$, $x$ is a leaf node and the number of nodes under $x$ is indeed $3^{0} = 1$.  IH: For all heights $j$ less than $h$, if $x$ has height $j$, then its subtree has at least $3^{bh(x)}$ nodes.  IS: Consider a node $x$ with height $h>0$ and let $q$, $r$, $s$ be $x$'s children.  All of these children have height less than $x$, so we can apply the IH to them.  Moreover, the black height of each child must be $\geq bh(x) - 1$.  Thus, by the IH, the number of nodes in the subtrees rooted at each child is $\geq 3^{bh(x)-1}$.  Hence, the total number of nodes in the subtree rooted at $x$ is at least $3*3^{bh(x)-1} = 3^{bh(x)}$}
+
+\end{enumerate}¥
+
+\problem{Chips	}
+
+In the following problem, you are trying to detect illegal copies of items made at a company.  For concreteness, assume that the company makes ``chips'' and that it embeds a unique id into each chip that it manufactures.  Unfortunately, there are reports of illegal copies of the company's chips.  It is possible to detect these copies because they are completely identical.\footnote{For example the company may use a watermark or a digital signature to digitally sign an ID for each chip; this is hard to forge.}  For any pair of chips, you can place them in a ``tray'' that will test the two chips and tell you whether or not they are identical.  However, this is a time consuming operation, so you want to minimize the number of times that you use the tray.  Your goal is to determine if more than half the chips in some collection are identical.
+
+Thus, you have the following algorithmic problem.  You are given a collection of  $n$ chips.  If no more than $n/2$ are identical, you should answer NO.  If more than $n/2$ are identical, you should answer YES and return one chip that is a member of this set of identical chips.  Sketch an algorithm to solve this problem that minimizes the number of times you use the tray.  Argue that your algorithm is correct and determine how many times your algorithm uses the tray.
+
+Hint: Use recursion!  You must use the tray $O(n \log n)$ times for full credit (15 points).
+
+\ans{Here is a $O(n\log n)$ solution that is easy - you can actually get down to $O(n)$.  Divide the chips into two equal piles.  Note that if there are more than $n/2$ identical chips at the start, then at least one of the piles will have more than half of its chips be identical.  Solve the problem recursively on each pile.
+Now if more than half the chips in the left (right) pile are identical, a chip x (resp. y) will be returned.  Test x and y against all other chips.  If either is identical to more than $n/2$ chips than return YES and return the appropriate chip.  If neither is, then return NO.} 
+
+\extrapage
+
+
+ 
+\problem{Dynamic Programming}
+In this problem, you have a $n$ wireless sensors located in a network.  When two adjacent nodes are assigned the same channel, there is a certain amount of interference, which is given by the weight on the edge between the adjacent nodes.  An assignment for the network is an assignment of a channel to each node in the network, and the total cost of an assignment is the sum of the interference costs for all adjacent nodes.  Your goal in the problems below is to find an assignment that minimizes total cost.\\
+  
+ {\bf For each of the variants below, 1) give a recurrence relation for the desired value; 2) describe a dynamic program; and 3) give an analysis of the runtime of your dynamic program.}
+  
+
+  \begin{enumerate}
+  \item (6 points) Imagine that the $n$ sensors are connected in a line, and that for all $1 \leq i < n$ the edge between node $i$ and node $i+1$ has positive weight
+  $w(i-1,i)$.  Hint: Let $c(i,1)$ be the minimum cost for assigning channels to nodes $1$ through $i$ when node $i$ is assigned channel $1$.  Let $c(i,2)$ be the minimum cost of assigning channels to nodes $1$ through $i$ when node $i$ is assigned channel $2$.
+  
+  \ans{The recurrence relation is the following:\\
+$c(1,1) = c(1,2) = 0$\\
+$c(i,1) = \textrm{min } (c(i-1, 1) + w(i-1,i), c(i-1, 2))$\\
+$c(i,2) = \textrm{min } (c(i-1, 1), c(i-1, 2) + w(i-1,i))$
+The dynamic program just keeps an array of size $n$ with all these values and fills it in from left to right.  The final value returned is the minimum of $c(n,1)$ and $c(n,2)$.  Runtime is $O(n)$.
+}
+
+\pagebreak
+
+\item (7 points) Now assume that the sensors are connected in a binary tree.  Hint: for node $v$ in the tree, let $c(v,1)$ be the min cost for assigning channels to all nodes in the subtree rooted at $v$ when $v$ is assigned channel $1$, and define $c(v,2)$ similarly.  Let $\textrm{left(v)}$ ($\textrm{right(v)}$) be the left (reps. right) child of $v$ if they exist or NIL otherwise; let $w(x,y) = 0$ if either $x$ or $y$ is NIL.
+  
+\ans{Base Case is when $v$ is a leaf node or when $v$ is NIL.  Then $c(v,1) = c(v,2) = 0$.  When $v$ is not a leaf node, we have the following recurrence:\\
+$c(v,1) = \textrm{min } (c(left(v),2) + w(v,left(v))), c(left(v),1)) + \textrm{min } (c(right(v),2) + w(v,right(v))), c(right(v),1))$
+$c(v,2) = \textrm{min } (c(left(v),1) + w(v,left(v))), c(left(v),2)) + \textrm{min } (c(right(v),1) + w(v,right(v))), c(right(v),2))$
+Dynamic program just stores these values for each node in the tree, working from the leaf nodes up.  Runtime is $O(n)$.
+}  
+
+\pagebreak
+  
+\item (7 points) Finally, assume that the sensors are connected in a binary tree and that at least a $2/3$ fraction must be assigned channel $1$.  Hint: Add another parameter to the function $c$.  For this problem, you only need to write down the recurrence relation for $c$ and give a very brief sketch of the algorithm and its runtime.
+\ans{Now we let $c(v,x,c)$ be the min cost for assigning channels to all nodes in subtree rooted at $v$ if 1) $v$ is assigned channel $c$; and 2) exactly $x$ nodes in the subtree are assigned channel $c$.  
+We will keep a $3$ dimensional table that is of size $n$ by $n+1$ by $2$.  Initially, all entries of the table are set to infinity.  Base Case is when $v$ is a leaf node: $c(v,1,1) = 0$,  $c(v,0,1) = 0$.  When $v$ is not a leaf, we have the following recurrence, for all values $0 \leq k \leq n$:\\
+$c(v,k,1) = \textrm{min }_{i,j s.t. i+j=k-1} ((\textrm{min } (c(left(v), i, 2) + w(v,left(v))), c(left(v), i,1)) + \textrm{min } (c(right(v), j, 2) + w(v,right(v))), c(right(v), j, 1))$
+$c(v,i,2) = \textrm{min }_{i,j s.t. i+j=k} \textrm{min } (c(left(v), i, 1) + w(v,left(v))), c(left(v), i, 2)) + \textrm{min } (c(right(v), j, 1) + w(v,right(v))), c(right(v), j, 2))$
+The dynamic program just stores these values for each node in the tree, working from the leaf nodes up.  Runtime is now $O(n^{3})$ since there are now $O(n^{2}) entries and each takes at most $O(n)$ time to fill in.  The minimum cost returned is the minimum over all $k \leq (2/3)n$ and $1 \leq x \leq 2$ of $c(v,k,x)$, where $v$ is the root of the tree.}
+  
+  
+  \end{enumerate}
+  
+ 
+\pagebreak
+
+ \problem{Randomized Algorithms}
+
+
+Consider a situation where we have $n$ servers and $n$ clients.  The servers all know a message $m$ and the clients want to learn that message.  Our goal is to design an algorithm that ensures that all clients learn $m$, while sending the smallest number of messages possible.  We have access to a global random number generator $R$ that generates a number uniformly at random between $1$ and $\sqrt{n}$, and which all the servers can read.
+
+Consider the following algorithm:
+
+\begin{enumerate}
+\item Each client chooses a subset $S$ of $k\sqrt{n}$ of the $n$ servers, uniformly at random from all such subsets.  The client then generates $k\sqrt{n}$ requests by choosing independently for each $s \in S$, a tag $t$ that is an integer distributed uniformly at random between $1$ and $\sqrt{n}$.  The client sends each such request $(s,t)$ to the server $s$
+\item A random number $r$ is generated by the global random number generator and all servers read that number
+\item Every server $s$ considers the requests they have received of the form $(s,r)$.  If there are less than $k \sqrt{n}$ such requests, then $s$ sends $m$ to each client that it received such a request from.  $k$ is a parameter to be determined later.
+\end{enumerate}
+
+Unfortunately, some of the clients are \emph{bad} in that they may disregard the first line of the algorithm, sending out more than $\sqrt{n}$ requests, and these requests may not necessarily be generated randomly.  Note that the number of messages sent by each good client and server is always only $O(\sqrt{n})$.  In this problem, you will show that even with the bad clients around, and even with this bound on communication costs, the protocol still has a good chance of ensuring all the good clients will learn $m$.  (The algorithm thus has applications to mitigating situations like denial of service attacks by botnets.)
+
+Call a sever \emph{overloaded} if it receives $\geq k\sqrt{n}$ requests with tag $r$.  Assume that each server receives at most $n$ requests total, since if they receive $\geq 2$ requests from the same client, they can throw out these requests, since that client is necessarily bad.  
+\begin{enumerate}
+
+\item (5 points) Derive an upper bound on the probability that a fixed server is overloaded.
+\ans{There are at most $n$ requests total that each server receives and these are distributed over $\sqrt{n}$ possible tags.  Thus, at most $\sqrt{n}/k$ of the tags have more than $k \sqrt{n}$ requests.  Thus the probability of being overloaded is at most $1/k$} \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\
+  
+\pagebreak 
+  
+\item (5 points) Give an upperbound on the expected number of servers that are overloaded.  Note: The events that two different servers are overloaded are NOT independent.
+
+\ans{Using linearity of expectation, the expected number of informed processors that are overloaded is at most $n/k$}  \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\
+
+\item (5 points) Now use Markov's inequality to bound the probability that the number of overloaded servers is greater than or equal to $n/6$.  If everything is going well, you should be able to show this probability is no more than $6/k$.
+\ans{Let $X$ be the number of overloaded servers.  By Markov's, $Pr(X \geq \lambda) \leq E(X)/\lambda$, which means $Pr(X \geq n/6) \leq (n/k)/(n/6) = 6/k$.} \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\
+
+
+\pagebreak
+
+\item (5 points) Now assuming that at most $n/6$ servers are overloaded, calculate the probability that a given client fails to send a request to any server that is not overloaded.  Note: The servers that a single client sends requests to are NOT chosen independently (since a given server can not be chosen more than once).  You may find the following bound from the book helpful: 
+$$ (x/y)^{y} \leq {x \choose y} \leq (xe/y)^{y}$$  Hint: In how many ways can you choose $\sqrt{n}$ of the $n$ servers?  In how many ways can you choose $\sqrt{n}$ of only the $n/6$ overloaded servers?
+
+\ans{The probability of sending every request to a server that is overloaded is ${n/6 \choose \sqrt{n}} / {n \choose \sqrt{n}}$.  Using the above inequality, this probability is no more than $(e/6)^{\sqrt{n}} \leq (1/2)^{\sqrt{n}}$} \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\
+
+\pagebreak
+
+\item (5 points) Finally, use union bounds and the above results to bound the probability that \emph{any} good client does not receive the message.  For $n$ large, what is a good approximation to the probability of failure?  Hint: Since the tags for good clients are chosen independently, you can use Chernoff bounds (see HW 2, problem 1) to bound the distribution of the number of requests from good clients that have tag $r$.
+
+\ans{First we need to bound the probability that a good client does not send a request with tag $r$ to a sever that is not overloaded.  Fix a good client and let $X$ be the number of requests that client sends out with tag $r$.  Note that $E(X)= k$ by linearity of expectation.  Further, since the tags on the requests are chosen independently, we can use Chernoff bounds to bound the random variable $X$ around its expectation.  In particular, $Pr(X \leq (1-\epsilon)E(X)) \leq e^{-\epsilon E(X)/2} = e^{-k\epsilon /2}$.  Now, choose $\epsilon = 1/2$ and $k = 8 \log n$.  Then a Union Bound gives that with probability at least $1-1/n$, each good client sends at least $k/2$ requests with tag $r$.  
+Now, we can bound the probability that every request with tag $r$ is sent to an overloaded server using the technique from the problem above.  In particular, consider the $\geq k/2$ set of requests that a fixed client sends out with tag $r$.  The probability that each of these is sent to a server that is overloaded is ${n/6 \choose k/2} / {n \choose k/2}$.  Using the inequality from the last problem, this probability is no more than $(e/6)^{k/2} \leq (1/2)^{4\log n}$.\\
+Thus, the probability of failure for a single client is at most $n^{-4}$ and the probability of failure for any client in this way by union bounds is $n^{-3}$.  Now there are three bad events that we need to take the union bound over  1) the event that the number of overloaded servers is >= n/6 (happens with probability 6/k; 2) the event that  some good client sends out less than k/2 messages with tag r (happens with probability 1/n); and 3) the event that some good client sends all requests with tag r to  servers that are overloaded (happens with probability $<= n^{-3}$) .  Hence, the probability of failure for any client in any way, is at most $6/k + n^{-1} + n^{-3} = O(1/k)$ (provided that $k \geq 8 \log n$.}
+
+\end{enumerate}
+
+ 
+ 
+
+
+ \end{enumerate}
+ 
+  \end{document}
+ 
+ 
+  \problem{Recurrences and Asymptotics}
+ 
+ Remember that when the base case for a recurrence is not explicitly given, assume that it is constant for inputs of constant size.
+ 
+ \begin{itemize}
+ 
+ \item Consider the recurrence $f(0) = 1$, $f(n) = \sum_{i=0}^{n-1} f(i)$.  Prove that the solution to this recurrence is $\theta(2^{n}$)
+ 
+ \ans{This is a straightforward proof by induction.}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+\item Solve the following recurrence: $f(n) = 4f(n-1) - 4f(n-2) + 2^{n}$.  Do not solve for the constant coefficients
+\ans{$(L^{2}-4L+4) = (L-2)^{2}$ annihilates the homogeneous part and $(L-2)$ annihilates the non-homogeneous part.  So the annihilator is $(L-2)^{3}$ and hence the solution is $(c_{1}n^{2} + c_{2} n + c_{3}) 2^{n}$}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+\pagebreak
+
+
+\item Solve the following recurrence: $f(n) = f(n/2) + f(n/4)$.  Do not solve for the constant coefficients.  If an algorithms runtime is given by this recurrence, how would it compare with algorithms with runtimes of $\theta(2^{n})$, $\theta(n)$, $\theta(\sqrt{n})$?
+
+ \ans{Let $2^{i}=n$ and $F(i) = f(2^{i})$.  Then we get a transformed recurrence: $F(i) = F(i-1) + F(i-2)$, whose solution is  $F(i) = c_{1} \phi^{i} + c_{2} \hat{\phi}^{i}$. Reverse transforming this solution, and using the fact that $i = \lg n$ we get  
+ $f(n) = n^{\lg \phi} + n^{\lg \hat{\phi}}$.  This solution is approximately $\theta(n^{.694})$, so it is better than linear but worse than square root run time.}
+ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+ 
+ \end{itemize}
+
+\problem{Heaps and Sorting}
+
+Professor Humbert claims to have invented a new Max-Heapify function for heaps that runs in $O(\lg \lg n)$ time.  Moreover, Humbert claims that his new Max-Heapify function is completely comparison based, i.e. the only way it ever compares two keys is with the $\leq$ operator.  Could Humbert be right?
+
+\ans{No.  If such a Max-Heapify function existed, we could plug it into heap sort and use if to do comparison-based sorting in $\Theta(n\lg \lg n)$ time. }
+
+ \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\ \ \\ \ \\  \ \\
+
+Prove that the following algorithm correctly sorts a list of $n$ elements by induction on $n$.  Don't forget to include the base case, inductive hypothesis and inductive step.
+\begin{verbatim}
+SillySort(A, i, j){
+  Let n = j - i + 1;                   // n is the number of elements to sort
+  If n <= 1 then return;          //nothing to sort
+  If n == 2                              // only two elements to sort
+    then
+      if A[i] > A[j], swap A[i] and A[j]
+  else                                     // more than two elements to sort                    
+     SillySort(A,i+n/2,j);         //SillySort the last n/2 elements of A
+     SillySort(A,i,i+n/2);    //SillySort the first n/2+1 elements of A
+     SillySort(A,i+1,j)             //SillySort the last n-1 elements of A
+ }
+\end{verbatim}
+
+\extrapage
+
+\ans{Prove by induction on the size of L.  Need to first prove that the minimum element in the array winds up in the first position.}
+
+\problem{Data Structures}
+
+\begin{itemize}
+
+\item Imagine that in a red black tree, the rule that a red node must have two black children is relaxed to the rule that a red node must have at least one black child.  All other rules remain the same.  What is now the maximum asymptotic height that a red black tree with $n$ nodes can have?  Give an example or proof as necessary to justify your claim.
+
+\ans{The tree can now have $\theta(n)$ height.  Imagine one branch where all the nodes are red except for the root, and one child of each node on the branch - the final node in this branch has two black children.}
+
+\pagebreak
+
+\item Imagine you have a ``blacklist'' of $n$ messages that are spam.  When a new message arrives in your mail queue, you want to test it to see if it's a message in your black list.  However, space is at a premium and so you don't want to have to store all $n$ messages in memory (assume each message is many bits in length).  Answer the following questions with asymptotic notation.  Hint: Assume that you have a hash function that maps strings of any size to integers that are essentially random.
+\begin{itemize}
+\item What is the minimum number of bits of space to ensure that you can test if new messages are in the blacklist and get false positive with probability no more than $1/100$?  What is the time needed to test if a message is in the blacklist in this case?
+\item How many bits do you need if you want the probability of false positives to be no more than $1/n$?  What is the time to test membership in this case?
+\end{itemize}
+\ans{Use a Bloom filter.  You need $\theta(n)$ bits and $\theta(1)$ time in the first case (since $k = \theta(1)$).  In the second case, you need 
+$\theta(n \lg n)$ bits (since $m$ must be $n \lg n$) to get probability of false positives less than $1/n$; you need $O(\lg n)$ time since $k$ is $O(\lg n)$}
+
+\end{itemize}
+
+ \problem{Probability}
+ 
+ \begin{itemize}
+ \item \emph{Bad Santa II: Mr. Kringle's Revenge:} Consider the Bad Santa problem from hw1 with the following change.  The child is allowed to take $2$ passes over the sequence of boxes if necessary, but still needs to find just one present before stopping.  However, Santa can secretly hide the presents again after the first pass of the child.  Describe and analyze an algorithm for this new problem that minimizes the expected number of boxes opened.  Hint: The problem is now much easier than the hw problem.
+ 
+ \ans{The algorithm: In this first pass, choose $\log n$ boxes uniformly at random and open those.  In the second pass, just open all boxes from let to right until finding a present.  The expected number of boxes opened is no more than $\log n + (1/n)n$, since the probability of getting to the second pass is only $(1/2)^{\log n} = 1/n$.  Thus the expected number of boxes opened is $O(\log n)$.}
+ 
+ \pagebreak
+ 
+ \item \emph{Closest Points:} Imagine $n$ points are distributed uniformly at random on a circle with circumference $1$.  Show that the expected number of pairs of points that are within distance $\theta(1/n^{2)}$ of each other is greater than $1$ (note that this implies that the smallest distance between two points is likely $O(1/n^{2})$).  Hint: Partition the circle into $n^{2}/k$ regions of size $k/n^{2}$ for some constant $k$; then use the Birthday paradox to solve for the necessary $k$.
+ \ans{Think of the regions as bins and the points as balls.  The probability that two points fall in the same region is $k/n^{2}$.   Let $X_{i,j}$ equal $1$ if points $i$ and $j$ fall in the same region and $0$ otherwise and let $X$ be the sum over all $n \choose 2$ values $i$ and $j$ of $X_{i,j}$.  Using linearity of expectation, $E(X) = {n \choose 2}k/n^{2}$.  Thus, for some $k$, e.g. $k\geq 3$, we would expect at least one pair of balls to fall in the same bin.}
+
+\end{itemize}
+
+
+ \problem{Are you Smarter than a 561 Student?}
+ 
+You are competing in the popular game show ``Let's Make a Dynamic Program'' with another player.  You and your opponent both start with $0$ dollars.  If you reach (or exceed) $n$ dollars before your opponent, you win $n$ dollars; if your opponent reaches (or exceeds) $n$ dollars before you, you win nothing; and if you both reach (or exceed) $n$ dollars at the same time, you both win $n$ dollars.  In each turn, you get to choose the level of difficulty of the next question asked, where this difficulty is represented by an integer $k$ between $1$ and $n$.  If you answer the question correctly, you get $k$ dollars, otherwise your opponent gets $k$ dollars.  Note that you are always in control throughout the entire game of the difficulty level of the question asked.
+ 
+Through careful study of the game you have been able to determine the probability $p_{i}$ for $i$ between $1$ and $n$, which is the probability that you will answer a question of difficulty $i$ correctly.
+
+\begin{itemize}
+
+\item Consider the greedy algorithm where you always choose a question of difficulty level $i$ for $i$ maximizing $i*p_{i} - i*(1-p_{i}) = i(2p_{i}-1) $.  Is this an optimal algorithm?  Hint: Is it ever better to make a long shot bet because the probability of success from multiple short bets is small.  In particular,think about the case where your opponent has $n-1$ dollars and you have $0$.
+
+
+\ans{Greedy is not optimal.  Consider the case where $p_{1} = 1/4$, $p_{n} = 1/5$ and for all other $i$, $p_{i} = 0$.  Then $1$ is the difficulty level maximizing the expected difference between you and your opponent, since $1p_{1} - 1q_{1} = -1/2$ and $np_{n} - nq_{n} = -(3/5)n$.  Assume further that your opponent has $n-1$ dollars and you have $0$ dollars.   If you choose a difficulty of $n$, you have the chance of jumping ahead of your opponent to victory, which happens with probability at least $1/5$.  In contrast, the probability of success by following the greedy strategy, where you just keep choosing difficulty of $1$ will only be $(1/4)^{n}$, which is exponentially small in $n$.}
+
+\pagebreak
+
+\item Let state $(i,j)$ be the state where you have $i$ dollars and your opponent has $j$ dollars.  Note that if you choose the difficulty level to be $k$ at that state, you have probability $p_{k}$ of going to state $(i+k,j)$ and probability $(1-p_{k})$ of going to state $(i,k+jj)$.  Now let $e(i,j)$ be your expected winnings if you have $i$ dollars and your opponent has $j$ dollars and you play optimally.  Write a recurrence relation for the value $e(i,j)$.  Note: You will find it useful to consider $i$ and $j$ values that range from $0$ to $2n-1$.  Hint: Use expected values for simpler subproblems and the probabilities $p_{i}$ described above to compute $e(i,j)$.  Don't forget the base case(s).
+
+\ans{Base Cases: $e(i,j) = n$ for all $j \geq n$.  $e(i,j) = 0$ for all $i \geq n$ and $j < n$.  \\ Recurrence:  for other values of $i$ and $j$,
+ $e(i,j) = max_{1 \leq k \leq n} p_{k} e(i+k,j) + (1-p_{k}) e(i,j+k)$}
+
+\pagebreak
+
+
+\item Give the pseudocode for computing the value $e(0,0)$, which gives you your expected winnings if you play this game optimally.
+\ans{Basically, need to fill in the base case first of a n by n array and then fill in the remaining values from bottom up and right to left}
+  
+\pagebreak 
+
+\item What if the game is changed as follows.  You still select the difficulty level $k$, but after your selection, both you and your opponent have the chance to write down the answer to the question.  Whoever gets the answer correct wins $k$ dollars (note that both of you may win now).  There is no penalty for a wrong answer.  The probability that you answer a question of difficulty $k$ correctly is $p_{k}$ and the probability that your opponent answers correctly is $q_{k}$.   Can you still solve this new problem using dynamic programming?  If so, give a recurrence and describe how to change the algorithm.  If not, describe why not.
+
+\ans{It is still possible.  The base case for the recurrence is the same as before.  The new part of the recurrence is determined by following equation for fixed $k$:
+$e(i,j) =  (p_{k}q_{k} e(i+k,j+k) + (1-p_{k})q_{k}e(i,j+k) + p_{k}(1-q_{k})e(i+k,j) + (1-p_{k})(1-q_{k}) e(i,j)$.  Note that $e(i,j)$ appears on both the left and right side of this equation, which at first seems to cause problems in formulating a recurrence; however, it is still possible to isolate $e(i,j)$ on the left side.  Then it is possible to get a proper recurrence by taking the maximum over all possible values of $k$.  The recurrence and pseudocode is left as an exercise.}
+  
+ \end{itemize}
+  
+  \end{enumerate}
+  
+
+ 
+ 
+ \problem{Borges Library - determining if all the books in a given room are the same}
+1) Create a Bloom Filter for all the books in the room
+ 
+2) How to compare two rooms quickly to determine if they have the same set of books or not.
+
+
+ 
+ 
+\problem{Data Structure Problem (BST, skip list, etc, heap)}
+ 
+ 
+ 
+ \problem{Bday}
+  
+ \problem{Hafts}
+ 
+ 
+ \problem{Skip Lists}
+ 
+ \begin{itemize}
+ \item How would you merge two skip lists?
+ \item How would you find the $i$-th element in sorted order
+ 
+\end{itemize}
+
+ 
+ 
+\problem{Search Trees}
+
+Consider a tree with the following properties:
+
+\begin{itemize}
+\item Each internal node has exactly three children
+\item The heights of the subtrees rooted at each child differ by at most $1$.
+\end{itemize}
+
+What is the maximum height of such a tree containing $n$ nodes?
+
+Hint: Write a recurrence relation for the maximum number of nodes as a function of the height and then solve for the height.  Show your work!
+
+\ans{Let $T(h)$ be the maximum number of nodes in a tree of height $h$.  Then $T(h) = T(h-1) + 2 T(h-2) + 1$.  $(\Le^{2}-\Le - 2) = (\Le -2)(\Le +1)$ annihilates the homogeneous part and $\Le - 1$ annihilates the non-homogeneous part.  Thus, the solution is of the form $T(h) = c_{1}2^{h} + c_{2} + c_{3} (-1)^{h}$.  Let $n$ be the number of nodes in the tree.  We know that $n \geq T(h)$ and so $n \geq c_{1}2^{h} + c_{2} + c_{3} (-1)^{h}$.  If we let $c = c_{2} - c_{3}$, we can say that, $n \geq c_{1} 2^{h} + c$.  Taking logs of both sides, we have that $\log n \geq h \log (2c_{1}) + \log c$.  This implies that $h \leq 1/(log(2c_{1}))(\log n - \log c)$.  The right hand side is $O(\log n)$.  Thus, $h$ is $O(\log n)$.}
+
+\problem{Hash Tables and Probability}
+
+Assume we hash $n$ items into a hash table with $n$ bins using a good hash function i.e. each item is hashed to a bin chosen independently and uniformly at random.  Give a good upper bound on the number of empty bins.  Solve for the constants in your upper bound i.e. do not use asymptotic notation.
+
+Hint: Use the fact that $1-x \leq e^{-x}$ for all $x$.
+
+\ans{Let $X_{i}$ be an indicator random variable which is $1$ if the $i$-th bin is empty and is $0$ otherwise.   Then note that $E(X_{i})$ equals the probability that the $i$-th bin is empty.  This is the probability that the $n$ items do not fall in bin $i$.  The probability that a single item does not fall in bin $i$ is exactly $1 - 1/n$.  Since the items are all hashed independently, the probability that \emph{no} item hashes into bin $i$ is exactly $(1-1/n)^{n}$.  Using the hint, note that  $(1-1/n)^{n} \leq (e^{-1/n})^{n} = e^{-1}.$  Let $X$ be a random variable giving the number of empty bins and note that $X = \sum_{i=1}^{n} X_{i}$.  Using linearity of expectation, we see that $E(X) = E(\sum_{i=1}^{n} X_{i}) = \sum_{i=1}^{n} E(X_{i}) \leq n/e$.  Thus the expected expected number of empty bins is at most $n/e$.  This is actually a pretty tight upper bound as $n$ gets large.}
+
+\problem{Divide and Conquer}
+
+Imagine that after graduating from UNM, you start your new job at the exciting investment banking firm SELLOUT, Inc.  The firm if faced with the following problem: they have an array of the predicted prices of a stock over $n$ days and they want to determine, using this array, exactly one day to buy the stock and one day to sell the stock in order to maximize their profit.
+
+The problem can be formally stated as follows.  You are given an array $A$ of $n$ numbers.  You want to choose indices $1 \leq i < j \leq n$ such that $A[j] - A[i]$ is maximized over all such indices.  Give an $o(n^{2})$ algorithm to solve this problem.
+
+\ans{Use Recursion!  Recursively find the pair of indices $i_{l}$ and $j_{l}$ on the left half of the array such that $i_{l} < j_{j}$ and $A[j]-A[i]$ is maximized over all such pairs.  Find a similar pair $i_{r}$ and $j_{r}$ on the right half of the array.  Now find $x$, the index of the element with smallest value on the left half and $y$, the index of the largest element on the right half.  Finally, return 
+max($A[j_{l}] - A[i_{l}]$, $A[j_{r}] - A[i_{r}]$, $A[y] - A[x]$).  The run time of this algorithm is given by the same recurrence as for merge sort $T(n) = 2T(n/2) + n$, whose solution is $n \log n$.  Note that we can get an even faster algorithm than this using dynamic programming. Also there is another $O(n \log n)$ solution that makes use of a heap or BST.}
+
+\end{enumerate}
+
+\end{document}
+
+
+
+
+
+% \item {\bf True or False}:  In a max-heap, the element with smallest key is always at the
+% rightmost leaf node of the heap? \ans{F: it's always at a leaf node
+% but not necessarily the rightmost leaf node}
+% \item {\bf True or False}:  Bubblesort requires $O (n)$ extra space (not counting the space
+% to store the array to be sorted)? \ans{F: it takes $O (1)$ extra space}
+% \item {\bf True or False}:  $1/\log n$ is $o (1)$? \ans{T}
+% \item {\bf True or False}:  $\log \sqrt{n}$ is $\Theta (\log n)$?
+% \ans{T: since $\log \sqrt{n} = 1/2\log n$}
+% \item {\bf True or False}:  $2^{n-1}$ is $o (2^{n})$?\ans{F: since $2^{n-1}=1/2*2^{n}$}
+% \problem{Annihilators}\\
+
+% Consider the recurrence $T (n) = 2T (n-1) - T (n-2) + 4$, $T (0)=0$, $T (1)=0$.
+% Solve this recurrence \emph{exactly} using annihilators.  Don't forget
+% to check your answer.
+
+% \ans{Consider the homogeneous part first.  Let $T_{n} = 2T (n-1) - T
+% (n-2)$, and $T = \seqi{T_{n}}$.  Then
+% \begin{eqnarray}
+% T & = & \seqi{T_{n}}\\
+% \Le T & = & \seqi{T_{n+1}}\\
+% \Le^{2} T & = & \seqi{T_{n+2}}
+% \end{eqnarray}
+% Since $\seqi{T_{n+2}} = \seqi{2T_{n+1}-T_{n}}$, we know that
+% $\Le^{2}T-2\Le T + T = \seqi{0}$, and thus $\Le^{2}-2\Le +1 = (\Le -1)
+% (\Le -1)$ annihilates $T$.  Further we know that $(\Le -1)$
+% annihilates the non-homogeneous part.  Thus the annihilator of the
+% whole sequence is $(\Le -1)^{3}$.  Thus $T (n)$ is of the form:
+% \[
+% T (n) = c_{1}n^{2}+c_{2}n+c_{3}
+% \]
+% We know:
+% \begin{eqnarray}
+% T (0) = 0 & = & c_{3}\\
+% T (1) = 0 & = & c_{1} + c_{2}\\
+% T (2) = 4 & = & 4 c_{1} + 2c_{2}
+% \end{eqnarray}
+% so $c_{1}=2$, $c_{2}=-2$, $c_{3}=0$ and thus
+% \[
+% T (n) = 2n^{2}-2n
+% \]
+% Check: $T (3) = 2*4-0+4=12$ and $2*9-6=12$.}
+
+
+
+
+% \problem{Substitution Method}\\
+% Consider the following recurrence: $$T(n) = T(n-1) + T(n-2) - n + 3,$$
+% where $T(1) = 1,T(2)=2$.\\ \ \\ Show that $T(n) = n$ by induction.
+% Include the following in your proof: 1)the base case(s) 2)the
+% inductive hypothesis and 3)the inductive step.
+
+% \ans{Base Case: T(1) = 1.\\Inductive Hypothesis: For all $j<n$, T(j) =
+% j\\Inductive Step: We must show that $T(n)=n$, assuming the inductive
+% hypothesis.  
+% \begin{eqnarray}
+% T(n) & = & T(n-1) + T(n-2) - n + 3\\
+% T(n) & = & (n-1) + (n-2) - n + 3\\
+% T(n) & = & n
+% \end{eqnarray}
+% where the inductive hypothesis allows us to make the replacements in
+% the second step.}
+
+% \item {\bf True or False}: If $X$ and $Y$ are sequences that both
+% begin with the character $a$, then some longest common subsequence of
+% $X$ and $Y$ begins with the character $a$. \ans{True}
+
+ \problem{Data Structures}
+ 
+ \begin{enumerate}
+ 
+Your colleague wants to change the rules of red-black trees to the following:
+ \begin{itemize}
+\item The root node and leaf nodes (NIL) can be either red or black
+\item If a node is red and not a leaf node, both of its children are black
+\item If a node is black and not a leaf node, both of its children are red
+\item For each node, all paths from the node to descendant leaves contain the same number of black nodes
+\end{itemize}
+\item (6 points) Is it possible to use these rules to create a balanced BST data structure?  If so, sketch your solution.  If not, show how things can go wrong with a minimum size counter-example.
+ 
+ \ans{This fails.  Consider a tree of size $n=4$.  There is no way to color it to satisfy the first three rules without violating the fourth one.}
+ 
+ \pagebreak
+
+\item (5 points) Your boss wants to create the following data structure in the comparison model and to name it after himself, the \emph{Merkle}.  A Merkle has the following operations and properties on it.  BuildMerkle takes an arbitrary array and builds a Merkle from it in $O(n)$ time.  The resulting Merkle will provide the following operations.  FindMin (resp. FindMax) will return the minimum (resp. maximum) element and run in $O(\log n)$ time.  Successor(x) (resp. Predecessor(x)) return the next largest (resp. smallest) element in the Merkle after the element $x$, and both of these operations run in $O(1)$ time.  Intuitively, your boss wants you to combine the nice properties of the heap with the nice properties of a data structure like skip lists.  Can you immortalize your boss's name in CS textbooks by creating this data structure?
+
+\ans{No.  This would allow sorting in $O(n)$ time.  To show this, first build the Merkle from an unsorted array, then find the minimum element and keep calling successor}
+
+
+
+\pagebreak
+
+In this problem, you will modify count-min sketches so that they handle negative counts.  As in class, assume you are presented with a stream of tuples of the form $(i_{t},c_{t})$, except now $c_{t}$ may be either a negative or positive integer.  The data structure you will use will consist of two count-min sketches, a positive count-min sketch for positive counts and a negative count-min sketch for negative counts.  In particular, each of the two sketches will use $m$ counters and $k$ hash functions, where all hash functions can be assumed to be independent.  If $c_{t}$ is positive, in the positive count-min sketch (positive sketch for short),  for each $1 \leq a \leq k$, $C_{a,h_{a}(i)}$ will be incremented by $c_{t}$.  If $c_{t}$ is negative, in the negative sketch, for each $1 \leq a \leq k$, $C_{a,h_{a}(i)}$ will be incremented by $-c_{t}$.   The estimate of the count of an item, $i$ at time $T$ is $m^{+}(i,T) - m^{-}(i,T$, where $m^{+}(i,T)$ is the value of the smallest counter associated with $i$ in the positive sketch and $m^{-}(i,T)$ is the value of the smallest counter associated with $i$ in the negative sketch.  As in class, let $Count(i,T)$ be the true count of item $i$ in the stream up to time $T$.  Also assume that $k = m \epsilon/e$ for the positive sketch and for the negative sketch.
+ 
+ \item (7 points) Give a good bound on the probability that the following holds:\\
+ $$ Count(i,T) - \epsilon \sum_{i=1}^{T} |c_{i}| \leq m(i,T) \leq Count(i,T) + \epsilon \sum_{i=1}^{T} |c_{i}| $$
+ Please prove your bound.
+ 
+ 
+ \ans{Let $S^{+}_{T}$ be the sum of all the positive counts in the stream up to time $T$.  For the positive sketch, we know that $Pr(Z_{j}> \epsilon S^{+}_{T}) \leq e^{m\epsilon/e}$, where $Z_{j}$ is the amount the min counter associated with $i$ in the positive sketch is incremented by items other than $i$.  Let $S^{-}_{T}$ be the sum of the absolute values of the negative counts in the stream up to time $T$.  Then we also know using the analysis in class that for the negative sketch, $Pr(Z'_{j}> \epsilon S^{-}_{T}) \leq e^{m\epsilon/e}$, where $Z'_{j}$ is the amount the min counter associated with $i$ in the negative sketch is incremented by items other than $i$.   A simple union bound on these two inequalities shows that $Pr(Z_{j}> \epsilon S^{+}_{T} \textrm{ or } Z'_{j}> \epsilon S^{-}_{T}) \leq 2 e^{m\epsilon/e}$.  Thus, we can see that $Pr(Z_{j} + Z'_{j} > \epsilon \sum_{i=1}^{T} |c_{i}|) \leq  2 e^{m\epsilon/e}$.  Thus the probability the approximation bound given holds is at least $1 - 2 e^{m\epsilon/e}$. }
+
+\pagebreak
+
+\item  (7 points) Now imagine you are given a constant number of data streams $D_{1}, D_{2}, \ldots, D_{c}$ and weights associated with them $w_{1}, w_{2}, \ldots w_{c}$ that may be positive or negative real numbers.  For each item $i$, at time $T$, define $Count(i,T)$ to be the weighted sum of the count values seen in all data streams up to time $T$, where a count value seen in stream $i$ is weighted by $w_{i}$.  Assume now that all count values seen are positive.  Describe a data structure based on count-min sketches that can approximate $Count(i,T)$.  How much memory does your data structure use? How closely can you approximate $Count(i,T)$ and with what probability?  Please justify your answers.  For consistency in notation, please let $S(i,j,T)$ be the sum of the counts of item $i$ in stream $j$ up to time $T$.
+
+\ans{The basic idea is to use $c$ different count min-sketches and let $m(i,T)$ be the weighted sum of the min value in each of them associated with the item $i$.  The total memory used is $cm$.  A union bound over the $c$ different data streams can establish the following guarantee with probability $1-c e^{m\epsilon/e}$:
+ $$ Count(i,T) - \epsilon \sum_{j=1}^{c} |w_{j}| S(i,j,T) \leq m(i,T) \leq Count(i,T) + \epsilon \sum_{j=1}^{c} |w_{j}| S(i,j,T) $$}
+
+
+\end{enumerate}
+ 
+ 
+ 
+ \problem{Dynamic Programming}
+
+Consider a collection of $n$ nodes aligned on a line, numbered $1$ to $n$.  Two nodes are connected by an edge if they are adjacent on the line, e.g. nodes $i$ and $i+1$ are neighbors.  For each pair $i$, $i+1$ of neighboring nodes, there is a weight $w_{i,i+1}$ associated with the pair, which may be either positive or negative.
+
+In this problem, each node will be colored with one of two colors, red or blue.  If a pair $(i,i+1)$ of neighboring nodes are colored the same, the cost associated with that pair is $w_{i,i+1}$; if the pair are colored differently, the cost associated with that pair is $-w_{i,i+1}$.   The total cost of a coloring is the sum of the costs of all neighboring pairs.
+
+\begin{enumerate}
+
+\item (10 points) Describe a dynamic program to output the minimum cost of any coloring, when given all edge weights.  Hint: Let $c(i,r)$ be the minimum cost of coloring nodes $1$ through $i$ when node $i$ is colored red.  Let $c(i,b)$ be the minimum cost of coloring nodes $1$ through $i$ when node $i$ is colored blue.
+
+\ans{The recurrence relation is the following:\\
+$c(1,r) = c(1,b) = 0$\\
+$c(i,b) = \textrm{min } (c(i-1, r) - w(i-1,i), c(i-1, b) + w(i-1,i))$\\
+$c(i,r) = \textrm{min } (c(i-1, r) + w_(i-1,i), c(i-1, b) - w(i-1,i))$
+The dynamic program just keeps an array of size $n$ with all these values and fills it in from left to right.  The final value returned is the minimum of $c(n,b)$ and $c(n,r)$.
+}
+
+
+
+\pagebreak
+
+Now imagine that the nodes are connected in a $n$ by $n$ grid, and that each node can be colored with $m$ possible colors.  There is an edge between a pair of nodes on the grid if they are immediately adjacent either horizontally or vertically; again, each edge has a weight associated with it that may be either positive or negative.  (For example neighboring nodes $(i,j)$ and $(i+1,j)$ would have an edge with weight $w((i,j),(i+1,j))$) 
+
+\item (15 points) Describe a dynamic program to output the minimum cost of any coloring, when given all edge weights for a grid.  What is the runtime of your algorithm?
+
+%\footnote{One motivation for this problem could be finding the best k clustering of people in a grid-like social network when given information about the strength of positive and negative social interactions (these would correspond to the edge weights) and the colors would correspond to clusters.}
+
+\ans{Let $c(i,j,k)$ be the minimum cost of coloring all nodes in rows above $i$ and all nodes in row $i$ up to node $(i,j)$, when node $i,j$ is colored with color $k$.  Let $S(k,k')$ be $1$ if $k=k'$ and $-1$ otherwise.   For convenience, we'll assume zero edge weights for edges that don't exist in the grid.
+The recurrence relation is the following:\\
+$c(1,1,x) = 0$ for all $x$ between $1$ and $m$\\
+$c(i,0,x) = 0$ for all $x$ between $1$ and $m$ and all $i$ between $1$ and $n$\\
+$c(0,j,x) = 0$ for all $x$ between $1$ and $m$ and all $j$ between $1$ and $n$\\
+$c(i,j,k) = \textrm{min}_{k'} (c(i-1,j,k') + w((i-1,j),(i,j)) * S(k,k')\\ + \textrm{min}_{k'} (c(i,j-1,k') + w((i,j-1),(i,j)) * S(k,k')$\\
+The dynamic program fills in a $n$ by $n$ by $m$ dimensional array.  The variables $i$ and $j$ move left right and top down.  For each fixed $i$ and $j$ value, all $k$ values between $1$ and $m$ are filled in, before proceeding to the next $i,j$ value.  The final value returned is the $c(n,n,k)$ value that is smallest over all valid $k$.}
+  
+ 
+ \end{enumerate}
+
+
+
+\problem{Asymptotic Notation} \newline
+
+Prove that $\sqrt{n} = O(\frac{n}{\log n})$.  
+
+\ans{Goal: Give $c$ and $n_{0}$ such that $\sqrt{n} \leq
+c\frac{n}{\log n}$ for all $n\geq n_{0}$.  The inequality we want then is:
+\begin{eqnarray}
+\sqrt{n} & \leq & c\frac{n}{\log n}\\
+\sqrt{n} * \frac{\log n}{n} & \leq & c\\
+\frac{\log n}{\sqrt{n}} & \leq & c\\
+\end{eqnarray}
+So for $c=1$ and $n_{0}=1$, it's the case that $\sqrt{n} \leq
+c\frac{n}{\log n}$ for all $n\geq n_{0}$
+}

@@ -1,0 +1,505 @@
+%Midterm exam for CS461 for Fall 2003
+
+\documentclass[11pt]{article}
+\usepackage{fullpage,pst-all,epsfig}
+
+\newcommand{\comment}[1]{}
+\newcommand{\Le}{\textbf{L}}
+
+\newcommand{\ans}[1]{\emph{Solution: #1}}
+%\newcommand{\ans}[1]{}
+
+\newcommand{\seq}[1]{ \langle #1,\cdots \, \rangle}
+\newcommand{\seqi}[1]{ \langle #1 \rangle}
+	
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+\def\handout{Midterm Examination}
+\vspace*{-.75in}
+{\large University of New Mexico}\\
+{\large Department of Computer Science}\\
+\vspace*{0.5in}
+{\LARGE {\bf \handout}}\\
+\vspace*{0.1in}
+{\large CS 362 Data Structures and Algorithms}\\
+{\large Spring, 2005}\\ [0.3in]
+\end{center}
+
+\vfill
+
+\makeatletter
+\long\def\hint#1{({\em Hint\/}: #1)}
+% \def\@oddhead{\rm\makebox[0in][l]{CS 461 Midterm ---Fall,
+% 2003}\hfil\thepage\hfil\makebox[0in][r]{Name:\rule[-0.1in]{2in}{.5pt}}}
+\let\@evenhead\@oddhead
+\def\@oddfoot{}
+\let\@evenfoot\@oddfoot
+
+\def\problem#1{\def\problemheading{#1}\clearpage\item{\bf #1}}
+
+% Comment out the above 'problem' def and use the one below to get
+% all the problems on a single page, instead of page break each time.
+%\def\problem#1{\def\problemheading{#1}\item{\bf #1}}
+
+\def\extrapage{\addtocounter{enumi}{-1}\clearpage\item{\bf \problemheading, continued.}}
+
+\let\part\item
+\renewcommand{\theenumii}{\alph{enumii}}
+\makeatother
+\parindent 0pt
+
+\vfill
+\centerline{
+\Large
+\begin{tabular}{|l|}  \hline
+Name: \hspace*{2in} \\ \hline
+Email: \hspace*{2in}\\ \hline
+\end{tabular}
+}
+\vfill
+
+\hrule
+\begin{itemize}
+\item Print your name and email, {\em neatly} in the space provided
+above; print your name at the upper right corner of {\em every} page.
+Please print legibly.
+
+\item This is an {\em closed book} exam.  You are permitted to use
+\emph{only} two pages of ``cheat sheets'' that you have brought to the
+exam and a calculator.  {\em Nothing else is permitted.}
+
+\item Do all five problems in this booklet. {\em Show your work!} 
+You will not get partial credit if we cannot figure out how you
+arrived at your answer.
+
+\item Write your answers in the space provided for the corresponding
+problem. Let us know if you need more paper.
+
+\item Don't spend too much time on any single problem. The questions
+are weighted equally. If you get stuck, move on to something else and
+come back later.
+
+\item If any question is unclear, ask us for clarification.
+
+\end{itemize}
+\hrule
+\vfill
+\centerline{
+\Large
+\begin{tabular}{|c|c|c|c|}  \hline
+Question & Points & Score & Grader \\  \hline\hline
+1 & 20 & & \\  \hline
+2 & 20 & & \\  \hline
+3 & 20 & & \\  \hline
+4 & 20 & & \\  \hline
+5 & 20 & & \\  \hline
+\hline Total & 100 & & \\  \hline
+\end{tabular}
+}
+\vfill
+
+\newpage
+
+\begin{enumerate}
+ 
+
+\problem{Short Answer}\\
+
+Multiple Choice:
+
+The following choices will be used for the multiple choice problems.
+\begin{enumerate}
+\item $\Theta (1)$
+\item $\Theta (\log^{*} n)$
+\item $\Theta (\log n)$
+\item $\Theta (\sqrt{n})$
+\item $\Theta (n)$
+\item $\Theta (n\log n)$
+\item $\Theta (n^{2})$
+\item $\Theta (n^{3})$
+\item $\Theta(2^{n})$
+\end{enumerate}
+
+For each of the questions below, choose one of the above possible
+answers.  Please write the letter of your chosen answer to the left of
+the question.
+
+\begin{enumerate}
+\item $2^{(1/2)\log n}$ \ans{$\Theta (\sqrt{n})$}
+
+\item Worst case cost of a single call to Find-Set using the
+union-find data structure over $n$ elements \ans{$\Theta (n)$}
+
+\item Amortized cost of an insertion of an element into a dynamic
+table \ans{$\Theta (1)$}
+
+\item Solution to the recurrence $T(n) = 4T(n/2) + 1$
+\ans{$\Theta (n^{2})$}
+\item Solution to the recurrent $T(n) = 2T(n/2) + 1$ \ans{$\Theta (n)$}
+\end{enumerate}
+
+True or False:  Justify your answer briefly (10 points total). 
+{\bf Circle your final answers.} 
+\begin{enumerate}
+
+\item If an operation takes $O(1)$ worst case time, then it takes
+$O(1)$ amortized time. \ans{True}
+
+\item Greedy algorithms do not always find the correct solutions \ans{True}
+
+\item $\log n$ is $o(\log^{2}{n})$ \ans{True}
+
+\item $\log n^{2}$ is $\Omega (\log^{2} n)$ \ans{False}
+
+\item A dynamic programming algorithm always uses some type of
+recurrence relation. \ans{True}
+
+\end{enumerate}
+
+\problem{Annihilators} \newline
+
+Consider the following function:
+\begin{verbatim}
+int f (int n){
+  if (n==0) return 0;
+  else{
+    val = f (n-1);
+    val += n;
+    return val;
+  }
+}
+\end{verbatim}
+
+\begin{enumerate}
+\item Let $f(n)$ be the value returned by the function $f$ when
+given input $n$.  Write a recurrence relation for $f(n)$ \\ \ \\
+\ans{$f(n) = f(n-1) + n$}
+
+\item Now give the general form for the solution for $f(n)$ using
+annihilators. \emph{You need not solve for the constants.}\\
+
+\ans{First we annihilate the homogeneous part, $f(n) = f(n-1)$.  This
+is annihilated by $\Le -1$.  Now we must annihilate the nonhomogeneous
+part $f(n) = n$.  It's not hard to see that $(\Le -1)^{2}$ annihilates
+this nonhomogeneous part.  So the annihilator for the entire function
+is $(\Le -1)^{3}$.  Looking this up in the lookup table, we see that
+$f (n)$ is of the form:
+\begin{eqnarray}
+f (n) & = & c_{1}{n}^{2} + c_{2}n + c_{3}
+\end{eqnarray}}
+
+\end{enumerate}
+
+%\extrapage 
+
+
+\problem{Dynamic Programming}
+
+Consider a new variant of the string alignment problem defined as
+follows.  \emph{1) Each column containing a blank costs two; 2) a
+column containing two characters that are different match costs one
+and a column containing two characters that are the same costs zero;
+and 3) we want to find an alignment of \emph{minimal} cost.} For
+example assume we are trying to align the two strings ``ALGORITHM''
+and ``AGORITHM''.  The alignment below would have cost $2$
+and would be an optimal alignment since it minimizes the cost.\\
+
+\begin{tabular}{ccccccccc}
+A & L & G & O & R & I & T & H & M\\
+A &  &  G & O & R & I & T & H & M \\
+\end{tabular}\\
+
+\begin{enumerate}
+\item The recurrence relation for the optimal cost of aligning two
+strings $A$ and $B$ in the original variant of the string alignment
+problem is given in the formula below.  $E(i,j)$ is the optimal value
+of aligning $A[0..i]$ and $B[0..j]$.  Give the modifications needed to
+get a recurrence relation for the optimal cost in the new variant of
+the problem.  \emph{To do this, you will need to make several small
+changes to the formula below.}  Please cross out the values (or words)
+to change and write the new values next to the crossed out ones.
+
+$$
+\begin{array}{lll}
+E(0,j) & = & j \textrm{ for all } j,\\
+E(i,0) & = & i \textrm{ for all } i\\
+E(i,j) & = & \min \left\{
+			\begin{array}{l}
+			E(i-1,j)+1,\\
+			E(i,j-1)+1,\\
+			E(i-1,j-1) +  \left\{ \begin{array}{l}
+                                      0 \textrm{ if } A[i]=B[j]\\
+                                      1 \textrm{ if } A[i]\neq B[j]
+                                      \end{array} \right\}
+			\end{array} \right\}
+\end{array}
+$$
+
+\item Now use this new recurrence to find the optimal alignment cost
+under this new variant for the two strings $ba$ and $cb$.  Do this by
+filling in the nine entries in the following dynamic programming
+table.  Also include the arrows used to reconstruct an optimal
+solution.  To the right of the table, give an alignment which
+achieves the optimal cost.\\ \ \\
+
+\def\x{$\to$} \def\y{$\downarrow$} \def\z{$\searrow$}
+\def\Z{\pmb{\pmb{$\searrow$}}} \def\B#1{\textbf{#1}}
+
+
+\def\arraystretch{2}
+\begin{tabular}{|c|cc|cc|cc|}
+\hline\strut
+   &   &\  & b  & & a &\\
+\hline\strut
+   &   &\  &   & & & \\
+\hline\strut
+c  &   &   &   & & & \\
+\hline\strut
+b  &   &   &  & & & \\
+\hline
+\end{tabular}
+
+\def\x{$\to$} \def\y{$\downarrow$} \def\z{$\searrow$}
+\def\Z{\pmb{\pmb{$\searrow$}}} \def\B#1{\textbf{#1}}
+
+\def\arraystretch{0.75}
+\ans{$$
+\begin{array}{lll}
+E(0,j) & = & 2*j \textrm{ for all } j,\\
+E(i,0) & = & 2*i \textrm{ for all } i\\
+E(i,j) & = & \min \left\{
+			\begin{array}{l}
+			E(i-1,j)+2,\\
+			E(i,j-1)+2,\\
+			E(i-1,j-1) +  \left\{ \begin{array}{l}
+                                      0 \textrm{ if } A[i]=B[j]\\
+                                      1 \textrm{ if } A[i]\neq B[j]
+                                      \end{array} \right\}
+			\end{array} \right\}
+\end{array}
+$$
+\begin{tabular}{|@{~}c@{~}|c@{}c@{}c@{}c@{}c|}
+\hline\strut
+   &   &   & b &   & a\\
+\hline\strut
+   & 0 &\x & 2 &\x & 4\\
+   &\y &\z &   &\z &  \\
+c  & 2 &   & 1 &\x & 3\\
+   &\y &\z &   &\z &  \\
+b  & 4 &   & 2 &   & 2\\
+\hline
+\end{tabular}
+Alignment:
+\begin{tabular}{cc}
+b & a\\
+c & b\\
+\end{tabular}\\
+}
+
+\end{enumerate}
+
+\problem{Amortized Analysis}
+
+Consider a linked list that has the following operations defined onit:
+
+\begin{itemize}
+\item \emph{AddLast(x)}: Adds the element x to the end of the list
+\item \emph{RemoveOdds()}: Removes every element at a location which
+is an odd number in the list.  I.e. removes the first, third, fifth,
+etc., elements of the list.
+
+\end{itemize}
+Assume these operations have the following costs:
+\begin{itemize}
+\item \emph{AddLast(x)} - cost equals $1$
+\item \emph{RemoveOdds()} - cost equals the number of elements in the list
+\end{itemize}
+
+\begin{enumerate}
+\item Assume we perform $n$ operations on the stack.  What is the
+worst case run time of a call to RemoveOdds?  Justify your answer. \\ \ \\ \
+\\ \ \\ \ 
+\ans{Worst case is $O(n)$ which happens when we call AddLast() $n-1$
+times and then call RemoveOdds()}
+
+\item \emph{Accounting Method}.  Now you will show that the amortized
+cost of these two operations is small using the taxation (accounting)
+method.
+\begin{enumerate}
+\item First give the amount that you will charge AddLast() and the amount
+that you will charge RemoveOdds().
+\item Next show how you will use these charges to pay for the actual
+costs of these operations.
+\item Finally write down the amortized cost per operation.
+\end{enumerate}
+\ans{AddLast gets charged $3$ dollars.  RemoveOdds gets charged $0$
+dollars.  When we call AddLast, we spend $1$ dollar immediately to pay
+for the cost of the call, we then store the remaining two dollars with
+the item added to the list.  When we call RemoveOdds(), every element
+in the list has two dollars stored with it.  We take one dollar from
+each item to pay the cost of the call to RemoveOdds().  Further, for
+every item deleted from the list, we take the extra dollar stored at
+that item and place it on the next item in the list.  Thus, at the end
+of the call to RemoveOdds() all elements in the list still have two
+dollars stored on them.  The amortized cost per operation is thus $O(1)$}
+
+\pagebreak
+
+\item \emph{Potential Method}.  You will next use the potential method
+to get the amortized cost per operation.  Let $L_{i}$ be the list
+after the $i$-th operation and let $num(S_{i})$ be the number of
+elements in $L_{i}$.  You will use the following potential function:
+
+\[
+\phi_{i} = 2*num(L_{i})
+\]
+\begin{enumerate}
+\item First show that this potential function is valid
+%(i.e. $\phi_{0}=0$ and $\phi_{i} \geq 0$ for all $i$)
+\item Next use this potential function to calculate the amortized
+costs of AddLast and RemoveOdds (Recall that $a_{i} = c_{i} + \phi_{i}
+- \phi_{i-1}$ where $a_{i}$ is the amortized cost of the $i$-th
+operation and $c_{i}$ is the actual cost)
+\end{enumerate}
+\ans{The number of items on the list is initally $0$ and is always
+nonnegative so $\phi$ is valid.  First we calculate the amortized cost
+of AddLast() at time $i$.  Note that $c_{i}=1$ and $\phi_{i} -
+\phi_{i-1} = 2$.  Thus $a_{i} = 3$.  Next we calculate the amortized
+cost of RemoveOdds().  Note that $c_{i} = num(S_{i-1})$.  Further note
+that $\phi_{i} - \phi_{i-1} = - num(S_{i-1})$.  Thus $a_{i} = 0$.
+This implies that the amortized cost of both operations is $O(1)$.}
+
+
+
+\end{enumerate}
+
+
+
+\problem{Recurrences}
+
+Let $T$ be a $3$-ary tree (i.e. branching factor $3$), with a root $r$
+and subtrees $T1$, $T2$ and $T3$ directly below $r$.  We say that $T$
+is a \emph{height-balanced} $3$-ary tree if:
+
+\begin{itemize}
+\item The heights of $T1$, $T2$, and $T3$ differ by at most one.
+(i.e. the max height of $T1$, $T2$ and $T3$ is at most one more than
+the min height of $T1$, $T2$ and $T3$)
+\item $T1$,$T2$ and $T3$ are themselves all height balanced $3$-ary
+trees
+\end{itemize}
+
+Let $T(n)$ be the smallest number of nodes needed to obtain a
+height-balanced $3$-ary tree of height $n$
+
+\begin{enumerate}
+
+\item Write the recurrence for $T(n)$ \ \\ \ \\  \ \\
+
+\ans{To get a height-balanced tree of height $n$ with the smallest
+number of nodes, need one subtree of height $n-1$ and the other two
+subtrees can be of height $n-2$.  Thus $T(n) = T(n-1) + 2T(n-2) + 1$.}
+
+
+\item Now solve this recurrence.  You need only give the general form
+for the solution; you do not need to solve for the constants.
+
+\ans{$\Le^{2} - \Le -2$ annihilates the homogeneous terms and $\Le -1$
+annihilates the non-homogeneous terms.  Factoring, we get that the
+whole annihilator is $(\Le -2)(\Le +1)(\Le-1) $.  The Lookup table
+tells us that the general solution to the recurrence is then $T(n) =
+c_{1}2^{n} + c_{2}(-1)^{n} + c_{3}$.  This was not required but if you
+want to solve for the constants, note that $T(0) = 1$, $T(1)=2$ and
+$T(2)=5$.  Solving $3$ equations and 3 unknowns gives that $T(n) =
+(4/3)2^{n} + (1/6)(-1)^{n} - (1/2)$.  Despite all the fractions, this
+formula always gives an integer.  Try it out for higher values of $n$.
+Cool, huh?}
+
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
+
+% \item {\bf True or False}:  In a max-heap, the element with smallest key is always at the
+% rightmost leaf node of the heap? \ans{F: it's always at a leaf node
+% but not necessarily the rightmost leaf node}
+% \item {\bf True or False}:  Bubblesort requires $O (n)$ extra space (not counting the space
+% to store the array to be sorted)? \ans{F: it takes $O (1)$ extra space}
+% \item {\bf True or False}:  $1/\log n$ is $o (1)$? \ans{T}
+% \item {\bf True or False}:  $\log \sqrt{n}$ is $\Theta (\log n)$?
+% \ans{T: since $\log \sqrt{n} = 1/2\log n$}
+% \item {\bf True or False}:  $2^{n-1}$ is $o (2^{n})$?\ans{F: since $2^{n-1}=1/2*2^{n}$}
+% \problem{Annihilators}\\
+
+% Consider the recurrence $T (n) = 2T (n-1) - T (n-2) + 4$, $T (0)=0$, $T (1)=0$.
+% Solve this recurrence \emph{exactly} using annihilators.  Don't forget
+% to check your answer.
+
+% \ans{Consider the homogeneous part first.  Let $T_{n} = 2T (n-1) - T
+% (n-2)$, and $T = \seqi{T_{n}}$.  Then
+% \begin{eqnarray}
+% T & = & \seqi{T_{n}}\\
+% \Le T & = & \seqi{T_{n+1}}\\
+% \Le^{2} T & = & \seqi{T_{n+2}}
+% \end{eqnarray}
+% Since $\seqi{T_{n+2}} = \seqi{2T_{n+1}-T_{n}}$, we know that
+% $\Le^{2}T-2\Le T + T = \seqi{0}$, and thus $\Le^{2}-2\Le +1 = (\Le -1)
+% (\Le -1)$ annihilates $T$.  Further we know that $(\Le -1)$
+% annihilates the non-homogeneous part.  Thus the annihilator of the
+% whole sequence is $(\Le -1)^{3}$.  Thus $T (n)$ is of the form:
+% \[
+% T (n) = c_{1}n^{2}+c_{2}n+c_{3}
+% \]
+% We know:
+% \begin{eqnarray}
+% T (0) = 0 & = & c_{3}\\
+% T (1) = 0 & = & c_{1} + c_{2}\\
+% T (2) = 4 & = & 4 c_{1} + 2c_{2}
+% \end{eqnarray}
+% so $c_{1}=2$, $c_{2}=-2$, $c_{3}=0$ and thus
+% \[
+% T (n) = 2n^{2}-2n
+% \]
+% Check: $T (3) = 2*4-0+4=12$ and $2*9-6=12$.}
+
+
+
+
+% \problem{Substitution Method}\\
+% Consider the following recurrence: $$T(n) = T(n-1) + T(n-2) - n + 3,$$
+% where $T(1) = 1,T(2)=2$.\\ \ \\ Show that $T(n) = n$ by induction.
+% Include the following in your proof: 1)the base case(s) 2)the
+% inductive hypothesis and 3)the inductive step.
+
+% \ans{Base Case: T(1) = 1.\\Inductive Hypothesis: For all $j<n$, T(j) =
+% j\\Inductive Step: We must show that $T(n)=n$, assuming the inductive
+% hypothesis.  
+% \begin{eqnarray}
+% T(n) & = & T(n-1) + T(n-2) - n + 3\\
+% T(n) & = & (n-1) + (n-2) - n + 3\\
+% T(n) & = & n
+% \end{eqnarray}
+% where the inductive hypothesis allows us to make the replacements in
+% the second step.}
+
+% \item {\bf True or False}: If $X$ and $Y$ are sequences that both
+% begin with the character $a$, then some longest common subsequence of
+% $X$ and $Y$ begins with the character $a$. \ans{True}
+
+
+\problem{Asymptotic Notation} \newline
+
+Prove that $\sqrt{n} = O(\frac{n}{\log n})$.  
+
+\ans{Goal: Give $c$ and $n_{0}$ such that $\sqrt{n} \leq
+c\frac{n}{\log n}$ for all $n\geq n_{0}$.  The inequality we want then is:
+\begin{eqnarray}
+\sqrt{n} & \leq & c\frac{n}{\log n}\\
+\sqrt{n} * \frac{\log n}{n} & \leq & c\\
+\frac{\log n}{\sqrt{n}} & \leq & c\\
+\end{eqnarray}
+So for $c=1$ and $n_{0}=1$, it's the case that $\sqrt{n} \leq
+c\frac{n}{\log n}$ for all $n\geq n_{0}$
+}

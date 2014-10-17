@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+%\input{preamble}
+  
+%\newcommand{\ans}[1]{\emph{Solution: #1}}
+
+\newcommand{\ans}[1]{}
+
+\begin{document}
+
+\title{CS 362, HW1}
+
+\author {Prof. Jared Saia, University of New Mexico}
+
+\date{\emph{Due: September 7th}}
+\maketitle
+
+If you have an older version of the book, check with a friend to make
+sure you get the right numbers for exercises (the numbers are
+different for the first and second editions)
+
+\begin{enumerate}
+
+%\item Exercise 3.1-2
+
+\item Exercise 3.1-4
+
+\item Exercise 3.1-5
+
+\item Exercise 3.1-6
+
+\item Exercise 4.1-6
+
+\item Exercise 4.1-1
+
+\item Exercise 4.2-1
+
+\item Exercise 4.2-3
+
+\item Exercise 4.3-1
+
+\item Exercise 4.3-2
+
+\item Extra Credit: Problem 4-2
+
+\item Extra Credit: Problem 4-6
+
+\end{enumerate}
+
+\end{document}

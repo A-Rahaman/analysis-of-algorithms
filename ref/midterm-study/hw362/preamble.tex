@@ -1,0 +1,164 @@
+%%
+%% Jared's preamble.
+%%
+
+%
+% Need these packages... 
+%
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amsfonts}
+\usepackage{amsopn}
+\usepackage{float}
+
+%
+% Theorem like environments.
+%
+ \newtheorem{theorem}{Theorem}
+ \newtheorem{lemma}[theorem]{Lemma}
+ \newtheorem{corollary}[theorem]{Corollary}
+ \newtheorem{proposition}[theorem]{Proposition}
+ \newtheorem{fact}{Fact}
+   \newtheorem{definition}{Definition}
+   \newtheorem{observation}{Observation}
+
+
+%algorithms and procedures
+\floatstyle{ruled}
+\newfloat{algorithm}{thp}{loa}
+\floatname{algorithm}{Algorithm}
+
+\floatstyle{ruled}
+\newfloat{procedure}{thp}{lop}
+\floatname{procedure}{Procedure}
+
+\floatstyle{ruled}
+\newfloat{protocol}{thp}{lop}
+\floatname{protocol}{Protocol}
+
+
+
+%
+% Don't use this, `proof' and `proofby' redefine this env
+% to allow you to specify a proof with a different type of 
+% enclosing environment for the proof body.
+%
+
+% \newenvironment{proof}[1][Proof:]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist} \qed}
+
+%
+% This is an environment that does nothing.  You could use this
+% for a proof if you did not want an enclosing environment.
+%
+\newenvironment{none}{}{}
+
+
+
+%
+% often used in proofs.
+%
+\newcommand{\ih}{inductive hypothesis}
+
+
+%
+% BlackBoardBold symbols.
+%
+\newcommand{\integers}{\mathbb Z}
+\newcommand{\reals}{\mathbb R}
+\newcommand{\complex}{\mathbb C}
+\newcommand{\rationals}{\mathbb Q}
+\newcommand{\naturals}{\mathbb N}
+\newcommand{\F}{\mathbb F}
+
+
+
+%
+% This adds the cute little box at the end of a proof.
+% the proof and proofby environment automatically do this.
+%
+%\newcommand{\qed}{\nopagebreak\hfill $\Box$}
+
+
+%
+% this doesn't really work.
+%
+\newcommand*{\ubar}[1]{\ensuremath{\underline{#1}}}
+
+
+
+%
+% For referencing equations, lemmas, theorems etc.
+%
+\newcommand{\lref}[1]{Lemma~\ref{#1}}
+\newcommand{\eqnref}[1]{Equation~\ref{#1}}
+\newcommand{\thmref}[1]{Theorem~\ref{#1}}
+
+
+%
+% these are for text.  some people like to write iff or WLOG, so
+% we will provide functions.  Remempler to use them like this:
+% ``yadda yadda X \IFF\ Y yadda''
+% or
+% ``yadda \WLOG, yadda''
+%
+\newcommand{\IFF}{if and only if}
+\newcommand{\WLOG}{without loss of generality}
+
+% isomorphic to: this is =~
+\newcommand{\iso}{\cong}
+
+\newcommand{\defeq}{\stackrel{\mathrm{\small def}}{=}}
+
+% derivitives.
+\newcommand{\deriv}[2]{\tfrac{d #1 }{d #2}}
+\newcommand{\partialderiv}[2]{\tfrac{\partial #1 }{\partial #2}}
+
+%
+% probability stuff.
+%
+\newcommand{\prob}[1]{\text{\bf Pr}\!\left[#1\right]}
+\newcommand{\expect}[1]{\text{\bf E}\!\left[#1\right]}
+
+%
+% random functions of one argument.
+%
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\setsize}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\pair}[1]{\left\langle #1 \right\rangle}
+%
+% random functions with no arguments.
+%
+\newcommand{\divides}{\mid}
+
+%
+% Such that is for equations not for text.
+%
+\newcommand{\suchthat}{\ :\ }
+
+
+%
+% quickly define math abreviations for repeated forms. e.g.
+% \mathdef{\PIi}{\pi_i}
+%
+% which allows you to use $x_\PIi$ instead of $x_{\pi_i}$
+%
+\newcommand{\mathdef}[2]{\newcommand{#1}{\ensuremath{#2}}}
+
+%
+% New math operators.  These work like `gcd' or `log'.
+%
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\img}{img}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\argmax}{argmax}
+\DeclareMathOperator{\avg}{avg}
+%\DeclareMathOperator{\det}{det}
+
+%
+% the end
+%
