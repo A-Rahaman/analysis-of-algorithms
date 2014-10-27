@@ -1,0 +1,208 @@
+%%%%%latex preamble%%%%%
+\documentclass[titlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+  \linewidth
+  \else
+  \Gin@nat@width
+  \fi
+}
+\makeatother
+
+
+\usepackage{listings}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{alltt}
+\usepackage[sc]{mathpazo}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=1.5cm,rmargin=1.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+  bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+{hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{tikz}
+ %changes default sectioning commands -> 1,a, etc.
+%\usepackage{breakurl}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+\renewcommand{\thesubsubsection}{\roman{subsection}.}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%%% Header and Footer %%% 
+\lhead{}
+\chead{\leftmark}
+\rhead{}
+\lfoot{Aaron Gonzales; Algorithms}
+\cfoot{Homework 5}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\begin{document}
+
+\title{Homework 5 \\ CS561 Fall 2014}
+\author{Aaron Gonzales}
+\maketitle
+
+
+\section{Probability}
+\begin{quote}
+  \textbf{ Solve Problem 5 on the midterm from 2013 at}
+\end{quote}
+
+
+
+\section{Binary Search - Problem 17-2}
+\begin{quote}
+  \textbf{
+	Binary search of a sorted array takes logarithmic search time, but the time
+	to insert a new element is linear in the size of the array. We can improve
+	the time for insertion by keeping several sorted arrays.  Specifically,
+	suppose that we wish to support SEARCH and INSERT on a set of n elements.
+	Let $k =  \lceil lg(n+1)\rceil $ and let the binary representation of n be
+	$ \langle n_{ k-1 }, n_{k-2},\dots n_0 \rangle$.  We have k sorted arrays $
+	A_0, A_1, \dots A_{k-1}$ where for $ i = 0, 1, \dots k-1$, the length of
+	array $A_i$  is $2^i$ .  Each array is either full or empty, depending on
+	whether $n_i = 1 $ or $n_i = 0$, respectively. The total number of elements
+	held in all k arrays is therefore $\sum_{i = 0}^{k -1 } n_i 2^i = n $ .
+	Although each individual array is sorted, elements in different arrays bear
+	no particular relationship to each other.}
+\end{quote}
+
+
+  \subsection{Describe how to perform the SEARCH operation for this data structure.
+	Analyze its worst-case running time.}
+	\subsubsection{answer}
+
+
+
+
+	\subsection{Describe how to perform the INSERT operation. Analyze its
+	worst-case and amortized running times.  }
+	\subsubsection{answer}
+
+
+
+
+
+
+  \subsection{Discuss how to implement DELETE.}
+  \subsubsection{answer}
+
+\section{Problem 22-4 (Reachability)}
+\begin{quote}
+\textbf{ Let $G = (V,E) $ be a directed graph in which each vertex $ u \in V$
+  is labeled with a unique integer $L(u) $ from the set $\{1,2,\dots,|V|\}$.
+  For each vertex $u \in V$ let $R(u) = \{v \in V : u \rightsquigarrow v\}$ be the set
+  of vertices that are reachable from $u$ Define min(u) to be the vertex in
+  $R(u)$ whose label is minimum, i.e., min(us) is the vertex $v$ such that
+  $L(v) = min\{L(w) : w \in R(u)\}. $ give an $O(V + E)$ time algorithm that
+  computes min(u) for all vertices $u \in V$.
+}
+\end{quote}
+
+\subsubsection{answer}
+
+\section{union by rank}
+\begin{quote}
+  \textbf{Professor Curly conjectures that if we do union by rank,
+\emph{without path compression}, the amortized cost of all operations
+is $o(\log n)$.  Prove him wrong by showing that if we do union by
+rank without path compression, there can be $m$ MAKESET, UNION and
+FINDSET operations, $n$ of which are MAKESET operations, where the
+total cost of all operations is $\theta(m \log n)$.}
+\end{quote}
+
+
+\section{graphs}
+\begin{quote}
+  \textbf{Assume you are given a connected graph $G$.  Give an algorithm
+that returns a vertex $v$ in $G$, such that if $v$ is removed, $G$ is
+still connected.  Motivation: $G$ might represent a social network at
+a company and you want to choose some unlucky person to fire whose
+removal will not disconnect the company network.}
+\end{quote}
+
+
+\section{Moe's graphs}
+\begin{quote}
+  \textbf{Professor Moe conjectures that for any graph $G$, the set of
+edges \{(u,v) : there exists a cut (S,V-S) such that (u,v) is a light
+edge crossing (S, V-S)\} always forms a minimum spanning tree.  Given
+a simple example of a connected graph that proves him wrong.}
+\end{quote}
+
+\section{ Exercise 23.1-2 (``Professor Sabatier conjectures'')}
+\begin{quote}
+  \textbf{Professor Sabatier conjectures the following converse of Theorem
+  23.1. Let $G = (V E)$  be a connected, undirected graph with a real-valued weight function w
+defined on E. Let A be a subset of E that is included in some minimum spanning
+tree for G, let $(S, V- S)$ be any cut of G that respects A, and let $u,v$ be a
+safe edge for A crossing $(S, V-S)$. Then, $(u,v)$ is a light edge for the cut. Show
+that the professor’s conjecture is incorrect by giving a counterexample.}
+\end{quote}
+
+\section{ Exercise 23.1-3 - MST} 
+\begin{quote}
+  \textbf{Show that if an edge $(u,v)$ is contained in some minimum spannign
+  tree, then it is a light edge crossing some cut of the graph.}
+\end{quote}
+\subsubsection{answer}
+
+\section{Wrestlers Exercise 22.2-6 / 22.2-7 } 
+\begin{quote}
+  \textbf{There are two types of professional wrestlers: ``babyfaces'' and
+  ``heels''. Between any pair of professional wrestlers, there may or may not
+be a rivalry. Suppose we have $n$ professional wrestlers and we have a list of
+r pairs of wrestlers for which there are rivalries. Give an $O(n + r)$ time
+algorithm that determines whether it is possible to designate some of the
+wrestlers as babyfaces and the remainder as heels such that each rvailry is
+between a babyface and a heel. Ifi t is posible to perform such a designation,
+your algorithm should produce it.}
+\end{quote}
+
+
+
+
+\end{document}
