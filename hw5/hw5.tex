@@ -86,10 +86,28 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \maketitle
 
 
-\section{Probability}
+\section{Cartels}
 \begin{quote}
-  \textbf{ Solve Problem 5 on the midterm from 2013 at}
+  \textbf{The Juarez Cartel is being investigated by the Federales. The $n$
+  members of the cartel are organized in a pefect binary tree (recall that in a
+perfect binary tree, all leaves are at the same depth and each internal node
+has two children). Each day, the Federales select a node uniformly at random
+from the tree. They then arrest this node and all nodes below it - subordinates
+are arrested due to incriminating information obtained from the selected node.
+All arrested nodes are removed from the tree. \\ what is the expected number of
+days until all nodes are removed? Hint: for each node $v$ let $X_v$ be an IRV
+that is 1 if $v$ is arrested before any of its ancestors fand 0 otherwise. Use
+linearity of expectation. Your solution can use $\Theta$ notation. }
 \end{quote}
+Following the hint, if $X_v$ is our IRV, the probability of the IRV should be
+\[ \frac{1}{log \ell +1} \] where $\ell = height of tree$. We can then see that
+by linearity of expectation 
+\[ \sum_{i=0}^n \frac{1}{log \ell +1} \] and instead of summing over the tree,
+we can notice that we can sum at each level of the tree and bound it from above
+by its height.
+
+\[ \sum_{i=0}^{log n} \frac{2^i}{log n +1} \]
+\[ \Theta(\frac{n}{log n}\] days until everyone is arrested. 
 
 
 
@@ -114,13 +132,44 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   \subsection{Describe how to perform the SEARCH operation for this data structure.
 	Analyze its worst-case running time.}
 	\subsubsection{answer}
+	Searching the whole data structure involves searching each of the sorted
+	arrays in the structure. If an element isn't found in an array, we have to
+	search another array, and so on, so in the worst case we'd have to perform
+	binary search on all of the $k = O(lg n) $ arrays in the structure. Binary search takes $O(lg n)$ time and this sums to $O(lg^2 n)$ time. 
 
+%Search through the preliminary elements of $A_0, \dots, A_{\lg n - 1}$, finding $A_i[0] \leq x$; search $A_i$ for $x$: if $x$ is not
+%  found, search the next $A_{i < j < \lg n}$ such that $A_j[0] \leq x$
+%  or declare ``not found.''
 
-
+%  Worst case, must search through all $A_0, \dots, A_{\lg n}$ arrays
+%  in $\Theta(\lg n)$; each of which must be binary-searched in
+%  $\Theta(\lg n)$ (since already sorted): for a total of $\Theta(\lg^2 n)$.
 
 	\subsection{Describe how to perform the INSERT operation. Analyze its
 	worst-case and amortized running times.  }
 	\subsubsection{answer}
+
+Insert an element as follows:
+  Worst case merge and remerge arrays in $\Theta(2^{\lg n}) \in \Theta(n)$ time; alternatively, merge sorted lists in $\Theta(n)$:
+  \begin{align}
+    \sum_{i=0}^{k-1}2^i &= \left(\frac{2^{k+1} - 1}{2-1}\right)\\
+    &\in \Theta(2^k)\\
+    &\in \Theta(n)
+  \end{align}
+  Since, for every bit set, there are worst-case $\Theta(\lg n)$ merge
+  operations; we can define modify the potential function in the
+  counter example followingly:
+  \begin{align}
+    \Phi(D_i)-\Phi(D_{i-1}) &\leq \lg n\cdot(b_{i-1}-t_i+1) - \lg n\cdot b_{i-1}\\
+    &= \lg n\cdot(t_i - 1)
+  \end{align}
+  And analyze the amortized complexity:
+  \begin{align}
+    \hat{c}_i &= c_i + \Phi(D_i) - \Phi(D_{i-1})\\
+    &= \lg n \cdot t_i + \lg n\cdot(1 - t_i)\\
+    &= \lg n
+  \end{align}
+  The amortized cost of each insert is therefore $\Theta(\lg n)$.
 
 
 
@@ -130,19 +179,46 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   \subsection{Discuss how to implement DELETE.}
   \subsubsection{answer}
 
+For delete - find $A_j$, the first full array; and
+  $A_i$, the array to which $x$ belongs. Remove an element $y$ from
+  $A_j$ and replace $x$ in $A_i$ with it; distribute the remaining
+  items from $A_j$ into $A_0, \dots, A_{j-1}$.
+
+  Worst case analysis: $\Theta(\lg n)$ to find $A_j$; $\Theta(\lg^2 n)$ to find $A_i$; $\Theta(2^{\lg n}) \in \Theta(n)$ to insert $y$
+  into $A_i$; and $\Theta(2^{\lg n - 1}) \in \Theta(n)$ to distribute
+  $A_j$ to its underarrays: for $\Theta(n)$ total in the worst case.
+
 \section{Problem 22-4 (Reachability)}
 \begin{quote}
-\textbf{ Let $G = (V,E) $ be a directed graph in which each vertex $ u \in V$
+\textbf{Let $G = (V,E) $ be a directed graph in which each vertex $ u \in V$
   is labeled with a unique integer $L(u) $ from the set $\{1,2,\dots,|V|\}$.
   For each vertex $u \in V$ let $R(u) = \{v \in V : u \rightsquigarrow v\}$ be the set
-  of vertices that are reachable from $u$ Define min(u) to be the vertex in
-  $R(u)$ whose label is minimum, i.e., min(us) is the vertex $v$ such that
+  of vertices that are reachable from $u$ Define $min(u)$ to be the vertex in
+  $R(u)$ whose label is minimum, i.e., $min(u)$ is the vertex $v$ such that
   $L(v) = min\{L(w) : w \in R(u)\}. $ give an $O(V + E)$ time algorithm that
-  computes min(u) for all vertices $u \in V$.
-}
+  computes min(u) for all vertices $u \in V$.  }
 \end{quote}
-
 \subsubsection{answer}
+N
+If we define the transpose of a directed graph $G = G^T$ such that the graphs
+edges are reversed (e.g., the edge $(a,b)$ becomes $(b,a)$). Feed the graph to
+the following algorithm:
+\begin{lstlisting}
+
+findMinReachable(graph g):
+	g_transpose = g.transpose()
+	for (vertex.discovered == False) in g_transpose:
+		r(vertex) = l(vertex)
+		vertex.setDiscovered(True)
+		for u in dfs(vertex)
+			if u.discovered ==  False:
+			r(u) = r(vertex)
+			u.setDiscovered(True)
+	  
+\end{lstlisting}
+The algorithm is backed by DFS and only searches vertices once, keeping its
+native $O(V + E) $ running time. 
+
 
 \section{union by rank}
 \begin{quote}
@@ -155,7 +231,8 @@ total cost of all operations is $\theta(m \log n)$.}
 \end{quote}
 
 
-\section{graphs}
+
+\section{articulation points}
 \begin{quote}
   \textbf{Assume you are given a connected graph $G$.  Give an algorithm
 that returns a vertex $v$ in $G$, such that if $v$ is removed, $G$ is
@@ -163,6 +240,27 @@ still connected.  Motivation: $G$ might represent a social network at
 a company and you want to choose some unlucky person to fire whose
 removal will not disconnect the company network.}
 \end{quote}
+
+Some definitions to show:
+An articulation point is a point that when removed from a graph, disconnects
+the graph. (See page 621 of CLRS).
+$G_\pi = (V, E_\pi)$ is a DFS tree of $G$. 
+The root of $G_\pi$ is an articulation point iff it has at least two children
+in $G_\pi$. If this vertex is called $r$, if it has no children, then there are
+no other nodes from which it can disconnect the graph and it is not an
+articulation point. If $r$ has only one child, then every other point in
+$G_\pi$ is reachable through the child node and $r$ is not an articulation
+point. If the root has two children in $G_\pi$ then r is an articulation point.
+If the root r has two children, $c_1, c_2$, and $c_1$ was visited first by the
+DFS. If r is not an articulation point, then there must be another path between
+nodes in $C_1, C_2$ that doesn't include $r$. Exploring $C_1$ would have revealed this
+path and as such nodes of $C_2$ should be children of nodes in $C_1$. r is an
+articulation point because they are in disconnected subtrees of r and no path
+exists between them. 
+
+$v$ is a nonroot vertex $v \in G_\pi$. v is an articulation point of $G$ iff v
+has a child $c$ such that there is no back edge from $c$ or any decendent of
+$c$ to an ancestor of v.
 
 
 \section{Moe's graphs}
@@ -172,6 +270,13 @@ edges \{(u,v) : there exists a cut (S,V-S) such that (u,v) is a light
 edge crossing (S, V-S)\} always forms a minimum spanning tree.  Given
 a simple example of a connected graph that proves him wrong.}
 \end{quote}
+\subsubsection{Answer}
+In the figure below, each edge has weight 1.
+\begin{verbatim}
+     a
+    / \
+   b---c
+   \end{verbatim}
 
 \section{ Exercise 23.1-2 (``Professor Sabatier conjectures'')}
 \begin{quote}
@@ -183,12 +288,39 @@ safe edge for A crossing $(S, V-S)$. Then, $(u,v)$ is a light edge for the cut. 
 that the professor’s conjecture is incorrect by giving a counterexample.}
 \end{quote}
 
+A safe edge is defined to be any edge such that when we add it to a set of
+edges $A$ we have a subset of a minimum spanning tree. There may be multiple
+safe edges for a subset $S$ to vertices $V-S$ and not every safe edge must be
+also be a light edge. 
+
+\begin{verbatim}
+    1     1
+  a----b-----c
+--|----|-----|-------C
+  3    2     5
+  |    |     |
+  d	   e     f
+\end{verbatim}
+
+  only the edge $(b,e)$ is a light edge across the cut C but $(a,d)$ and
+  $(c,f)$ are safe. 
+
+
 \section{ Exercise 23.1-3 - MST} 
 \begin{quote}
-  \textbf{Show that if an edge $(u,v)$ is contained in some minimum spannign
+  \textbf{Show that if an edge $(u,v)$ is contained in some minimum spanning
   tree, then it is a light edge crossing some cut of the graph.}
 \end{quote}
 \subsubsection{answer}
+If we have a graph $G$ with MST $T$ having edge $a = (u,v) \in T$, removing $a$
+from $T$ would bifurcate $T$ into sets $R,S$. Then $a$ crosses the cut and if
+it wasn't a light edge for the cut we would have taken the edge with lighter
+weight isntead of $a$ to get a tree with lighter total weight than $T$. This
+would show that $T$ was in fact not an MST and as such, edge $a$ must be a
+light cut for the cut partitioning the graph into $R,S$. 
+
+
+
 
 \section{Wrestlers Exercise 22.2-6 / 22.2-7 } 
 \begin{quote}
@@ -202,7 +334,22 @@ between a babyface and a heel. Ifi t is posible to perform such a designation,
 your algorithm should produce it.}
 \end{quote}
 
+This is equivalent to finding if a graph is bipartite. We can say that a graph
+$G$ is bipartite if it can be partitioned into two sets $X,Y$ such that every
+edge has one end point in $X$ and the other end point in $Y$. 
+If we let graph $G = (V,E)$ be the graph with each vertex representing a
+wrestler and each edge representing a rivalry between wrestlers such that for
+$n$ wrestlers and $r$ rivalries, we have 
+$V = \{v_1, v_2, \dots v_n\} = n = \{n_1, n_2, \dots n\} \text{and} E \{e_1, e_2, \dots e_r\} = \{r_1, r_2, \dots r \}$.  
 
+We can 'color' the unlabled graph as follows to find if it is bipartite. Pick a
+vertex v and label it as ``babyface''. Start a BFS on v. 
 
+For each vertex whose distance from the source label is even, label it as a
+``babyface'' and for each vertex whose distance from the source label is odd, label
+it a ``heel''. If any child has the same label assignment as it's parent, we
+have a non-bipartite graph and can return an answer as such, and if the
+algorithm labels everything without returning a failed value, we have a
+bipartite coloring of the graph with babyfaces and heels.
 
 \end{document}
