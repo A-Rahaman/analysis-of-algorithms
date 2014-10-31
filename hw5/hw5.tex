@@ -87,27 +87,36 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 
 
 \section{Cartels}
-\begin{quote}
-  \textbf{The Juarez Cartel is being investigated by the Federales. The $n$
-  members of the cartel are organized in a pefect binary tree (recall that in a
-perfect binary tree, all leaves are at the same depth and each internal node
-has two children). Each day, the Federales select a node uniformly at random
-from the tree. They then arrest this node and all nodes below it - subordinates
-are arrested due to incriminating information obtained from the selected node.
-All arrested nodes are removed from the tree. \\ what is the expected number of
-days until all nodes are removed? Hint: for each node $v$ let $X_v$ be an IRV
-that is 1 if $v$ is arrested before any of its ancestors fand 0 otherwise. Use
-linearity of expectation. Your solution can use $\Theta$ notation. }
-\end{quote}
-Following the hint, if $X_v$ is our IRV, the probability of the IRV should be
-\[ \frac{1}{log \ell +1} \] where $\ell = height of tree$. We can then see that
-by linearity of expectation 
-\[ \sum_{i=0}^n \frac{1}{log \ell +1} \] and instead of summing over the tree,
-we can notice that we can sum at each level of the tree and bound it from above
-by its height.
+  \begin{quote}
+    \textbf{The Juarez Cartel is being investigated by the Federales. The $n$
+    members of the cartel are organized in a pefect binary tree (recall that in a
+  perfect binary tree, all leaves are at the same depth and each internal node
+  has two children). Each day, the Federales select a node uniformly at random
+  from the tree. They then arrest this node and all nodes below it - subordinates
+  are arrested due to incriminating information obtained from the selected node.
+  All arrested nodes are removed from the tree. \\ what is the expected number of
+  days until all nodes are removed? Hint: for each node $v$ let $X_v$ be an IRV
+  that is 1 if $v$ is arrested before any of its ancestors fand 0 otherwise. Use
+  linearity of expectation. Your solution can use $\Theta$ notation. }
+  \end{quote}
 
-\[ \sum_{i=0}^{log n} \frac{2^i}{log n +1} \]
-\[ \Theta(\frac{n}{log n}\] days until everyone is arrested. 
+  Following the hint, if $X_v$ is our IRV, the probability of the IRV should be
+  \[ \frac{1}{log \ell +1} \] where $\ell = height of tree$. We can then see that
+  by linearity of expectation 
+  \[ \sum_{i=0}^n \frac{1}{\ell +1} \] and instead of summing over the tree,
+  we can notice that we can sum at each level of the tree and bound it from above
+  by its height as was done in the class version of recursion trees/master
+  method derivation. 
+
+  \[ \sum_{i=0}^{\ell} \frac{2^i}{\ell +1} \]
+
+  if we rewrite the sum as a recurrence relation:
+  \[ A(i) = \sum_{i=0}^{\ell} \frac{2^i}{\ell +1} \]
+  \[ A(i) = A(i-1) + \frac{2^i}{\ell +1} \]
+  we can see that a trivial loose upper bound for this is $O(n)$ 
+  and that a tighter bound is 
+  \[ \Theta\left(\frac{n}{log n}\right) \] 
+  days until everyone is arrested\footnote{trivial algebra omitted}. 
 
 
 
@@ -129,74 +138,52 @@ by its height.
 \end{quote}
 
 
-  \subsection{Describe how to perform the SEARCH operation for this data structure.
-	Analyze its worst-case running time.}
-	\subsubsection{answer}
-	Searching the whole data structure involves searching each of the sorted
-	arrays in the structure. If an element isn't found in an array, we have to
-	search another array, and so on, so in the worst case we'd have to perform
-	binary search on all of the $k = O(lg n) $ arrays in the structure. Binary search takes $O(lg n)$ time and this sums to $O(lg^2 n)$ time. 
-
-%Search through the preliminary elements of $A_0, \dots, A_{\lg n - 1}$, finding $A_i[0] \leq x$; search $A_i$ for $x$: if $x$ is not
-%  found, search the next $A_{i < j < \lg n}$ such that $A_j[0] \leq x$
-%  or declare ``not found.''
-
-%  Worst case, must search through all $A_0, \dots, A_{\lg n}$ arrays
-%  in $\Theta(\lg n)$; each of which must be binary-searched in
-%  $\Theta(\lg n)$ (since already sorted): for a total of $\Theta(\lg^2 n)$.
-
-	\subsection{Describe how to perform the INSERT operation. Analyze its
-	worst-case and amortized running times.  }
-	\subsubsection{answer}
-
-Insert an element as follows:
-  Worst case merge and remerge arrays in $\Theta(2^{\lg n}) \in \Theta(n)$ time; alternatively, merge sorted lists in $\Theta(n)$:
-  \begin{align}
-    \sum_{i=0}^{k-1}2^i &= \left(\frac{2^{k+1} - 1}{2-1}\right)\\
-    &\in \Theta(2^k)\\
-    &\in \Theta(n)
-  \end{align}
-  Since, for every bit set, there are worst-case $\Theta(\lg n)$ merge
-  operations; we can define modify the potential function in the
-  counter example followingly:
-  \begin{align}
-    \Phi(D_i)-\Phi(D_{i-1}) &\leq \lg n\cdot(b_{i-1}-t_i+1) - \lg n\cdot b_{i-1}\\
-    &= \lg n\cdot(t_i - 1)
-  \end{align}
-  And analyze the amortized complexity:
-  \begin{align}
-    \hat{c}_i &= c_i + \Phi(D_i) - \Phi(D_{i-1})\\
-    &= \lg n \cdot t_i + \lg n\cdot(1 - t_i)\\
-    &= \lg n
-  \end{align}
-  The amortized cost of each insert is therefore $\Theta(\lg n)$.
-
-
-
-
-
-
-  \subsection{Discuss how to implement DELETE.}
+\subsection{Describe how to perform the SEARCH operation for this data structure.
+Analyze its worst-case running time.}
   \subsubsection{answer}
+  Searching the whole data structure involves searching each of the
+  sorted arrays in the structure. If an element isn't found in an array,
+  we have to search another array, and so on, so in the worst case we'd
+  have to perform binary search on all of the $k = O(lg n) $ arrays in
+  the structure. Binary search takes $O(lg n)$ time and this sums to
+  $O(lg^2 n)$ time. 
 
-For delete - find $A_j$, the first full array; and
-  $A_i$, the array to which $x$ belongs. Remove an element $y$ from
-  $A_j$ and replace $x$ in $A_i$ with it; distribute the remaining
+\subsection{Describe how to perform the INSERT operation. Analyze its
+worst-case and amortized running times.  }
+  \subsubsection{answer}
+  Find the smallest array $A_i$ that is not empty and insert the new item
+  into $A_i$ and move all elements from other arrays $A_0, \dots A_{i-1}$
+  into $A_i$. In the worst case insertion, we have to moe all the current
+  items in the structure (this can include the item being inserted). 
+
+  For any sequence of $n$ insertions, $A_i$ will be changed from empty to
+  full $\frac{n}{2^i}$ times. As such, $n$ operations takes:
+  \[ \sum_{i=0}^{k} \frac{2^i *n }{2^i} = \sum_{i=0}^{k} n = O(n lg n)\] 
+  and over $n$ operations, we get $O(lg n)$ amortized cost.
+
+
+\subsection{Discuss how to implement DELETE.}
+  \subsubsection{answer}
+  Find $A_j$, the first full array; and
+  $A_i$, the array to which $x$ belongs. Remove an element $p$ from
+  $A_j$ and replace $x$ in $A_i$ with it and move  
   items from $A_j$ into $A_0, \dots, A_{j-1}$.
 
-  Worst case analysis: $\Theta(\lg n)$ to find $A_j$; $\Theta(\lg^2 n)$ to find $A_i$; $\Theta(2^{\lg n}) \in \Theta(n)$ to insert $y$
-  into $A_i$; and $\Theta(2^{\lg n - 1}) \in \Theta(n)$ to distribute
-  $A_j$ to its underarrays: for $\Theta(n)$ total in the worst case.
+  In the worst case, we get a time of $O(n)$.
+  which amounts to $O(\lg n)$ to find array $A_j$; $O(\lg^2 n)$ to 
+  find $A_i$; $O(2^{\lg n}) = O(n)$ to insert $p$
+  into $A_i$; and $O(n)$ to move
+  $A_j$ to its underarrays. 
 
 \section{Problem 22-4 (Reachability)}
 \begin{quote}
 \textbf{Let $G = (V,E) $ be a directed graph in which each vertex $ u \in V$
   is labeled with a unique integer $L(u) $ from the set $\{1,2,\dots,|V|\}$.
-  For each vertex $u \in V$ let $R(u) = \{v \in V : u \rightsquigarrow v\}$ be the set
-  of vertices that are reachable from $u$ Define $min(u)$ to be the vertex in
-  $R(u)$ whose label is minimum, i.e., $min(u)$ is the vertex $v$ such that
-  $L(v) = min\{L(w) : w \in R(u)\}. $ give an $O(V + E)$ time algorithm that
-  computes min(u) for all vertices $u \in V$.  }
+  For each vertex $u \in V$ let $R(u) = \{v \in V : u \rightsquigarrow v\}$ be
+  the set of vertices that are reachable from $u$ Define $min(u)$ to be the
+  vertex in $R(u)$ whose label is minimum, i.e., $min(u)$ is the vertex $v$
+  such that $L(v) = min\{L(w) : w \in R(u)\}. $ give an $O(V + E)$ time
+  algorithm that computes min(u) for all vertices $u \in V$.  }
 \end{quote}
 \subsubsection{answer}
 N
@@ -230,7 +217,12 @@ FINDSET operations, $n$ of which are MAKESET operations, where the
 total cost of all operations is $\theta(m \log n)$.}
 \end{quote}
 
-
+The running time of any findset operation in the tree is proportional to the
+depth of the tree, which is the point of path compression. We know that the
+number of total operations $m$ s greater than the total number of makeset
+operations $n$. We know that $n$ operations at a cost of $log n$ reduces down
+to an amortized cost of $log n$ and with up to $m$ total operations, we have an
+overall amortized cost of $m log\, n$ for union without path compression.
 
 \section{articulation points}
 \begin{quote}
@@ -240,43 +232,94 @@ still connected.  Motivation: $G$ might represent a social network at
 a company and you want to choose some unlucky person to fire whose
 removal will not disconnect the company network.}
 \end{quote}
+\subsubsection{Answer}
+  This question is highly related to CLRS 22-2 and will follow most of it. 
+  Some definitions to show:
+  An articulation point is a point that when removed from a graph, disconnects
+  the graph. (See page 621 of CLRS).
+  $G_\pi = (V, E_\pi)$ is a DFS tree of $G$. 
+  The root of $G_\pi$ is an articulation point iff it has at least two children
+  in $G_\pi$. If this vertex is called $r$, if it has no children, then there are
+  no other nodes from which it can disconnect the graph and it is not an
+  articulation point. If $r$ has only one child, then every other point in
+  $G_\pi$ is reachable through the child node and $r$ is not an articulation
+  point. If the root has two children in $G_\pi$ then r is an articulation point.
+  If the root r has two children, $c_1, c_2$, and $c_1$ was visited first by the
+  DFS. If r is not an articulation point, then there must be another path between
+  nodes in $C_1, C_2$ that doesn't include $r$. Exploring $C_1$ would have
+  revealed this path and as such nodes of $C_2$ should be children of nodes in
+  $C_1$. r is an articulation point because they are in disconnected subtrees of
+  r and no path exists between them. 
 
-Some definitions to show:
-An articulation point is a point that when removed from a graph, disconnects
-the graph. (See page 621 of CLRS).
-$G_\pi = (V, E_\pi)$ is a DFS tree of $G$. 
-The root of $G_\pi$ is an articulation point iff it has at least two children
-in $G_\pi$. If this vertex is called $r$, if it has no children, then there are
-no other nodes from which it can disconnect the graph and it is not an
-articulation point. If $r$ has only one child, then every other point in
-$G_\pi$ is reachable through the child node and $r$ is not an articulation
-point. If the root has two children in $G_\pi$ then r is an articulation point.
-If the root r has two children, $c_1, c_2$, and $c_1$ was visited first by the
-DFS. If r is not an articulation point, then there must be another path between
-nodes in $C_1, C_2$ that doesn't include $r$. Exploring $C_1$ would have revealed this
-path and as such nodes of $C_2$ should be children of nodes in $C_1$. r is an
-articulation point because they are in disconnected subtrees of r and no path
-exists between them. 
+  $v$ is a nonroot vertex $v \in G_\pi$. v is an articulation point of $G$ iff v
+  has a child $c$ such that there is no back edge from $c$ or any decendent of
+  $c$ to an ancestor of v. If $C_r$ is the connected component in $G - v $ that
+  has the root of $G_\pi$. Let $s$ be a neighbor of $v$ that is not in $C_r$ and
+  another compenent $C_s$ have $s$. All ancestors of $v$ are in $C_r$ and all
+  decendents of s are in $C_s$. No edges between decendents of s and ancestors of
+  v exist. If there $\exists s$ such that $s$ has no back edge from it or any of
+  the set of its decendents to an ancestor of the node $v$, then there is only
+  one path from the root of our tree goes to $s$ via $v$ and removing $v$ would
+  disconnect the root of tree $G_\pi$ to $s$.
 
-$v$ is a nonroot vertex $v \in G_\pi$. v is an articulation point of $G$ iff v
-has a child $c$ such that there is no back edge from $c$ or any decendent of
-$c$ to an ancestor of v.
+  Let a function $low(v)$ be the lowest number of the DFS tree of any vertex
+  that is either in the dfs subtree with a root at $v$ (which includes v) or
+  connected to a vertex in that subtree by a back edge. If a child $x$ of $v$
+  has $low(v) \geq dfs_num(v)$ then v is an articulation point. 
+\[
+  v.low = min 
+  \begin{cases}
+	v.d, \\
+        w.d: (u,w) \text{is a back edge for a decendent } u \text{of} v
+  \end{cases}
+\]
+
+
+  An algorithm to find the articulation points of a graph could easily be
+  modified to store non-articulation points as well. The algorithm is backed by
+  DFS, which carries a quick runtime $O(V+E)$ and this particular algorithm
+  keeps a seperate list of articulation points to query if someone wants to
+  remove it from a graph. In a full implementation, a class Vertex could hold a
+  field that denotes if it is an articulation point and could be found after
+  the graph is initalized. 
+
+  \begin{lstlisting}
+  init: v.dfs_num = -1  for all v; DFS(v) for all unvisited v.
+  articulation_points ={}
+  DFS(v):
+    v.dfs_num ++
+    v.low = v.dfs_num // initialization
+    for each edge (v,x)
+      if x.dfs_num == -1 # x is undiscovered
+        DFS(x)
+        v.low = min(v.low, x.low)
+        if (x.low >= v.dfs_num)
+        articulation_points.add(v)
+      else if x is not parent of v
+        v.low = min(v.low, x.dfs_num)
+
+    checkIfArticulationPoint(v):
+      return articulation_points.contains(v)
+  \end{lstlisting}
+
+  
+
 
 
 \section{Moe's graphs}
-\begin{quote}
-  \textbf{Professor Moe conjectures that for any graph $G$, the set of
-edges \{(u,v) : there exists a cut (S,V-S) such that (u,v) is a light
-edge crossing (S, V-S)\} always forms a minimum spanning tree.  Given
-a simple example of a connected graph that proves him wrong.}
-\end{quote}
-\subsubsection{Answer}
-In the figure below, each edge has weight 1.
-\begin{verbatim}
-     a
-    / \
-   b---c
-   \end{verbatim}
+  \begin{quote}
+    \textbf{Professor Moe conjectures that for any graph $G$, the set of
+  edges \{(u,v) : there exists a cut (S,V-S) such that (u,v) is a light
+  edge crossing (S, V-S)\} always forms a minimum spanning tree.  Given
+  a simple example of a connected graph that proves him wrong.}
+  \end{quote}
+  \subsubsection{Answer}
+  In the figure below, each edge has weight 1.
+  \begin{verbatim}
+       a
+      / \
+     b---c
+  \end{verbatim}
 
 \section{ Exercise 23.1-2 (``Professor Sabatier conjectures'')}
 \begin{quote}
