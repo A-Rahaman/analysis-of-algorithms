@@ -1,0 +1,317 @@
+%%%%%latex preamble%%%%%
+\documentclass[titlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+  \linewidth
+  \else
+  \Gin@nat@width
+  \fi
+}
+\makeatother
+
+
+\usepackage{listings}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Python,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage{alltt}
+\usepackage[sc]{mathpazo}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=1.5cm,rmargin=1.5cm}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle,
+  bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+{hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{tikz}
+ %changes default sectioning commands -> 1,a, etc.
+%\usepackage{breakurl}
+\renewcommand{\thesubsection}{(\alph{subsection})}
+\renewcommand{\thesubsubsection}{\roman{subsection}.}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%\usepackage[active,tightpage]{preview}
+\usepackage{tikz}
+%\PreviewEnvironment{tikzpicture}
+
+%%% Header and Footer %%% 
+\lhead{}
+\chead{\leftmark}
+\rhead{}
+\lfoot{Aaron Gonzales; Algorithms}
+\cfoot{Homework 6}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\newtheorem{name}{Printed output}
+
+\begin{document}
+
+\title{Homework 6, CS561, Fall 2014}
+\author{Aaron Gonzales}
+\maketitle
+
+\section{Problem 4 from the midterm}
+\begin{quote}
+  \textbf{}
+\end{quote}
+
+\begin{itemize}
+  \item \textbf{}
+  \item \textbf{ }
+\end{itemize}
+
+\section{Problem 5 from the midterm}
+\begin{quote}
+  \textbf{}
+\end{quote}
+
+\begin{itemize}
+  \item \textbf{}
+  \item \textbf{ }
+\end{itemize}
+
+%%%% useful align for this
+\section{Tree Induction}
+\begin{quote}
+  \textbf{Prove via induction that any tree over n nodes has exactly $n-1$
+  edges. }
+\end{quote}
+
+\subsubsection{answer:}
+
+\newtheorem{mydef}{Theorem}
+
+\begin{name}
+  Any tree over $n$ nodes has exactly $n-1$ edges.
+\end{name}
+
+
+\begin{proof}
+By induction on $n$. \\*
+Let $E$ be the number of edges in a tree.
+
+Base case: when $n =1$, clearly $e = 0$ (there are no other nodes in the tree).
+
+Inductive hypothesis: \\*
+The Theorem is true for all trees with fewer than $ n$ vertices.
+
+Let $T$ be a tree with $n$ nodes and $e$ be an edge from a node $u$ to a node
+$v$. Only one path exists between $u,v$ and that is $e$. As such, if we delete $e$, the
+tree $T$ is disconnected. $T - e$ represents the tree $T$ without the edge $e$
+which can be represented by two subcomponents of $T$, $T_1, T_2$. Each
+subcomponent is a tree, and let $n_1,n_2$ be the number of nodes in each
+subcomponent such that $n_1 + n_2 = n$. 
+
+Inductive step: \\*
+By the inductive hypothesis, the number of edges in $T_1, T_2$ are $n_1-1,
+n_2-1$
+respectively and it follows that the the tree $T$ has 
+\[ E = n_1 -1 + n_2 -1 +1 = n_1 + n_2-1 = n-1 \]
+  \qedhere
+\end{proof}
+
+
+\section{Claim 1 from SSSP}
+\begin{quote}
+\begin{itemize}
+  \item \textbf{if $dist(v) \neq \infty $, then $dist(v)$ is the total weight
+	of the predessor chain ending at $v$:
+  \[ s \rightarrow \dots \rightarrow pred(pred(v)) \rightarrow pred(v) \rightarrow v \] }
+  \item \textbf{This is easy to prove by induction on the number of edges in
+	the path from $s$ to $v$.}
+\end{itemize}
+\end{quote}
+
+
+
+
+
+\section{Claim 2 from SSSP}
+\begin{quote}
+\begin{itemize}
+  \item \textbf{ If the algorithm halts, then $dist(v) \leq w(s \leadsto )$
+	  for \emph{any} path $s \leadsto v$.}
+  \item \textbf{This is easy to prove by induction on the number of edges in
+	the path from $s$ to $v$.}
+\end{itemize}
+\end{quote}
+
+
+
+\section{Problem 23-4: Alternative MST}
+\begin{quote}
+  \textbf{ In this problem, we give pseudocode for three different algorithms.
+	Each one takes a connected graph and a weight function as input and returns
+	a set of edges $T$ .  For each algorithm, either prove that $T$ is a
+	minimum spanning tree or prove that $T$ is not a minimum spanning tree.
+	Also describe the most efﬁcient implementation of each algorithm, whether or
+	not it computes a minimum spanning tree.  }
+\end{quote}
+
+\subsection{}<++>
+\begin{lstlisting}
+Maybe-MST-A(G, w)
+	sort the edges into nonincreasing order of edge weights w
+	T = E
+	for each edge e, taken in nonincreasing order by weight
+		if T-{e} is a connected graph
+			T = T - {e}
+	return T
+\end{lstlisting}
+\subsubsection{answer: }
+
+
+
+
+\subsection{}
+\begin{lstlisting}
+Maybe-MST-B(G,w)
+  T = null
+  for each edge e, taken in arbitrary order
+	  if union(T, {e}) has no cycles
+		  T = union(T, {e})
+	  return T
+\end{lstlisting}
+\subsubsection{answer: }
+
+
+
+\subsection{}
+\begin{lstlisting}
+Maybe-MST-C(G,w)
+  T = null
+  for each edge e, taken in arbitrary order
+	T = union(T, {e})
+	if T has a cycle c
+	  let e_prime be a maximum weight edge on c
+	  T = T - {e_prime}
+  return T
+\end{lstlisting}
+\subsubsection{answer:}
+
+
+\section{Problem 24-2 Nesting Boxes}
+\begin{quote}
+  \textbf{a d-dimensional box with dimensions $(x_1, x_2, \dots x_d)$
+	\textbf{nests} within another box with dimensions $(y_1, y_2, \dots y_d)$
+	if there exists a permutation $\pi$ on $\{1,2\dots,d\}$ such that 
+	$ x_{\pi(1)} < y_1, x_{\pi(2)} < y_2, \dots x_{\pi(d)} < y_d$.  }
+\end{quote}
+
+\subsection{Argue that the nesting relation is transitive.}
+
+
+\subsection{Describe an efficient method to determine wether or not one
+$d$-dimensional box nests inside another.}
+
+
+
+\subsection{Suppose that you are given a set of $n$ $d$-dimensional boxes
+  $\{B_1, B_2,\dots B_n\}$. Give an efficient algorithm to find the longest
+  sequence $\langle B_{i_1}, B_{i_2},\dots B_{i_k}\rangle$ of boxes such that
+  $B_{i_j}$ nests within  
+  $B_{i_{j+1}}$ for $j = 1,2,\dots,k-1$. Express the running time of your
+algorithm in terms of n and d.}
+
+\section{Saia Trucking}
+\begin{quote}
+  \textbf{Saia Trucking is a very saftey concious (and algorithm loving)
+  trucking company. They always try to find the safest route between any pair
+of cities. They are thus faced with the following problem.}
+
+\textbf{There is a graph $G = (V,E)$ where the vertices represent cities and the edges
+represent roads. Each edge has a value associated with it that gives the
+probability of safe transport on that edge i.e. the prbability that there will
+be no accident when driving across that edge. The probability of safe transport
+along any path in the gtraph is the product $\Pi$ of the probabilities of safe
+transport on each edge in that path.}
+
+\textbf{The Goal is to find a path from $s$ to $t$ that maximizes the probability of
+safe transport. Describe an efficient algorithm to solve this problem.  }
+\end{quote}
+
+\newpage
+\section{25.2-1 - Floyd\textemdash Warshall}
+\begin{quote}
+  \textbf{Run the Floyd\textemdash Warshall algorithm on the weighted, directed
+	graph of Figure \ref{fig:figure1}. Show the matrix $D^{(k)}$ that results for each
+	iteration of the outer loop.}
+\end{quote}
+
+\usetikzlibrary{arrows}
+\begin{figure}
+  \begin{center}
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+	  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+	  \node[main node] (1) {1};
+	  \node[main node] (2) [right of=1] {2};
+	  \node[main node] (3) [right of=2] {3};
+	  \node[main node] (4) [below of=1] {4};
+	  \node[main node] (5) [right of=4] {5};
+	  \node[main node] (6) [right of=5] {6};
+
+	  \path[every node/.style={font=\sffamily\small}]
+		(1) edge node [below right] {-1} (5)
+			%edge [bend right] node[left] {0.3} (2)
+			%edge [loop above] node {0.1} (1)
+		(2) edge node [above] {1} (1)
+			edge node [below left] {2} (4)
+			%edge [loop left] node {0.4} (2)
+			%edge [bend right] node[left] {0.1} (3)
+		(3) edge node [above] {2} (2)
+			edge [bend left] node[right] {-8} (6)
+		(4) edge node [left] {-4} (1)
+			%edge [loop right] node {0.6} (4)
+			edge [bend right] node[below] {3} (5)
+		(5) edge node [right] {7} (2)
+			%edge [loop right] node {0.6} (4)
+		(6) edge node [below] {5} (2)
+			edge [bend left] node {10} (3);
+	\end{tikzpicture}
+  \end{center}
+\caption{Figure 25.2 from CLRS}
+\label{fig:figure1}
+\end{figure}
+
+\end{document}
