@@ -269,6 +269,24 @@ transport on each edge in that path.}
 \textbf{The Goal is to find a path from $s$ to $t$ that maximizes the probability of
 safe transport. Describe an efficient algorithm to solve this problem.  }
 \end{quote}
+\subsubsection{answer:}
+We have $s$ as our start node and $t$ as our destination. let $e(u,v)$ be the
+edge from vertex $u \rightarrow v$. We want to maximuze the product of the
+probabilities on the path such that the set of vertices $p = \langle v_0, v_1,
+\dots, v_k \rangle$ where $v_0 = s, v_k = t$. We want
+
+\[ p = max \prod_{i = 0}^{k} e(v_{i-1}, v_i) \]
+
+If we log transform the edge weights, we can solf this problem easily. if we
+define $w(e) = - log \, e(u,v)$ as the log transform of the edge weight, we can
+change the problem to  a single-source shortest path problem as 
+
+\[ p = min \sum_{i=1}^{k} w(v_{i-1}, v_i) \]
+
+This is easily solved with Dijkstra's algorithm with the additional step of log
+transforming the edges ($O(E)$). Using a fibbonacci-heap-backed min-priority
+queue we can do this is total $O(|E| + |V| log |V|)$ time.
+
 
 \newpage
 \section{25.2-1 - Floyd\textemdash Warshall}
