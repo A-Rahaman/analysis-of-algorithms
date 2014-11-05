@@ -90,27 +90,94 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \author{Aaron Gonzales}
 \maketitle
 
-\section{Problem 4 from the midterm}
+\section{Naming Omicronians}
 \begin{quote}
-  \textbf{}
+  \textbf{Omicronians reproduce asexually with each baby producing up to two
+  other babies. A birth process results in a binary tree, where babies are
+  assigned their names in teh folloowing way. The baby at the root of the tree
+  is assigned the name ``J''. Then any baby that is a left child of a node with
+  the name $\sigma$ receives the name $\sigma L$ and any baby that is the right
+  child of that node receives the name $\sigma R$. \\*
+  Your goal is to take a binary tree specifying a birth process and return the
+  number of R's in the names of all babies.}
 \end{quote}
-
 \begin{itemize}
-  \item \textbf{}
-  \item \textbf{ }
+	\item \textbf{\emph{Example:} in the following tree, the names are J, JL,
+	JR, JLL, JLR, JRL, JRR, so the total number of R's is 5.  }
 \end{itemize}
+
+\subsection{For a node $v$ let $n(v)$ be the number of nodes in the subtree
+	rooted at $v$ and assume this value is stored at each node. For a node $v$
+	let $f(v)$ be the number of R's in the names of nodes below $v$. For
+	simplicity, if $v$ is NULL, let $f(v) = 0$ andl et $n(v) = 0$ Also, for a
+	node $v$, let $l(v)$ (resp $r(v)$) be the left (resp. right ) child of $v$
+	if it exists or NULL otherwise. Give a recurrence relation for $f(v)$.}
+\subsubsection{answer:}
+\vspace{5cm}
+
+\subsection{Your friend Bender claims that once you have the recurrence
+	relation, you can just write a recurasive algorithm for this problem in
+	order to compute $f(r)$ where r is the root node. There's no need to bother
+	with a dynamic program that stores the computed $f$ values at the nodes of
+	the tree. Is Bender right? Explain in a couple of sentences.}
+\subsubsection{answer:}
+\vspace{5cm}
+
+
+
+\subsection{The Omicronians have evolved!} 
+\begin{quote}
+  \textbf{Now they can reproduce both sexually
+	and assexually: i.e., each node can have 1 or 2 parents. So a birth process
+	is now a rooted directed graph without cycles. Now each node can have
+	multiple names, one for each path from the root down to that node. A
+	particular path determins a name in the same way as before: start with J at
+	the root and add a L whenever a left edge is taken and a R whenever a right
+	edge is taken. \\*
+	Professor Farnsworth claims that the same recurrence relation from part a
+	can be used for this problem. Bender claims that this problem can also be
+	done recursively, without the dynamic programming approach of storing $f$
+	values at intermediate nodes. Which if either of your friends are correct?
+	Explain briefly.}
+\end{quote}
+\subsubsection{answer: }
+\vspace{8cm}
+
+
+
+
 
 \section{Problem 5 from the midterm}
 \begin{quote}
-  \textbf{}
+  \textbf{There are two bins. Bin 1 initially has 3 white balls and 1 red ball.
+  Bin 2 has 4 white balls. In every round, a ball is selected uniformly at
+  random from each bin and these two balls are swapped. \\*
+  Let $p_k$ be the prbability that the red ball is in bin 1 at the beginning of
+  the $k$-th round.}
 \end{quote}
 
-\begin{itemize}
-  \item \textbf{}
-  \item \textbf{ }
-\end{itemize}
+\subsection{ Write a recurrence relation for $p_k$. }
+\vspace{4cm}
 
-%%%% useful align for this
+
+\subsubsection{answer:}
+\vspace{8cm}
+
+
+\subsection{Use the guess and check and proof by induction method to solve this
+	recurrence, Don't forget to label BC, IH, and IS and clearly say where you
+	are using the IH}.
+\subsubsection{answer:}
+\vspace{8cm}
+
+
+\subsection{Assume you are paid one dollar for every round in which the red
+	ball is in bin 1 and there are $m$ rounds. What is the expected number of
+dollars you earn?}
+\subsubsection{answer:}
+\vspace{8cm}
+
+
 \section{Tree Induction}
 \begin{quote}
   \textbf{Prove via induction that any tree over n nodes has exactly $n-1$
@@ -162,6 +229,8 @@ respectively and it follows that the the tree $T$ has
 \end{itemize}
 \end{quote}
 
+\subsubsection{answer:}
+\vspace{8cm}
 
 
 
@@ -175,6 +244,8 @@ respectively and it follows that the the tree $T$ has
 	the path from $s$ to $v$.}
 \end{itemize}
 \end{quote}
+\subsubsection{answer:}
+\vspace{8cm}
 
 
 
@@ -199,6 +270,7 @@ Maybe-MST-A(G, w)
 	return T
 \end{lstlisting}
 \subsubsection{answer: }
+\vspace{8cm}
 
 
 
@@ -214,6 +286,7 @@ Maybe-MST-B(G,w)
 \end{lstlisting}
 \subsubsection{answer: }
 
+\vspace{8cm}
 
 
 \subsection{}
@@ -229,6 +302,7 @@ Maybe-MST-C(G,w)
 \end{lstlisting}
 \subsubsection{answer:}
 
+\vspace{8cm}
 
 \section{Problem 24-2 Nesting Boxes}
 \begin{quote}
@@ -239,10 +313,14 @@ Maybe-MST-C(G,w)
 \end{quote}
 
 \subsection{Argue that the nesting relation is transitive.}
+\subsubsection{answer:}
+\vspace{5cm}
 
 
 \subsection{Describe an efficient method to determine wether or not one
 $d$-dimensional box nests inside another.}
+\subsubsection{answer:}
+\vspace{5cm}
 
 
 
@@ -252,6 +330,8 @@ $d$-dimensional box nests inside another.}
   $B_{i_j}$ nests within  
   $B_{i_{j+1}}$ for $j = 1,2,\dots,k-1$. Express the running time of your
 algorithm in terms of n and d.}
+\subsubsection{answer:}
+\vspace{5cm}
 
 \section{Saia Trucking}
 \begin{quote}
@@ -331,5 +411,7 @@ queue we can do this is total $O(|E| + |V| log |V|)$ time.
 \caption{Figure 25.2 from CLRS}
 \label{fig:figure1}
 \end{figure}
+\subsubsection{answer:}
+\vspace{6cm}
 
 \end{document}
