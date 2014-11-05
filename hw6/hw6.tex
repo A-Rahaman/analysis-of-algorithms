@@ -72,7 +72,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 %\usepackage[active,tightpage]{preview}
 \usepackage{tikz}
 %\PreviewEnvironment{tikzpicture}
-
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 %%% Header and Footer %%% 
 \lhead{}
 \chead{\leftmark}
@@ -147,7 +148,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 
 
 
-\section{Problem 5 from the midterm}
+\section{Bins, Probability, and Expectation}
 \begin{quote}
   \textbf{There are two bins. Bin 1 initially has 3 white balls and 1 red ball.
   Bin 2 has 4 white balls. In every round, a ball is selected uniformly at
@@ -157,10 +158,16 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \end{quote}
 
 \subsection{ Write a recurrence relation for $p_k$. }
-\vspace{4cm}
-
-
 \subsubsection{answer:}
+\vspace{4cm}
+\begin{align}
+  f(k) = 
+	\begin{cases}
+          \text{if red ball is in the right bin: } & \frac{1}{4}\left(1 - f(k-1)\right) \\*
+          \text{if red ball is in the left bin: }  & \frac{3}{4} \left( f(k-1) \right) \\*	
+	\end{cases}
+\end{align}
+
 \vspace{8cm}
 
 
@@ -250,6 +257,7 @@ respectively and it follows that the the tree $T$ has
 
 
 \section{Problem 23-4: Alternative MST}
+
 \begin{quote}
   \textbf{ In this problem, we give pseudocode for three different algorithms.
 	Each one takes a connected graph and a weight function as input and returns
@@ -259,7 +267,27 @@ respectively and it follows that the the tree $T$ has
 	not it computes a minimum spanning tree.  }
 \end{quote}
 
-\subsection{}<++>
+Before the problems, first a few definitions:
+
+\theoremstyle{definition}
+\begin{definition}{SpanningTree}
+  A tree is a connected undirected graph with no cycles. It is a spanning tree
+  of a graph $G$ if it spans $G$ (that is, it includes every vertex of $G$) and is a
+  subgraph of $G$ (every edge in the tree belongs to $G$). A spanning tree of a
+  connected graph $G$ can also be defined as a maximal set of edges of $G$ that
+  contains no cycle, or as a minimal set of edges that connect all vertices.
+  \footnote{verbatim from wikipedia, not from CLRS}
+\end{definition}
+\begin{definition}{Minimal}
+  Minimum spanning tree. An edge-weighted graph is a graph where we associate
+  weights or costs with each edge. A minimum spanning tree (MST) of an
+  edge-weighted graph is a spanning tree whose weight (the sum of the weights
+  of its edges) is no larger than the weight of any other spanning tree.
+  \footnote{from princeton algs book}
+\end{definition}
+
+
+\subsection{}
 \begin{lstlisting}
 Maybe-MST-A(G, w)
 	sort the edges into nonincreasing order of edge weights w
