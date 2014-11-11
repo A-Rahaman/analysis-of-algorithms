@@ -105,10 +105,6 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     Your goal is to take a binary tree specifying a birth process and return the
     number of R's in the names of all babies.}
   \end{quote}
-  \begin{itemize}
-    \item \textbf{\emph{Example:} in the following tree, the names are J, JL,
-    JR, JLL, JLR, JRL, JRR, so the total number of R's is 5.  }
-  \end{itemize}
 
   \subsection{For a node $v$ let $n(v)$ be the number of nodes in the subtree
     rooted at $v$ and assume this value is stored at each node. For a node $v$
@@ -117,15 +113,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     node $v$, let $l(v)$ (resp $r(v)$) be the left (resp. right ) child of $v$
     if it exists or NULL otherwise. Give a recurrence relation for $f(v)$.}
     \subsubsection{Answer:}
-      \[ f(v) = f\left( l (v) \right) + f\left( r (v) \right) + n\left( r(v) \right) \]
-      $f(v)$ is the sum of the number of r's in the names below the left subtree plus
-      the number of r's in the right subtree plus the number of r's in the right
-      subtree.
-
+      \begin{align}
+        f(v) = f\left( l (v) \right) + f\left( r (v) \right) + n\left( r(v) \right)
+      \end{align}
 
   \subsection{Your friend Bender claims that once you have the recurrence
     relation, you can just write a recursive algorithm for this problem in
-    order to compute $f(r)$ where r is the root node. There's no need to bother
+    order to compute $f(r)$ where $r$ is the root node. There's no need to bother
     with a dynamic program that stores the computed $f$ values at the nodes of
     the tree. Is Bender right? Explain in a couple of sentences.}
       \subsubsection{Answer:}
@@ -155,9 +149,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
       \begin{wrapfigure}{r}{0.25\textwidth}
         \centering
           \includegraphics[scale=0.3]{farnsworth}
-        \end{wrapfigure}
-      Farnsworth is right. 
-
+      \end{wrapfigure}
+      Farnsworth is right. We need to store the $f$ values at each node since
+      the number of parents may be different. 
 
 
 \section{Bins, Probability, and Expectation}
@@ -182,57 +176,53 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     staying in the left bin if it is in the left bin is $\frac{3}{4}$. 
 
     A recurrence relation follows:
-    \begin{align}
+    \begin{align*}
       p(k) & = \frac{1}{4}\left(1 - p(k-1)\right) + \frac{3}{4}\left(p\left(k-1\right)\right) \\*
       p(k) & = \frac{1}{4} - \frac{1}{4}p(k-1) + \frac{3}{4}p(k-1) \\*
       p(k) & = \frac{1}{2}p(k-1) + \frac{1}{4} 
-    \end{align}
+    \end{align*}
 
 
-\subsection{Use the guess and check and proof by induction method to solve this
-	recurrence, Don't forget to label BC, IH, and IS and clearly say where you
-	are using the IH}.
+  \subsection{Use the guess and check and proof by induction method to solve this
+          recurrence, Don't forget to label BC, IH, and IS and clearly say where you
+          are using the IH}.
   \subsubsection{Answer:}
     First, we solve the recurrence.
 
-    \begin{align}
+    \begin{align*}
       p(k) & = 1/2 p(k -1) + 1/4 \\*
-      p(k+1) & = 1/2 p(k)
-      p(k) - 1/2 p(k) & =  0 
-      Lp - 1/2 p & = 0
-      \left( L - 1/2 \right) & = 0 \text{annihilates the sequences homogeneous
-      part}
-    \end{align}
-    \begin{align}
-      \left(L - 1\right) \text{annihilates the sequences non-homogeneous
-      part, leaving us with }\\
-      \left( L - 1/2 \right) \left(L - 1\right)
-    \end{align}
+      p(k+1) & = 1/2 p(k) \\*
+      p(k) - 1/2 p(k) & =  0  \\*
+      Lp - 1/2 p & = 0 \\* 
+      \left( L - 1/2 \right) & = 0 \text{annihilates the sequences homogeneous part} \\
+    \end{align*}
+      $ \left(L - 1\right) $ annihilates the sequences non-homogeneous part,
+    leaving us with $\left( L - 1/2 \right) \left(L - 1\right)$. 
 
     Solving for the constants gives us:
     \[ f(n) = c_1 * (1/2)^n + c_2 \]
-    \begin{align}
+    \begin{align*}
       \text{base cases}: \\*
       p(1) = 1: & f(1) = c_1 (1/2)^1 + c_2 = 1  \\*
       p(2) = 3/4: & f(2) = c_1 (1/2)^2 + c_2 = 3/4
-    \end{align}
-    \begin{align}
+    \end{align*}
+    \begin{align*}
       c_1 &= (1/2)^2 + (1 - 1/2 c_1) = 3/4 \\*
       c_1 &= \left( (1/2)^2 - (1/2)\right) \\*
           &= 3/4 - 1 \\*
           &= 1 \\*
-    \end{align}
-    \begin{align}
+    \end{align*}
+    \begin{align*}
       c_2 &= 1 - 1/2 c_1 \\*
       c_2 &= 1 - 1/2 * 1 \\*
       c_2 = 1/2
-    \end{align}
+    \end{align*}
   We can say that 
   \[ p(k) = \left(\frac{1}{2}\right)^k + \frac{1}{2} \]
   and use it as a guess to prove via induction.
   \begin{proof}
-      let $f(n) = \frac{1}{2} f(n-1) + \frac{1}{4}$ represent our recurrence. 
-      suppose that :
+    let $f(n) = \frac{1}{2} f(n-1) + \frac{1}{4}$ represent our recurrence. 
+    suppose that :
     \[ f(n) = \left(\frac{1}{2}\right)^n + \frac{1}{2} \]
     We have two base cases:
     \[ n =1: f(n) = (1/2)^1 + 1/2 = 1 \]
@@ -242,13 +232,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     \[ \forall j < n, f(j) = (1/2)^j + 1/2 \]
 
     Inductive step:
-    \begin{align}
+    \begin{align*}
       f(n) &= 1/2 f(n-1) + 1/4 \\*
       &= 1/2\left( (1/2)^{n-1} + 1/2 \right) + 1/4 \\*
       &= 1/2 \left( \frac{\left(1/2\right)^j}{1/2} + 1/2 \right) + 1/4 \\*
       &= (1/2)^j + 1/4 + 1/4 \\*
       &= (1/2)^j + 1/2 \qedhere
-    \end{align}
+    \end{align*}
   \end{proof}
 
 
@@ -258,11 +248,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     \subsubsection{Answer:}
       Let $X_k$ be an indicator random variable that denotes the event when the red
       ball is in bin 1. We define $X_k$ as 
-      \begin{align}
+      \begin{align*}
         X_k = \begin{cases} 1 \text{ if red ball is in bin 1 at beginning of round }k \\*
                             0 \text{ otherwise }\\*
         \end{cases}
-      \end{align}
+      \end{align*}
       as such, we have:
       \begin{align*}
         E[X_k] &= Pr[X_k = 1] = \left(\frac{1}{2}\right)^k + 1/2  = \frac{1}{2^k} + 1/2 \\*
@@ -338,9 +328,8 @@ respectively and it follows that the tree $T$ has
       \[ \forall j < n: dist(j) = dist(n) = \text{ total weight of pred ending at } v \]
 
       Inductive Step:
-      $(s \rightarrow v)$ where $v = pred(v)$. By the inductive hypothesis,
-      $dist(x) = pred(v)$ from $s \rightarrow v$, therefore $dist(v) = dist(x) +
-      w(k,v)$
+      $(s \rightarrow x)$ where $x = pred(v)$. By the inductive hypothesis,
+      $dist(x) = pred(v)$ from $s \rightarrow x$, therefore $dist(v) = dist(x) + w(x,v)$
     \end{proof}
 
 
@@ -365,11 +354,18 @@ respectively and it follows that the tree $T$ has
     incorrect since the path $(s \leadsto u)$ and then $(u, v)$ is shorter. Our
     generic algorithm repeatedly finds a tense edge in the graph and relaxes
     it. If there are no tense edges, our algorithm is finished and we have our
-    desired shortest path tree.
+    desired shortest path tree. \footnote{from the SSSP lecture notes}
   \end{definition}
 
-  Let $k$ be the number of edges in $s \leadsto v$. 
-
+  Let $k$ be the number of edges in $s \leadsto v$. By definition, our
+  algorithm, upon finishing finds the shortest path tree. If we define $j < k$
+  as $j$ being the number of edges in $s \leadsto u$ where $u$ is a vertex in
+  the path efore $v$. If our algorithm relaxes all edges in the path $s
+  \leadsto u$, then we have a shortest path from $s \leadsto u$ and any tense
+  edges from $u \leadsto s$ will be relaxed, and at termination, we will have a
+  shortest path from $s \leadsto v$. This path will have $dist(v) \leq w(s
+  \leadsto v)$ as the path $s \leadsto u$ had $dist(u) \leq w(s \leadsto u)$
+  and we add the one new relaxed edge from $u,v$ to the path $s\leadsto u$. 
 \end{proof}
 
 
@@ -540,14 +536,14 @@ Maybe-MST-B(G,w)
       In our problem, we must show that $x$ nests in $y$ and $y$ nests in some box
       $z$. If we find a relation $\pi$ for both of the relations above such that
 
-      \[ x_{pi_i} < y_i \text{and } y_{pi_i} < z_j \]
+      \[ x_{\pi_i} < y_i \text{and } y_{\pi_i} < z_j \]
 
       if our number of dimensions is the set $d$
       We have $ \{i,j\} \in d$, we can find for every $i$ a unique $j$ that satisfies
       $i = \pi_j$, resulting in 
-      \[ x_{pi_i} < y_i =  y_{pi_i} < z_j \]
+      \[ x_{\pi_i} < y_i =  y_{\pi_i} < z_j \]
       which reduces to 
-      \[ x_{pi_i} < z_j \]
+      \[ x_{\pi_i} < z_j \]
       and the relation is transitive as we can find a unique $z_j$ for every
       $x_{\pi_i}$.
 
@@ -582,39 +578,43 @@ Maybe-MST-B(G,w)
 
 
 \section{Saia Trucking}
-\begin{quote}
-  \textbf{Saia Trucking is a very saftey concious (and algorithm loving)
-  trucking company. They always try to find the safest route between any pair
-of cities. They are thus faced with the following problem.}
+  \begin{quote}
+    \textbf{Saia Trucking is a very saftey concious (and algorithm loving)
+    trucking company. They always try to find the safest route between any pair
+    of cities. They are thus faced with the following problem.}
 
-\textbf{There is a graph $G = (V,E)$ where the vertices represent cities and the edges
-represent roads. Each edge has a value associated with it that gives the
-probability of safe transport on that edge i.e. the prbability that there will
-be no accident when driving across that edge. The probability of safe transport
-along any path in the gtraph is the product $\Pi$ of the probabilities of safe
-transport on each edge in that path.}
+    \textbf{There is a graph $G = (V,E)$ where the vertices represent cities and the edges
+    represent roads. Each edge has a value associated with it that gives the
+    probability of safe transport on that edge i.e. the prbability that there will
+    be no accident when driving across that edge. The probability of safe transport
+    along any path in the gtraph is the product $\Pi$ of the probabilities of safe
+    transport on each edge in that path.}
 
-\textbf{The Goal is to find a path from $s$ to $t$ that maximizes the probability of
-safe transport. Describe an efficient algorithm to solve this problem.  }
-\end{quote}
-\subsubsection{Answer:}
-We have $s$ as our start node and $t$ as our destination. let $e(u,v)$ be the
-edge from vertex $u \rightarrow v$. We want to maximize the product of the
-probabilities on the path such that the set of vertices $p = \langle v_0, v_1,
-\dots, v_k \rangle$ where $v_0 = s, v_k = t$. We want
+    \textbf{The Goal is to find a path from $s$ to $t$ that maximizes the probability of
+    safe transport. Describe an efficient algorithm to solve this problem.  }
+  \end{quote}
+  \subsubsection{Answer:}
+    We have $s$ as our start node and $t$ as our destination. let $e(u,v)$ be the
+    edge from vertex $u \rightarrow v$. We want to maximize the product of the
+    probabilities on the path such that the set of vertices $p = \langle v_0, v_1,
+    \dots, v_k \rangle$ where $v_0 = s, v_k = t$. We want
 
-\[ p = max \prod_{i = 0}^{k} e(v_{i-1}, v_i) \]
+    \[ p = max \prod_{i = 0}^{k} e(v_{i-1}, v_i) \]
 
-If we log transform the edge weights, we can solve this problem easily. If we
-define $w(e) = - log \, e(u,v)$ as the log transform of the edge weight, we can
-change the problem to  a single-source shortest path problem as 
+    If we log transform the edge weights, we can solve this problem easily. If we
+    define $w(e) = - log \, e(u,v)$ as the 'negative' log transform of the edge weight, we can
+    change the problem to a single-source shortest path problem as 
 
-\[ p = min \sum_{i=1}^{k} w(v_{i-1}, v_i) \]
+    \[ p = min \sum_{i=1}^{k} w(v_{i-1}, v_i) \]
 
-This is easily solved with Dijkstra's algorithm with the additional step of log
-transforming the edges ($O(E)$). Using a Fibbonacci-heap-backed min-priority
-queue we can do this is total $O(|E| + |V| log |V|)$ time.
-
+    This is easily solved with Dijkstra's algorithm with the additional step of log
+    transforming the edges ($O(E)$). Using a Fibbonacci-heap-backed min-priority
+    queue and an adjacency list to represent the graph, 
+    we can do this is total $O(|E| + |V| log |V|)$ time. If we wanted to extend the
+    problem to show all pairs of shortest paths between cities, we can use
+    Floyd-Warshall in $O(V^3)$ time or take advantage of the fact that there
+    are no negative edges in our graph and run Dijkstra's algorithm from each
+    vertex, giving a runtime of $O(|E| + |V^2| log |V|)$.
 
 \newpage
 \section{25.2-1 - Floyd\textemdash Warshall}
