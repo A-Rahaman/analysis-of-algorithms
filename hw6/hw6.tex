@@ -1,5 +1,8 @@
 %%%%%latex preamble%%%%%
-\documentclass[titlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+\documentclass[titlepage]{article}
+\usepackage[]{graphicx}
+\usepackage[]{color}
+\usepackage{wrapfig}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -56,7 +59,7 @@
 \usepackage{url}
 \usepackage[unicode=true,pdfusetitle,
   bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
-breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
 {hyperref}
 \hypersetup{pdfstartview={XYZ null null 1}}
 \usepackage{float}
@@ -92,61 +95,68 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \maketitle
 
 \section{Naming Omicronians}
-\begin{quote}
-  \textbf{Omicronians reproduce asexually with each baby producing up to two
-  other babies. A birth process results in a binary tree, where babies are
-  assigned their names in teh folloowing way. The baby at the root of the tree
-  is assigned the name ``J''. Then any baby that is a left child of a node with
-  the name $\sigma$ receives the name $\sigma L$ and any baby that is the right
-  child of that node receives the name $\sigma R$. \\*
-  Your goal is to take a binary tree specifying a birth process and return the
-  number of R's in the names of all babies.}
-\end{quote}
-\begin{itemize}
-	\item \textbf{\emph{Example:} in the following tree, the names are J, JL,
-	JR, JLL, JLR, JRL, JRR, so the total number of R's is 5.  }
-\end{itemize}
+  \begin{quote}
+    \textbf{Omicronians reproduce asexually with each baby producing up to two
+    other babies. A birth process results in a binary tree, where babies are
+    assigned their names in teh folloowing way. The baby at the root of the tree
+    is assigned the name ``J''. Then any baby that is a left child of a node with
+    the name $\sigma$ receives the name $\sigma L$ and any baby that is the right
+    child of that node receives the name $\sigma R$. \\*
+    Your goal is to take a binary tree specifying a birth process and return the
+    number of R's in the names of all babies.}
+  \end{quote}
+  \begin{itemize}
+    \item \textbf{\emph{Example:} in the following tree, the names are J, JL,
+    JR, JLL, JLR, JRL, JRR, so the total number of R's is 5.  }
+  \end{itemize}
 
-\subsection{For a node $v$ let $n(v)$ be the number of nodes in the subtree
-	rooted at $v$ and assume this value is stored at each node. For a node $v$
-	let $f(v)$ be the number of R's in the names of nodes below $v$. For
-	simplicity, if $v$ is NULL, let $f(v) = 0$ andl et $n(v) = 0$ Also, for a
-	node $v$, let $l(v)$ (resp $r(v)$) be the left (resp. right ) child of $v$
-	if it exists or NULL otherwise. Give a recurrence relation for $f(v)$.}
-\subsubsection{answer:}
-\[ f\left( l (v) \right) + f\left( r (v) \right) + n\left( r(v) \right) \]
-
-\vspace{5cm}
-
-\subsection{Your friend Bender claims that once you have the recurrence
-	relation, you can just write a recurasive algorithm for this problem in
-	order to compute $f(r)$ where r is the root node. There's no need to bother
-	with a dynamic program that stores the computed $f$ values at the nodes of
-	the tree. Is Bender right? Explain in a couple of sentences.}
-\subsubsection{answer:}
-\vspace{5cm}
+  \subsection{For a node $v$ let $n(v)$ be the number of nodes in the subtree
+    rooted at $v$ and assume this value is stored at each node. For a node $v$
+    let $f(v)$ be the number of R's in the names of nodes below $v$. For
+    simplicity, if $v$ is NULL, let $f(v) = 0$ and let $n(v) = 0$ Also, for a
+    node $v$, let $l(v)$ (resp $r(v)$) be the left (resp. right ) child of $v$
+    if it exists or NULL otherwise. Give a recurrence relation for $f(v)$.}
+    \subsubsection{answer:}
+      \[ f(v) = f\left( l (v) \right) + f\left( r (v) \right) + n\left( r(v) \right) \]
+      $f(v)$ is the sum of the number of r's in the names below the left subtree plus
+      the number of r's in the right subtree plus the number of r's in the right
+      subtree.
 
 
+  \subsection{Your friend Bender claims that once you have the recurrence
+    relation, you can just write a recurasive algorithm for this problem in
+    order to compute $f(r)$ where r is the root node. There's no need to bother
+    with a dynamic program that stores the computed $f$ values at the nodes of
+    the tree. Is Bender right? Explain in a couple of sentences.}
+      \subsubsection{answer:}
+        \begin{wrapfigure}{l}{0.25\textwidth}
+          \centering
+            \includegraphics[scale=0.3]{bender}
+        \end{wrapfigure}
+        Yes, he is - there is no need to store all the previously calculated values in
+        a table or other structure, you only need the current count. 
 
-\subsection{The Omicronians have evolved!} 
-\begin{quote}
-  \textbf{Now they can reproduce both sexually
-	and assexually: i.e., each node can have 1 or 2 parents. So a birth process
-	is now a rooted directed graph without cycles. Now each node can have
-	multiple names, one for each path from the root down to that node. A
-	particular path determins a name in the same way as before: start with J at
-	the root and add a L whenever a left edge is taken and a R whenever a right
-	edge is taken. \\*
-	Professor Farnsworth claims that the same recurrence relation from part a
-	can be used for this problem. Bender claims that this problem can also be
-	done recursively, without the dynamic programming approach of storing $f$
-	values at intermediate nodes. Which if either of your friends are correct?
-	Explain briefly.}
-\end{quote}
-\subsubsection{answer: }
-\vspace{8cm}
-
-
+  \subsection{The Omicronians have evolved!} 
+  \begin{quote}
+    \textbf{Now they can reproduce both sexually
+    and assexually: i.e., each node can have 1 or 2 parents. So a birth process
+    is now a rooted directed graph without cycles. Now each node can have
+    multiple names, one for each path from the root down to that node. A
+    particular path determins a name in the same way as before: start with J at
+    the root and add a L whenever a left edge is taken and a R whenever a right
+    edge is taken. \\*
+    Professor Farnsworth claims that the same recurrence relation from part a
+    can be used for this problem. Bender claims that this problem can also be
+    done recursively, without the dynamic programming approach of storing $f$
+    values at intermediate nodes. Which if either of your friends are correct?
+    Explain briefly.}
+  \end{quote}
+    \subsubsection{answer: }
+      \begin{wrapfigure}{r}{0.25\textwidth}
+        \centering
+          \includegraphics[scale=0.3]{farnsworth}
+        \end{wrapfigure}
+      Farnsworth is right. 
 
 
 
@@ -242,11 +252,27 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   \end{proof}
 
 
-\subsection{Assume you are paid one dollar for every round in which the red
-	ball is in bin 1 and there are $m$ rounds. What is the expected number of
-dollars you earn?}
-\subsubsection{answer:}
-\vspace{8cm}
+  \subsection{Assume you are paid one dollar for every round in which the red
+    ball is in bin 1 and there are $m$ rounds. What is the expected number of
+    dollars you earn?}
+    \subsubsection{answer:}
+      Let $X_k$ be an indicator random variable that denotes the event when the red
+      ball is in bin 1. We define $X_k$ as 
+      \begin{align}
+        X_k = \begin{cases} 1 \text{ if red ball is in bin 1 at beginning of round k} \\*
+                            0 \text{ otherwise }\\*
+        \end{cases}
+      \end{align}
+      as such, we have:
+      \begin{align*}
+        E[X_k] &= Pr[X_k = 1] = \left(\frac{1}{2}\right)^k + 1/2  = \frac{1}{2^k} + 1/2 \\*
+        E(x) &= E\left[ \sum_{k=1}^m X_k \right] \\*
+        E(x) &= \sum_{k=1}^m \left[X_k \right] \text{ \emph{ By linearity of expectation}}\\*
+        E(x) &= \sum_{k=1}^m \left( \left( \frac{1}{2^k}\right) + 1/2 \right) \\*
+        E(x) &= \sum_{k=1}^m \left( \left( \frac{1}{2^m}\right) + 1/2 \right) \\*
+        E(x) &= m \left( \left( \frac{1}{2^m}\right) + 1/2 \right) \\*
+        E(x) &= \frac{m}{2^m} + \frac{m}{2}
+      \end{align*}
 
 
 \section{Tree Induction}
@@ -290,18 +316,32 @@ respectively and it follows that the the tree $T$ has
 
 
 \section{Claim 1 from SSSP}
-\begin{quote}
-\begin{itemize}
-  \item \textbf{if $dist(v) \neq \infty $, then $dist(v)$ is the total weight
-	of the predessor chain ending at $v$:
-  \[ s \rightarrow \dots \rightarrow pred(pred(v)) \rightarrow pred(v) \rightarrow v \] }
-  \item \textbf{This is easy to prove by induction on the number of edges in
-	the path from $s$ to $v$.}
-\end{itemize}
-\end{quote}
+  \begin{quote}
+  \begin{itemize}
+    \item \textbf{if $dist(v) \neq \infty $, then $dist(v)$ is the total weight
+    of the predessor chain ending at $v$:
+    \[ s \rightarrow \dots \rightarrow pred(pred(v)) \rightarrow pred(v) \rightarrow v \] }
+    \item \textbf{This is easy to prove by induction on the number of edges in
+    the path from $s$ to $v$.}
+  \end{itemize}
+  \end{quote}
 
-\subsubsection{answer:}
-\vspace{8cm}
+  \subsubsection{answer:}
+    \begin{proof}
+      By induction on $n$ where $n$ is the nnumber of edges in the path from
+      $s$ to $v$. 
+
+      Base Case: 
+      \[ s = v: dist(v) = 0 \]
+
+      Inductive Hypothesis:
+      \[ \forall j < n: dist(j) = dist(n) = \text{ total weight of pred ending at } v \]
+
+      Inductive Step:
+      $(s \rightarrow v)$ where $v = pred(v)$. By the inductive hypothesis,
+      $dist(x) = pred(v)$ from $s \rightarrow v$, therefore $dist(v) = dist(x) +
+      w(k,v)$
+    \end{proof}
 
 
 
@@ -316,7 +356,6 @@ respectively and it follows that the the tree $T$ has
 \end{itemize}
 \end{quote}
 \subsubsection{answer:}
-\vspace{8cm}
 
 
 
@@ -350,6 +389,8 @@ Before the problems, first a few definitions:
   \footnote{from princeton algs book}
 \end{definition}
 
+For all below answers, we have to show that for a an algorithm to return a
+minimal spanning tree, it must meet both of the above critera.
 
 \subsection{}
 \begin{lstlisting}
@@ -362,9 +403,20 @@ Maybe-MST-A(G, w)
 	return T
 \end{lstlisting}
 \subsubsection{answer: }
-\vspace{8cm}
-
-
+    \subsubsection{analysis}
+      MaybeMSTA removes edges in nonincreasing order as long as the graph stays
+      connected which results in a tree $T$ which is an MST. If we let $S$ be an
+      MST $S \in G$  If we remove an edge from $g$, $e \in S$ or $e \notin S$. If
+      $e \in S$, removing $e$ disconnects the tree $S$ into two subtrees. If a
+      larger edge existed that connected the subtrees with lower weight than edge
+      $e$, then the algorithm would have removed it before $e$ (nonincreasing order
+      by weight). The graph is still connected, so anotehr edge with equal weight
+      hasn't been discovered yet, safely allowing removal of $e$. 
+      The algorithm returns a tree that is both a spanning tree and is minimal.
+    \subsubsection{implementation}
+      represent $T$ with an adjacency list and construct a priority queue from
+      the egdes. Use union find with union-by-rank unions and path compression.
+      We get a total running time of $O\left(E log(E)\right)$.
 
 
 \subsection{}
@@ -376,73 +428,144 @@ Maybe-MST-B(G,w)
 		  T = union(T, {e})
 	  return T
 \end{lstlisting}
-\subsubsection{answer: }
+  \subsubsection{answer: }
+  \subsubsection{analysis: }
+    No, the algorithm does not return an MST. 
+      
+    \usetikzlibrary{arrows}
+    \begin{figure}
+      \begin{center}
+      \begin{tikzpicture}[-,>=stealth',shorten >=1pt,auto,node distance=3cm,
+        thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
 
-\vspace{8cm}
+        \node[main node] (1) {a};
+        \node[main node] (2) [below of=1] {b};
+        \node[main node] (3) [left  of=1] {c};
+
+        \path[every node/.style={font=\sffamily\small}]
+        (1) edge node [below right] {1} (2)
+          %edge [bend right] node[left] {0.3} (2)
+          %edge [loop above] node {0.1} (1)
+        (2) edge node [below right] {1} (1)
+            %edge [loop left] node {3} (3)
+          %edge [bend right] node[left] {0.1} (3)
+        (3) edge node [above] {2} (2)
+            edge [bend left] node[below] {3} (1);
+      \end{tikzpicture}
+      \end{center}
+    \caption{Figure blah}
+    \label{fig:mst}
+    \end{figure}
+
+    The graph in Figure \ref{fig:mst} would have edges $\{a,b\}, \{b,c\}$ with
+    weight 3. As cycles are taken in an arbitrary order it could try to add the
+    edge $\{a,b\}$  to the previous picked sets $\{c,a\}, \{c,b\}$ which would add
+    a cycle and result in a spanning tree, but that tree wouldn't be a minimal
+    spanning tree. 
+
+    \subsubsection{implementation:}
+      Use a union-find data structure to hold $T$ in similar fashion to Kruskal's
+      algorithm. We make $V$ calls to MakeSet, $2E$ find-set operations, and
+      $V-1$ union operations, which gives us a $O(V log^* V + E)$ running time. 
 
 
 \subsection{}
-\begin{lstlisting}
-Maybe-MST-C(G,w)
-  T = null
-  for each edge e, taken in arbitrary order
-	T = union(T, {e})
-	if T has a cycle c
-	  let e_prime be a maximum weight edge on c
-	  T = T - {e_prime}
-  return T
-\end{lstlisting}
-\subsubsection{answer:}
+  \begin{lstlisting}
+  Maybe-MST-C(G,w)
+    T = null
+    for each edge e, taken in arbitrary order
+    T = union(T, {e})
+    if T has a cycle c
+      let e_prime be a maximum weight edge on c
+      T = T - {e_prime}
+    return T
+  \end{lstlisting}
 
-\vspace{8cm}
+  \subsubsection{answer:}
+  \subsubsection{analysis:}
+    $T$ will add every edge $e \in G$ and only edges $e$ that make cycles will
+    be deleted. If a graph has an edge that results in a cycle, removing that
+    edge removing that edge not disconnect the graph. Because $T$ has every
+    edge added at some point and only delete edges that create cycles, $T$ is a
+    spanning tree. 
+
+    Adding any  edge within an MST creates a cycle, and $T$ is built in a way
+    such that any edge that is added that creates a cycle is discarded, $T$ has
+    the minimal number edges that comprise the set of edges that make a minimal
+    spanning tree. The algorithm ensures that the maximal weighted edge within
+    a cycle is removed, and following these steps, $T$ is both a spanning tree
+    and minimal. 
+
+  \subsubsection{implementation}
+  Use an adjacency list for $T$ and when adding an edge to $T$, use DFS to
+  check it for a cycle. If there are no cycles for the edge, we keep it in 
+  $T$ and continue. If there is a cycle, we have to detect it's
+  maximum-weighted edge and remove it from $T$. DFS takes $O(V+E)$ which in
+  this algorithm is bounded by $O(V)$ as the edges in $T$ are never more than
+  $V$ since cycles are removed. For each edge we have to perform DFS and this
+  results in $O(E*V)$ running time. 
+
+
 
 \section{Problem 24-2 Nesting Boxes}
-\begin{quote}
-  \textbf{a d-dimensional box with dimensions $(x_1, x_2, \dots x_d)$
-	\textbf{nests} within another box with dimensions $(y_1, y_2, \dots y_d)$
-	if there exists a permutation $\pi$ on $\{1,2\dots,d\}$ such that 
-	$ x_{\pi(1)} < y_1, x_{\pi(2)} < y_2, \dots x_{\pi(d)} < y_d$.  }
-\end{quote}
+  \begin{quote}
+    \textbf{a d-dimensional box with dimensions $(x_1, x_2, \dots x_d)$
+    \textbf{nests} within another box with dimensions $(y_1, y_2, \dots y_d)$
+    if there exists a permutation $\pi$ on $\{1,2\dots,d\}$ such that 
+    $ x_{\pi(1)} < y_1, x_{\pi(2)} < y_2, \dots x_{\pi(d)} < y_d$.  }
+  \end{quote}
 
-\subsection{Argue that the nesting relation is transitive.}
-\subsubsection{answer:}
-let $\mathcal R \subseteq S x S$ be a relation in $S$. 
-In order to show that a relation is transitive, we must show that  for
+  \subsection{Argue that the nesting relation is transitive.}
+    \subsubsection{answer:}
+      let $\mathcal R \subseteq S x S$ be a relation in $S$. 
+      In order to show that a relation is transitive, we must show that  for
 
-\[ \left({x, y}\right) \in \mathcal R \land \left({y, z}\right) \in \mathcal R \implies \left({x, z}\right) \in \mathcal R \]
+      \[ \left({x, y}\right) \in \mathcal R \land \left({y, z}\right) \in \mathcal R \implies \left({x, z}\right) \in \mathcal R \]
 
-\[ \left\{ {\left({x, y}\right), \left({y, z}\right)}\right\} \subseteq \mathcal R \implies \left({x, z}\right) \in \mathcal R \]
-In our problem, we must show that $x$ nests in $y$ and $y$ nests in some box
-$z$. If we find a relation $\pi$ for both of the relations above such that
+      \[ \left\{ {\left({x, y}\right), \left({y, z}\right)}\right\} \subseteq \mathcal R \implies \left({x, z}\right) \in \mathcal R \]
+      In our problem, we must show that $x$ nests in $y$ and $y$ nests in some box
+      $z$. If we find a relation $\pi$ for both of the relations above such that
 
-\[ x_{pi_i} < y_i \text{and } y_{pi_i} < z_j \]
+      \[ x_{pi_i} < y_i \text{and } y_{pi_i} < z_j \]
 
-if our number of dimensions is the set $d$
-We have $ \{i,j\} \in d$, we can find for every $i$ a unique $j$ that satisfies
-$i = \pi_j$, resulting in 
-\[ x_{pi_i} < y_i =  y_{pi_i} < z_j \]
-which reduces to 
-\[ x_{pi_i} < z_j \]
-and the relation is transitive as we can find a unique $z_j$ for every
-$x_{\pi_i}$.
-
-
-
-\subsection{Describe an efficient method to determine wether or not one
-$d$-dimensional box nests inside another.}
-\subsubsection{answer:}
-\vspace{5cm}
+      if our number of dimensions is the set $d$
+      We have $ \{i,j\} \in d$, we can find for every $i$ a unique $j$ that satisfies
+      $i = \pi_j$, resulting in 
+      \[ x_{pi_i} < y_i =  y_{pi_i} < z_j \]
+      which reduces to 
+      \[ x_{pi_i} < z_j \]
+      and the relation is transitive as we can find a unique $z_j$ for every
+      $x_{\pi_i}$.
 
 
 
-\subsection{Suppose that you are given a set of $n$ $d$-dimensional boxes
-  $\{B_1, B_2,\dots B_n\}$. Give an efficient algorithm to find the longest
-  sequence $\langle B_{i_1}, B_{i_2},\dots B_{i_k}\rangle$ of boxes such that
-  $B_{i_j}$ nests within  
-  $B_{i_{j+1}}$ for $j = 1,2,\dots,k-1$. Express the running time of your
-algorithm in terms of n and d.}
-\subsubsection{answer:}
-\vspace{5cm}
+  \subsection{Describe an efficient method to determine wether or not one
+              $d$-dimensional box nests inside another.}
+  \subsubsection{answer:}
+    If we sort the $d$ dimension values within both $(x_1, x_2, \dots x_d)$ and
+    $(y_1, y_2, \dots y_d)$ and then compare $x_i, y_i$ for every value of $i =
+    1 \to d$ If $x_i <y_i$ for all $i$, this implies that $x$ nests within $y$.
+    
+  \subsection{Suppose that you are given a set of $n$ $d$-dimensional boxes
+        $\{B_1, B_2,\dots B_n\}$. Give an efficient algorithm to find the longest
+        sequence $\langle B_{i_1}, B_{i_2},\dots B_{i_k}\rangle$ of boxes such that
+        $B_{i_j}$ nests within  $B_{i_{j+1}}$ for $j = 1,2,\dots,k-1$. Express the
+        running time of your algorithm in terms of n and d.}
+  \subsubsection{answer:}
+    As before, sort the dimension values $d$ within each box $(x_1, x_2, \dots x_d)$ and
+    $(y_1, y_2, \dots y_d)$ Check if each possible pair of boxes $(B_i, B_j)$
+    $B_i$ nests inside of $B_j$ or if the converse is true. Make a graph $G$
+    with $n$ nodes where each node represenets the one $B_i$, so that each
+    $B_i, B_j$ pair where $B_i$ nests in $ B_j$ gets a directed edge from $B_i
+    \to B_j$. Add a root vertex $s$ to the graph and give an edge from $r$ to
+    every vertex in the graph. Add a 'destination' vertext $d$ to the graph
+    that has an incoming edge from each vertex. Peform a topolgical sort of the
+    graph with $s$ as the root vertex. Run a Bellman-Ford SSSP search on $s
+    \rightarrow d$ . The most expensive part of the algorithm is building the
+    graph, which involves $O(dn^2)$ operations, which is greater than the
+    sorting time $O(nd log d)$ or search time $O(V + E)$. 
+
+
 
 \section{Saia Trucking}
 \begin{quote}
