@@ -116,7 +116,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     simplicity, if $v$ is NULL, let $f(v) = 0$ and let $n(v) = 0$ Also, for a
     node $v$, let $l(v)$ (resp $r(v)$) be the left (resp. right ) child of $v$
     if it exists or NULL otherwise. Give a recurrence relation for $f(v)$.}
-    \subsubsection{answer:}
+    \subsubsection{Answer:}
       \[ f(v) = f\left( l (v) \right) + f\left( r (v) \right) + n\left( r(v) \right) \]
       $f(v)$ is the sum of the number of r's in the names below the left subtree plus
       the number of r's in the right subtree plus the number of r's in the right
@@ -128,7 +128,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     order to compute $f(r)$ where r is the root node. There's no need to bother
     with a dynamic program that stores the computed $f$ values at the nodes of
     the tree. Is Bender right? Explain in a couple of sentences.}
-      \subsubsection{answer:}
+      \subsubsection{Answer:}
         \begin{wrapfigure}{l}{0.25\textwidth}
           \centering
             \includegraphics[scale=0.3]{bender}
@@ -151,7 +151,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     values at intermediate nodes. Which if either of your friends are correct?
     Explain briefly.}
   \end{quote}
-    \subsubsection{answer: }
+    \subsubsection{Answer: }
       \begin{wrapfigure}{r}{0.25\textwidth}
         \centering
           \includegraphics[scale=0.3]{farnsworth}
@@ -170,7 +170,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
 \end{quote}
 
 \subsection{ Write a recurrence relation for $p_k$. }
-  \subsubsection{answer:}
+  \subsubsection{Answer:}
     Note that $p_k$ is the probability that the red ball is in bin 1 at the beginning of
     the $k$-th round.
 
@@ -192,7 +192,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
 \subsection{Use the guess and check and proof by induction method to solve this
 	recurrence, Don't forget to label BC, IH, and IS and clearly say where you
 	are using the IH}.
-  \subsubsection{answer:}
+  \subsubsection{Answer:}
     First, we solve the recurrence.
 
     \begin{align}
@@ -255,7 +255,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
   \subsection{Assume you are paid one dollar for every round in which the red
     ball is in bin 1 and there are $m$ rounds. What is the expected number of
     dollars you earn?}
-    \subsubsection{answer:}
+    \subsubsection{Answer:}
       Let $X_k$ be an indicator random variable that denotes the event when the red
       ball is in bin 1. We define $X_k$ as 
       \begin{align}
@@ -281,7 +281,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
   edges. }
 \end{quote}
 
-\subsubsection{answer:}
+\subsubsection{Answer:}
 
 \newtheorem{mydef}{Theorem}
 
@@ -326,7 +326,7 @@ respectively and it follows that the tree $T$ has
   \end{itemize}
   \end{quote}
 
-  \subsubsection{answer:}
+  \subsubsection{Answer:}
     \begin{proof}
       By induction on $n$ where $n$ is the number of edges in the path from
       $s$ to $v$. 
@@ -349,14 +349,28 @@ respectively and it follows that the tree $T$ has
 \section{Claim 2 from SSSP}
 \begin{quote}
 \begin{itemize}
-  \item \textbf{ If the algorithm halts, then $dist(v) \leq w(s \leadsto )$
+  \item \textbf{ If the algorithm halts, then $dist(v) \leq w(s \leadsto v)$
 	  for \emph{any} path $s \leadsto v$.}
   \item \textbf{This is easy to prove by induction on the number of edges in
 	the path from $s$ to $v$.}
 \end{itemize}
 \end{quote}
-\subsubsection{answer:}
+\subsubsection{Answer:}
 
+\begin{proof}
+  The definition of relaxation follows:
+  \begin{definition}
+    We call an edge $(u, v)$ tense if $dist(u) + w(u, v) < dist(v)$ If $(u, v)$
+    is tense, then the tentative shortest path from $(s \leadsto v )$ is
+    incorrect since the path $(s \leadsto u)$ and then $(u, v)$ is shorter. Our
+    generic algorithm repeatedly finds a tense edge in the graph and relaxes
+    it. If there are no tense edges, our algorithm is finished and we have our
+    desired shortest path tree.
+  \end{definition}
+
+  Let $k$ be the number of edges in $s \leadsto v$. 
+
+\end{proof}
 
 
 \section{Problem 23-4: Alternative MST}
@@ -402,7 +416,7 @@ Maybe-MST-A(G, w)
 			T = T - {e}
 	return T
 \end{lstlisting}
-\subsubsection{answer: }
+\subsubsection{Answer: }
     \subsubsection{analysis}
       MaybeMSTA removes edges in nonincreasing order as long as the graph stays
       connected which results in a tree $T$ which is an MST. If we let $S$ be an
@@ -428,7 +442,7 @@ Maybe-MST-B(G,w)
 		  T = union(T, {e})
 	  return T
 \end{lstlisting}
-  \subsubsection{answer: }
+  \subsubsection{Answer: }
   \subsubsection{analysis: }
     No, the algorithm does not return an MST. 
       
@@ -481,7 +495,7 @@ Maybe-MST-B(G,w)
     return T
   \end{lstlisting}
 
-  \subsubsection{answer:}
+  \subsubsection{Answer:}
   \subsubsection{analysis:}
     $T$ will add every edge $e \in G$ and only edges $e$ that make cycles will
     be deleted. If a graph has an edge that results in a cycle, removing that
@@ -516,7 +530,7 @@ Maybe-MST-B(G,w)
   \end{quote}
 
   \subsection{Argue that the nesting relation is transitive.}
-    \subsubsection{answer:}
+    \subsubsection{Answer:}
       let $\mathcal R \subseteq S x S$ be a relation in $S$. 
       In order to show that a relation is transitive, we must show that  for
 
@@ -541,7 +555,7 @@ Maybe-MST-B(G,w)
 
   \subsection{Describe an efficient method to determine weather or not one
               $d$-dimensional box nests inside another.}
-  \subsubsection{answer:}
+  \subsubsection{Answer:}
     If we sort the $d$ dimension values within both $(x_1, x_2, \dots x_d)$ and
     $(y_1, y_2, \dots y_d)$ and then compare $x_i, y_i$ for every value of $i =
     1 \to d$ If $x_i <y_i$ for all $i$, this implies that $x$ nests within $y$.
@@ -551,7 +565,7 @@ Maybe-MST-B(G,w)
         sequence $\langle B_{i_1}, B_{i_2},\dots B_{i_k}\rangle$ of boxes such that
         $B_{i_j}$ nests within  $B_{i_{j+1}}$ for $j = 1,2,\dots,k-1$. Express the
         running time of your algorithm in terms of n and d.}
-  \subsubsection{answer:}
+  \subsubsection{Answer:}
     As before, sort the dimension values $d$ within each box $(x_1, x_2, \dots x_d)$ and
     $(y_1, y_2, \dots y_d)$ Check if each possible pair of boxes $(B_i, B_j)$
     $B_i$ nests inside of $B_j$ or if the converse is true. Make a graph $G$
@@ -583,7 +597,7 @@ transport on each edge in that path.}
 \textbf{The Goal is to find a path from $s$ to $t$ that maximizes the probability of
 safe transport. Describe an efficient algorithm to solve this problem.  }
 \end{quote}
-\subsubsection{answer:}
+\subsubsection{Answer:}
 We have $s$ as our start node and $t$ as our destination. let $e(u,v)$ be the
 edge from vertex $u \rightarrow v$. We want to maximize the product of the
 probabilities on the path such that the set of vertices $p = \langle v_0, v_1,
@@ -645,7 +659,7 @@ queue we can do this is total $O(|E| + |V| log |V|)$ time.
 \caption{Figure 25.2 from CLRS}
 \label{fig:figure1}
 \end{figure}
-\subsubsection{answer:}
+\subsubsection{Answer:}
 \vspace{6cm}
 
 \end{document}
