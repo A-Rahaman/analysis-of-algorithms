@@ -124,7 +124,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
 
 
   \subsection{Your friend Bender claims that once you have the recurrence
-    relation, you can just write a recurasive algorithm for this problem in
+    relation, you can just write a recursive algorithm for this problem in
     order to compute $f(r)$ where r is the root node. There's no need to bother
     with a dynamic program that stores the computed $f$ values at the nodes of
     the tree. Is Bender right? Explain in a couple of sentences.}
@@ -174,9 +174,9 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     Note that $p_k$ is the probability that the red ball is in bin 1 at the beginning of
     the $k$-th round.
 
-    We can write this approching from two angles, one if the red ball is in the
+    We can write this approaching from two angles, one if the red ball is in the
     right bin and another if the red ball is in the left bin at the beginning of
-    the kth round. 
+    the $k$th round. 
     We know that if, at any round, the chance of the red ball moving from the right
     bin to the left if it is in the right bin is $\frac{1}{4}$ and the chance of it
     staying in the left bin if it is in the left bin is $\frac{3}{4}$. 
@@ -200,16 +200,16 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
       p(k+1) & = 1/2 p(k)
       p(k) - 1/2 p(k) & =  0 
       Lp - 1/2 p & = 0
-      \left( L - 1/2 \right) & = 0 \text{annihilates the sequences homegeneous
+      \left( L - 1/2 \right) & = 0 \text{annihilates the sequences homogeneous
       part}
     \end{align}
     \begin{align}
-      \left(L - 1\right) \text{annihilates the sequences non-homegeneous
+      \left(L - 1\right) \text{annihilates the sequences non-homogeneous
       part, leaving us with }\\
       \left( L - 1/2 \right) \left(L - 1\right)
     \end{align}
 
-    solving for the constants gives us:
+    Solving for the constants gives us:
     \[ f(n) = c_1 * (1/2)^n + c_2 \]
     \begin{align}
       \text{base cases}: \\*
@@ -259,7 +259,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
       Let $X_k$ be an indicator random variable that denotes the event when the red
       ball is in bin 1. We define $X_k$ as 
       \begin{align}
-        X_k = \begin{cases} 1 \text{ if red ball is in bin 1 at beginning of round k} \\*
+        X_k = \begin{cases} 1 \text{ if red ball is in bin 1 at beginning of round }k \\*
                             0 \text{ otherwise }\\*
         \end{cases}
       \end{align}
@@ -309,7 +309,7 @@ subcomponent such that $n_1 + n_2 = n$.
 Inductive step: \\*
 By the inductive hypothesis, the number of edges in $T_1, T_2$ are $n_1-1,
 n_2-1$
-respectively and it follows that the the tree $T$ has 
+respectively and it follows that the tree $T$ has 
 \[ E = n_1 -1 + n_2 -1 +1 = n_1 + n_2-1 = n-1 \]
   \qedhere
 \end{proof}
@@ -328,7 +328,7 @@ respectively and it follows that the the tree $T$ has
 
   \subsubsection{answer:}
     \begin{proof}
-      By induction on $n$ where $n$ is the nnumber of edges in the path from
+      By induction on $n$ where $n$ is the number of edges in the path from
       $s$ to $v$. 
 
       Base Case: 
@@ -390,7 +390,7 @@ Before the problems, first a few definitions:
 \end{definition}
 
 For all below answers, we have to show that for a an algorithm to return a
-minimal spanning tree, it must meet both of the above critera.
+minimal spanning tree, it must meet both of the above criteria.
 
 \subsection{}
 \begin{lstlisting}
@@ -539,7 +539,7 @@ Maybe-MST-B(G,w)
 
 
 
-  \subsection{Describe an efficient method to determine wether or not one
+  \subsection{Describe an efficient method to determine weather or not one
               $d$-dimensional box nests inside another.}
   \subsubsection{answer:}
     If we sort the $d$ dimension values within both $(x_1, x_2, \dots x_d)$ and
@@ -555,11 +555,11 @@ Maybe-MST-B(G,w)
     As before, sort the dimension values $d$ within each box $(x_1, x_2, \dots x_d)$ and
     $(y_1, y_2, \dots y_d)$ Check if each possible pair of boxes $(B_i, B_j)$
     $B_i$ nests inside of $B_j$ or if the converse is true. Make a graph $G$
-    with $n$ nodes where each node represenets the one $B_i$, so that each
+    with $n$ nodes where each node represents the one $B_i$, so that each
     $B_i, B_j$ pair where $B_i$ nests in $ B_j$ gets a directed edge from $B_i
     \to B_j$. Add a root vertex $s$ to the graph and give an edge from $r$ to
-    every vertex in the graph. Add a 'destination' vertext $d$ to the graph
-    that has an incoming edge from each vertex. Peform a topolgical sort of the
+    every vertex in the graph. Add a 'destination' vertex $d$ to the graph
+    that has an incoming edge from each vertex. Preform a topological sort of the
     graph with $s$ as the root vertex. Run a Bellman-Ford SSSP search on $s
     \rightarrow d$ . The most expensive part of the algorithm is building the
     graph, which involves $O(dn^2)$ operations, which is greater than the
@@ -585,20 +585,20 @@ safe transport. Describe an efficient algorithm to solve this problem.  }
 \end{quote}
 \subsubsection{answer:}
 We have $s$ as our start node and $t$ as our destination. let $e(u,v)$ be the
-edge from vertex $u \rightarrow v$. We want to maximuze the product of the
+edge from vertex $u \rightarrow v$. We want to maximize the product of the
 probabilities on the path such that the set of vertices $p = \langle v_0, v_1,
 \dots, v_k \rangle$ where $v_0 = s, v_k = t$. We want
 
 \[ p = max \prod_{i = 0}^{k} e(v_{i-1}, v_i) \]
 
-If we log transform the edge weights, we can solf this problem easily. if we
+If we log transform the edge weights, we can solve this problem easily. If we
 define $w(e) = - log \, e(u,v)$ as the log transform of the edge weight, we can
 change the problem to  a single-source shortest path problem as 
 
 \[ p = min \sum_{i=1}^{k} w(v_{i-1}, v_i) \]
 
 This is easily solved with Dijkstra's algorithm with the additional step of log
-transforming the edges ($O(E)$). Using a fibbonacci-heap-backed min-priority
+transforming the edges ($O(E)$). Using a Fibbonacci-heap-backed min-priority
 queue we can do this is total $O(|E| + |V| log |V|)$ time.
 
 
