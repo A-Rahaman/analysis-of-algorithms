@@ -114,6 +114,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 	node $v$, let $l(v)$ (resp $r(v)$) be the left (resp. right ) child of $v$
 	if it exists or NULL otherwise. Give a recurrence relation for $f(v)$.}
 \subsubsection{answer:}
+\[ f\left( l (v) \right) + f\left( r (v) \right) + n\left( r(v) \right) \]
+
 \vspace{5cm}
 
 \subsection{Your friend Bender claims that once you have the recurrence
@@ -342,7 +344,26 @@ Maybe-MST-C(G,w)
 
 \subsection{Argue that the nesting relation is transitive.}
 \subsubsection{answer:}
-\vspace{5cm}
+let $\mathcal R \subseteq S x S$ be a relation in $S$. 
+In order to show that a relation is transitive, we must show that  for
+
+\[ \left({x, y}\right) \in \mathcal R \land \left({y, z}\right) \in \mathcal R \implies \left({x, z}\right) \in \mathcal R \]
+
+\[ \left\{ {\left({x, y}\right), \left({y, z}\right)}\right\} \subseteq \mathcal R \implies \left({x, z}\right) \in \mathcal R \]
+In our problem, we must show that $x$ nests in $y$ and $y$ nests in some box
+$z$. If we find a relation $\pi$ for both of the relations above such that
+
+\[ x_{pi_i} < y_i \text{and } y_{pi_i} < z_j \]
+
+if our number of dimensions is the set $d$
+We have $ \{i,j\} \in d$, we can find for every $i$ a unique $j$ that satisfies
+$i = \pi_j$, resulting in 
+\[ x_{pi_i} < y_i =  y_{pi_i} < z_j \]
+which reduces to 
+\[ x_{pi_i} < z_j \]
+and the relation is transitive as we can find a unique $z_j$ for every
+$x_{\pi_i}$.
+
 
 
 \subsection{Describe an efficient method to determine wether or not one
