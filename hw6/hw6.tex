@@ -155,29 +155,91 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   \textbf{There are two bins. Bin 1 initially has 3 white balls and 1 red ball.
   Bin 2 has 4 white balls. In every round, a ball is selected uniformly at
   random from each bin and these two balls are swapped. \\*
-  Let $p_k$ be the prbability that the red ball is in bin 1 at the beginning of
+  Let $p_k$ be the probability that the red ball is in bin 1 at the beginning of
   the $k$-th round.}
 \end{quote}
 
 \subsection{ Write a recurrence relation for $p_k$. }
-\subsubsection{answer:}
-\vspace{4cm}
-\begin{align}
-  f(k) = 
-	\begin{cases}
-          \text{if red ball is in the right bin: } & \frac{1}{4}\left(1 - f(k-1)\right) \\*
-          \text{if red ball is in the left bin: }  & \frac{3}{4} \left( f(k-1) \right) \\*	
-	\end{cases}
-\end{align}
+  \subsubsection{answer:}
+    Note that $p_k$ is the probability that the red ball is in bin 1 at the beginning of
+    the $k$-th round.
 
-\vspace{8cm}
+    We can write this approching from two angles, one if the red ball is in the
+    right bin and another if the red ball is in the left bin at the beginning of
+    the kth round. 
+    We know that if, at any round, the chance of the red ball moving from the right
+    bin to the left if it is in the right bin is $\frac{1}{4}$ and the chance of it
+    staying in the left bin if it is in the left bin is $\frac{3}{4}$. 
+
+    A recurrence relation follows:
+    \begin{align}
+      p(k) & = \frac{1}{4}\left(1 - p(k-1)\right) + \frac{3}{4}\left(p\left(k-1\right)\right) \\*
+      p(k) & = \frac{1}{4} - \frac{1}{4}p(k-1) + \frac{3}{4}p(k-1) \\*
+      p(k) & = \frac{1}{2}p(k-1) + \frac{1}{4} 
+    \end{align}
 
 
 \subsection{Use the guess and check and proof by induction method to solve this
 	recurrence, Don't forget to label BC, IH, and IS and clearly say where you
 	are using the IH}.
-\subsubsection{answer:}
-\vspace{8cm}
+  \subsubsection{answer:}
+    First, we solve the recurrence.
+
+    \begin{align}
+      p(k) & = 1/2 p(k -1) + 1/4 \\*
+      p(k+1) & = 1/2 p(k)
+      p(k) - 1/2 p(k) & =  0 
+      Lp - 1/2 p & = 0
+      \left( L - 1/2 \right) & = 0 \text{annihilates the sequences homegeneous
+      part}
+    \end{align}
+    \begin{align}
+      \left(L - 1\right) \text{annihilates the sequences non-homegeneous
+      part, leaving us with }\\
+      \left( L - 1/2 \right) \left(L - 1\right)
+    \end{align}
+
+    solving for the constants gives us:
+    \[ f(n) = c_1 * (1/2)^n + c_2 \]
+    \begin{align}
+      \text{base cases}: \\*
+      p(1) = 1: & f(1) = c_1 (1/2)^1 + c_2 = 1  \\*
+      p(2) = 3/4: & f(2) = c_1 (1/2)^2 + c_2 = 3/4
+    \end{align}
+    \begin{align}
+      c_1 &= (1/2)^2 + (1 - 1/2 c_1) = 3/4 \\*
+      c_1 &= \left( (1/2)^2 - (1/2)\right) \\*
+          &= 3/4 - 1 \\*
+          &= 1 \\*
+    \end{align}
+    \begin{align}
+      c_2 &= 1 - 1/2 c_1 \\*
+      c_2 &= 1 - 1/2 * 1 \\*
+      c_2 = 1/2
+    \end{align}
+  We can say that 
+  \[ p(k) = \left(\frac{1}{2}\right)^k + \frac{1}{2} \]
+  and use it as a guess to prove via induction.
+  \begin{proof}
+      let $f(n) = \frac{1}{2} f(n-1) + \frac{1}{4}$ represent our recurrence. 
+      suppose that :
+    \[ f(n) = \left(\frac{1}{2}\right)^n + \frac{1}{2} \]
+    We have two base cases:
+    \[ n =1: f(n) = (1/2)^1 + 1/2 = 1 \]
+    \[ n = 2: f(2) = (1/2)^2 + 1/2 = 3/4 \]
+
+    Inductive Hypothesis:
+    \[ \forall j < n, f(j) = (1/2)^j + 1/2 \]
+
+    Inductive step:
+    \begin{align}
+      f(n) &= 1/2 f(n-1) + 1/4 \\*
+      &= 1/2\left( (1/2)^{n-1} + 1/2 \right) + 1/4 \\*
+      &= 1/2 \left( \frac{\left(1/2\right)^j}{1/2} + 1/2 \right) + 1/4 \\*
+      &= (1/2)^j + 1/4 + 1/4 \\*
+      &= (1/2)^j + 1/2 \qedhere
+    \end{align}
+  \end{proof}
 
 
 \subsection{Assume you are paid one dollar for every round in which the red
