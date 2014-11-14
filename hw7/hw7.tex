@@ -69,6 +69,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 \usepackage{lastpage}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
+\usepackage{tikz-qtree}
 
 %%% Header and Footer %%% 
 \lhead{}
@@ -83,7 +84,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 
 \title{Homework 7, CS561, Fall 2014}
 \author{Aaron Gonzales}
-\maketitle
+%\maketitle
 
 
 %%%% useful align for this
@@ -91,24 +92,29 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   \begin{quote}
     \textbf{In the example of Figure 26.6, what is the minimum cut corresponding
     to the maximum flow shown? Of the augmenting paths appearing in the
-  example, which one cancels flow?}
+    example, which one cancels flow?}
   \end{quote}
 
+  \includegraphics[scale=0.40]{26.6a.png}\\*
+  \includegraphics[scale=0.40]{26.6b.png}\\*
   \subsubsection{Answer:}
+
+  \vspace{9cm}
 
 
 \section{26.2 - 11 : connectivity}
   \begin{quote}
     \textbf{The edge connectivity of an undirected graph is the minimum number
-      $k$
-    of edges that must be removed to disconnect the graph. For example, the edge
-  connectivity of a tree is 1, and the edge connectivity of a cyclic chain of
-  vertices is 2. Show how to determine the edge connectivity of an undirected
-  graph $G = (V,E) $ by running a maximum-flow algorithm on at most $|V|$ flow
-  networks, each having $O(V)$ vertices and $O(E)$ edges.}
+      $k$ of edges that must be removed to disconnect the graph. For example,
+      the edge connectivity of a tree is 1, and the edge connectivity of a
+      cyclic chain of vertices is 2. Show how to determine the edge
+      connectivity of an undirected graph $G = (V,E) $ by running a
+      maximum-flow algorithm on at most $|V|$ flow networks, each having $O(V)$
+      vertices and $O(E)$ edges.}
   \end{quote}
 
   \subsubsection{Answer:}
+  \vspace{9cm}
 
 
 \section{Perfect Matchings}
@@ -129,6 +135,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
     Hint: Use the Max flow/Min Cut Theorem}
   \end{quote}
 
+  \vspace{9cm}
 
 
 
@@ -157,7 +164,59 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 
   \subsubsection{Answer:}
 
+  \vspace{9cm}
 
+
+\section{Exercise 29.2-2 (Linear Program)}
+  \begin{quote}
+    \textbf{Write out explicitly the linear program corresponding to finding
+    the shortest path from node $s$ to node $y$ in Figure 24.2(a).}
+  \end{quote}
+\usetikzlibrary{arrows}
+\begin{figure}
+  \begin{center}
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+	  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+	  \node[main node] (1) {3};
+	  \node[main node] (2) [right of=1] {9};
+	  \node[main node] (3) [below of=2] {11};
+	  \node[main node] (4) [below of=1] {5};
+	  \node[main node] (5) [below left of=1] {0};
+
+	  \path[every node/.style={font=\sffamily\small}]
+		(1) edge node [above] {6} (2)
+			 edge [bend right] node[left] {2} (4)
+			%edge [loop above] node {0.1} (1)
+		(2) edge[bend right] node [bend right] {2} (3)
+			%edge [loop left] node {0.4} (2)
+			%edge [bend right] node[left] {0.1} (3)
+		(3) edge [bend right] node [right] {7} (2)
+                    edge node [below right] {3} (5)
+		(4) edge [bend right] node [above left] {1} (1)
+                        edge node[below] {6} (3)
+                        edge node {4} (2)
+		(5) edge node [above left] {3} (1)
+                    edge node [below left] {5} (4);
+                    %edge node [left] {5} (2);
+			%edge [loop right] node {0.6} (4)
+	\end{tikzpicture}
+  \end{center}
+\caption{Figure 24.2 from CLRS}
+\label{fig:figure1}
+\end{figure}
+
+  \subsubsection{Answer:}
+  \vspace{9cm}
+
+\section{Exercise 29.2-4 (Network Flow as an LP)}
+  \begin{quote}
+    \textbf{Write out explicitly the linear program corresponding to finding
+    the maximum flow in Figure 26.1(a).}
+  \end{quote}
+
+  \subsubsection{Answer:}
+  \vspace{9cm}
 \section{Rock, Paper, Scissors}
   \begin{quote}
     \textbf{Rock, Paper, Scissors is a simple 2 person game. In a given round,
@@ -187,15 +246,19 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
         strategy will be to choose one of the three objects with probability 1.
       \\* Hint 2: Review the LP you wrote for the shortest paths problem.}
   \end{itemize}
+  \subsubsection{Answer:}
+
+  \vspace{9cm}
 
 \section{Independent-Set}
   \begin{quote}
-    \textbf{The problem INDEPENDENT-SET asks: Does there exist a set of $k$
-    vertices in a graph $G$ with no edges between them? Show that this problem is
+  \textbf{The problem INDEPENDENT-SET asks: Does there exist a set of $k$
+  vertices in a graph $G$ with no edges between them? Show that this problem is
   NP-Complete. (hint: Reduce from CLIQUE)}
   \end{quote}
   \subsubsection{Answer:}
 
+  \vspace{9cm}
 
 
 
@@ -212,14 +275,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   \end{quote}
 
   \subsubsection{Answer:}
-
+  \vspace{9cm}
 \end{document}
 
 
-
-
-
-
-
-
-
+\end{document}
