@@ -95,10 +95,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
     example, which one cancels flow?}
   \end{quote}
 
-  \includegraphics[scale=0.40]{26.6a.png}\\*
-  \includegraphics[scale=0.40]{26.6b.png}\\*
+  \begin{figure}
+    \begin{center}
+    \includegraphics[scale=0.40]{26.6a.png}\\*
+    \includegraphics[scale=0.40]{26.6b.png}\\*
+  \end{center}
+  \end{figure}
   \subsubsection{Answer:}
-
   \vspace{9cm}
 
 
@@ -134,7 +137,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
     perfect matching in $G$ iff $|N(S)| \geq |S|$ for all $S \in L$.
     Hint: Use the Max flow/Min Cut Theorem}
   \end{quote}
-
+  \subsubsection{Answer:}
   \vspace{9cm}
 
 
@@ -146,9 +149,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
       consists of $n$ pixels. We represent this as an undirected graph $G =
       (V,E)$ where $V$ is the set of pixels and there is an edge $(i,j) \in
       E$ iff pixel $i$ and pixel $j$ are neighbors in the image
-      \footnote{Note that we’d commonly expect this graph to be a grid, but
+      \footnote{Note that we'd commonly expect this graph to be a grid, but
         in fact we want to handle any arbitrary graph (to handle, e.g., 3-D
-      images, wrapped are warped images, etc)}}. \\* \textbf{We want to find
+        images, wrapped and warped images, etc)}}. \\* 
+        \textbf{We want to find
         a good segmentation, which is an assignment of each pixel to either
         the foreground or the background.  For each pixel $i$, we have a
         likelihood $a_i$ that $i$ belongs to the foreground and a likelihood
@@ -214,6 +218,11 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
     \textbf{Write out explicitly the linear program corresponding to finding
     the maximum flow in Figure 26.1(a).}
   \end{quote}
+  \begin{figure}
+    \begin{center}
+    \includegraphics[scale=0.40]{26.1a.png}\\*
+    \end{center}
+  \end{figure}
 
   \subsubsection{Answer:}
   \vspace{9cm}
