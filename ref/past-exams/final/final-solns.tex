@@ -140,53 +140,130 @@ and $n$? Is it an algorithm that runs in polynomial time in the input sizes?
 \item Pull: remove the item on the right end of the list
 \end{itemize}
 
-Show how to implement this new data structure using only: one stack, one queue, and $O(1)$ additional memory, so that the amortized time for all three operations is $O(1)$.  {\bf You are allowed to access the  stack and queue only through the standard PUSH, POP and PULL operations}.  Don't forget to prove your operations have $O(1)$ amortized cost.
+Show how to implement this new data structure using only: one stack, one queue,
+and $O(1)$ additional memory, so that the amortized time for all three
+operations is $O(1)$.  {\bf You are allowed to access the  stack and queue only
+through the standard PUSH, POP and PULL operations}.  Don't forget to prove
+your operations have $O(1)$ amortized cost.
 
-\ans{Call the new data structure a quack and let S be the stack and Q be the queue.  We will keep track of the value n, which is the number of items on the quack, i.e. the max of $0$ and the number of times push has been called minus the number of times Pop or Pull have been called.  When an item is pushed onto the quack, push it onto both S and Q.  If $n>0$, then when an item is popped from the quack, call POP on S and when an item is pulled from the quack, call PULL from Q.  However, if $n=0$, when either pop or pull is called on the quack, do 1) call POP on S until it is empty; 2) call PULL on Q until it is empty; and 3) return ``ERROR: Empty Quack''.  We can use the accounting method to show the amortized run time.  Charge \$3's for each call to Push and \$0's for the other operations.  When an item $x$ is pushed on the Quack, store one dollar with the item that is pushed on $S$ and one dollar with the copy pushed on $Q$.  When calling POP or PULL on S or Q, each item will have a dollar on it to pay for the time for removal!}
+\ans{Call the new data structure a quack and let S be the stack and Q be the
+queue.  We will keep track of the value n, which is the number of items on the
+quack, i.e. the max of $0$ and the number of times push has been called minus
+the number of times Pop or Pull have been called.  When an item is pushed onto
+the quack, push it onto both S and Q.  If $n>0$, then when an item is popped
+from the quack, call POP on S and when an item is pulled from the quack, call
+PULL from Q.  However, if $n=0$, when either pop or pull is called on the
+quack, do 1) call POP on S until it is empty; 2) call PULL on Q until it is
+empty; and 3) return ``ERROR: Empty Quack''.  We can use the accounting method
+to show the amortized run time.  Charge \$3's for each call to Push and \$0's
+for the other operations.  When an item $x$ is pushed on the Quack, store one
+dollar with the item that is pushed on $S$ and one dollar with the copy pushed
+on $Q$.  When calling POP or PULL on S or Q, each item will have a dollar on it
+to pay for the time for removal!}
  
  
-\problem{Commodities Trading} 
- (20 points) Imagine there are $n$ commodities $g_{1}, g_{2}, \ldots, g_{n}$ and an $n$ by $n$ table $R$ of exchange rates, such that one unit of commodity $g_{i}$ can be traded for $R[i,j]$ units of commodity $j$.  Moreover, there are \emph{taxes} on each commodity given by $t_{1}, t_{2}, ..., t_{n}$ such that if $i$ is an intermediate commodity in a sequence of trades, you are taxed at rate $t_{i}$ when you convert to commodity $i$.  For example, when you convert to the intermediate commodity ``pork bellies'', you are taxed at a rate of $.05$.  A \emph{valid} sequence of trades, starts and ends with the same commodity.  The \emph{revenue} from a sequence of trades is the amount of the first commodity you end up with if you start with one unit of the first commodity initially and perform the trades in the sequence.  For example, if there is a sequence of commodities $g_{i_{1}}, g_{i_{2}}, \ldots, g_{i_{k}}, g_{i_{1}}$, then the profit for that sequence is: $R[i_{1}, i_{2}] \cdot (1 - t_{2}) \cdot R[i_{2}, i_{3}] \cdot(1 -  t_{3}) \cdots R[i_{k-1},i_{k}] \cdot (1- t_{k}) \cdot R[i_{k},i_{1}] \cdot (1-t_{1})$.  Note that you are only taxed once for the start/end commodity in the valid sequence.  Note also that the revenue may be less than $1$.
+\problem{Commodities Trading} (20 points) Imagine there are $n$ commodities
+$g_{1}, g_{2}, \ldots, g_{n}$ and an $n$ by $n$ table $R$ of exchange rates,
+such that one unit of commodity $g_{i}$ can be traded for $R[i,j]$ units of
+commodity $j$.  Moreover, there are \emph{taxes} on each commodity given by
+$t_{1}, t_{2}, ..., t_{n}$ such that if $i$ is an intermediate commodity in a
+sequence of trades, you are taxed at rate $t_{i}$ when you convert to commodity
+$i$.  For example, when you convert to the intermediate commodity ``pork
+bellies'', you are taxed at a rate of $.05$.  A \emph{valid} sequence of
+trades, starts and ends with the same commodity.  The \emph{revenue} from a
+sequence of trades is the amount of the first commodity you end up with if you
+start with one unit of the first commodity initially and perform the trades in
+the sequence.  For example, if there is a sequence of commodities $g_{i_{1}},
+g_{i_{2}}, \ldots, g_{i_{k}}, g_{i_{1}}$, then the profit for that sequence is:
+$R[i_{1}, i_{2}] \cdot (1 - t_{2}) \cdot R[i_{2}, i_{3}] \cdot(1 -  t_{3})
+\cdots R[i_{k-1},i_{k}] \cdot (1- t_{k}) \cdot R[i_{k},i_{1}] \cdot (1-t_{1})$.
+Note that you are only taxed once for the start/end commodity in the valid
+sequence.  Note also that the revenue may be less than $1$.
 
-Your goal is to design an algorithm that finds some valid sequence of trades with revenue greater than $1$ if such a sequence exists, or outputs NONE if no such sequence exists.  Show how to do this using techniques from class.  Don't forget to analyze the runtime of your algorithm.
+Your goal is to design an algorithm that finds some valid sequence of trades
+with revenue greater than $1$ if such a sequence exists, or outputs NONE if no
+such sequence exists.  Show how to do this using techniques from class.  Don't
+forget to analyze the runtime of your algorithm.
 
-\ans{Create a graph, $G$, with source vertex $s$, and for each commodity $v$, there is a vertex $v_{i}$ and $v_{o}$.  For each commodity $v$, add edge from $s$ to $v$ with weight $0$; and also add an edge from $v_{i}$ to $v_{0}$ with weight $- \log (1-t_{v})$.  Finally, for each commodity $u$ and $v$, add an edge from $u_{o}$ to $u_{i}$ with weight $- \log R[u,v]$.  Now run Floyd Warshall to determine if there is a negative cycle in $G$.  The runtime is dominated by the runtime of Floyd Warshall, which is $O(n^{3})$.}
+\ans{Create a graph, $G$, with source vertex $s$, and for each commodity $v$,
+  there is a vertex $v_{i}$ and $v_{o}$.  For each commodity $v$, add edge from
+  $s$ to $v$ with weight $0$; and also add an edge from $v_{i}$ to $v_{0}$ with
+  weight $- \log (1-t_{v})$.  Finally, for each commodity $u$ and $v$, add an
+  edge from $u_{o}$ to $u_{i}$ with weight $- \log R[u,v]$.  Now run Floyd
+  Warshall to determine if there is a negative cycle in $G$.  The runtime is
+  dominated by the runtime of Floyd Warshall, which is $O(n^{3})$.}
 
  
 
-\problem{Dinner Party} 
-(20 points) You are giving a large dinner party. There are $n$ guests who you will have to split up over
-two  tables. Assume that for any two people, $i$ and $j$, there is a nonnegative cost $c_{i,j}$ if they
-sit at different tables. Moreover, each person has given you information about their table preferences: for each $i$ there is a nonnegative cost $a_{i}$
-if they do not sit at table A, and a nonnegative cost $b_{i}$ if they do not sit at table B. Your goal is to divide the guests into two sets A and B, seating them at the
-corresponding tables, in a way that minimizes the total cost:
-$ \sum_{i \in A} b_{i} + \sum_{i \in B} a_{i} + \sum_{(i,j): i \in A \textrm{ and } j \in B} c_{i,j}$
+\problem{Dinner Party} (20 points) You are giving a large dinner party. There
+are $n$ guests who you will have to split up over two  tables. Assume that for
+any two people, $i$ and $j$, there is a nonnegative cost $c_{i,j}$ if they sit
+at different tables. Moreover, each person has given you information about
+their table preferences: for each $i$ there is a nonnegative cost $a_{i}$ if
+they do not sit at table A, and a nonnegative cost $b_{i}$ if they do not sit
+at table B. Your goal is to divide the guests into two sets A and B, seating
+them at the corresponding tables, in a way that minimizes the total cost: $
+\sum_{i \in A} b_{i} + \sum_{i \in B} a_{i} + \sum_{(i,j): i \in A \textrm{ and
+} j \in B} c_{i,j}$
 
-Give an efficient algorithm to solve this problem based on min-cuts.  Argue that your algorithm is correct and analyze its runtime.
+Give an efficient algorithm to solve this problem based on min-cuts.  Argue
+that your algorithm is correct and analyze its runtime.
  
-\ans{This is a min-cut problem.  We create a new network $G$, with a node for each of the people in the network and additional nodes $s$ and $t$.  We create edges from every node $s$ and every node associated with each person $i$ to $s$ with edge weight $a_{i}$.  We also create edges from each person $i$ to $t$ with edge weight $b_{i}$.  Finally, for every person $i$ and every person $j$, we create an edge from node $i$ to node $j$ with weight $c_{i,j}$.  Now we find the minimum $s$, $t$ cut in this network.  Intuitively, the $s$ side of the cut will represent everyone sitting at table A and the $t$ side will represent everyone sitting at table B.  You can use the Dinits algorithm to find the min cut in this network for a total runtime of $O(nm^{2})$ which is $O(n^{5})$ in this case.} 
+\ans{This is a min-cut problem.  We create a new network $G$, with a node for
+  each of the people in the network and additional nodes $s$ and $t$.  We
+  create edges from every node $s$ and every node associated with each person
+  $i$ to $s$ with edge weight $a_{i}$.  We also create edges from each person
+  $i$ to $t$ with edge weight $b_{i}$.  Finally, for every person $i$ and every
+  person $j$, we create an edge from node $i$ to node $j$ with weight
+  $c_{i,j}$.  Now we find the minimum $s$, $t$ cut in this network.
+  Intuitively, the $s$ side of the cut will represent everyone sitting at table
+  A and the $t$ side will represent everyone sitting at table B.  You can use
+  the Dinits algorithm to find the min cut in this network for a total runtime
+  of $O(nm^{2})$ which is $O(n^{5})$ in this case.} 
  
  
  
  \problem{Rock, Paper, Scissors}
  
- Rock, Paper, Scissors is a simple 2 person game.  In a given round, both players simultaneously choose either Rock, Paper or Scissors.  If they both choose the same object, it's a tie.  Otherwise, Rock beats Scissors; Scissors beats Paper; and Paper beats Rock.  Imagine you're playing the following betting variant of this game with a friend.  When Scissors beats Paper, or Paper beats Rock, the loser gives the winner
- \$1.  However, in the case when Rock beats Scissors, this is called a SMASH, and the loser must give the winner \$10.  
+ Rock, Paper, Scissors is a simple 2 person game.  In a given round, both
+ players simultaneously choose either Rock, Paper or Scissors.  If they both
+ choose the same object, it's a tie.  Otherwise, Rock beats Scissors; Scissors
+ beats Paper; and Paper beats Rock.  Imagine you're playing the following
+ betting variant of this game with a friend.  When Scissors beats Paper, or
+ Paper beats Rock, the loser gives the winner \$1.  However, in the case when
+ Rock beats Scissors, this is called a SMASH, and the loser must give the
+ winner \$10.  
  
  
  \begin{enumerate}
- \item (6 points) Say you know that your friend will choose Rock, Scissors or Paper, each with probability $1/3$.  Write a linear program to calculate the probabilities you should use of choosing each object in order to maximize your expected winnings.  Let $p_{1}, p_{2}, p_{3}$ be variables associated with the best way of choosing Rock, Scissors and Paper respectively.  Note: If you want to check your work, there are several free linear program solvers on the Internets: check the Wikipedea page on linear programming.
+ \item (6 points) Say you know that your friend will choose Rock, Scissors or
+   Paper, each with probability $1/3$.  Write a linear program to calculate the
+   probabilities you should use of choosing each object in order to maximize
+   your expected winnings.  Let $p_{1}, p_{2}, p_{3}$ be variables associated
+   with the best way of choosing Rock, Scissors and Paper respectively.  Note:
+   If you want to check your work, there are several free linear program
+   solvers on the Internets: check the Wikipedea page on linear programming.
  
- \ans{Let $p_{1}, p_{2}, p_{3}$ be variables associated with you choosing Rock, Scissors and Paper respectively.\\ Maximize: $10*(1/3)*p_{1} - 1*(1/3)*p_{1} - 10*(1/3)*p_{2} + 1*(1/3)*p_{2} +  1*(1/3)*p_{3} - 1*(1/3)*p_{3}$ \\ Subject to the following constraints: \\ $0 \leq p_{1} \leq 1$, $0 \leq p_{2} \leq 1$, $0 \leq p_{3} \leq 1$\\ $p_{1} + p_{2} + p_{3} = 1$}
+ \ans{Let $p_{1}, p_{2}, p_{3}$ be variables associated with you choosing Rock,
+ Scissors and Paper respectively.\\ Maximize: $10*(1/3)*p_{1} - 1*(1/3)*p_{1} -
+ 10*(1/3)*p_{2} + 1*(1/3)*p_{2} +  1*(1/3)*p_{3} - 1*(1/3)*p_{3}$ \\ Subject to
+ the following constraints: \\ $0 \leq p_{1} \leq 1$, $0 \leq p_{2} \leq 1$, $0
+ \leq p_{3} \leq 1$\\ $p_{1} + p_{2} + p_{3} = 1$}
  
  \pagebreak
 
  
- \item (14 points) Now say that your friend is smart and, also, clairvoyant: she will magically know the exact probabilities you are using and will respond optimally.  Write another linear program to calculate the probabilities you should now use in order to maximize your expected winnings.  Hint 1: If your opponent knows your strategy, her strategy will be to choose one of the three objects with probability $1$.  Hint 2: Review the LP for shortest paths in the last HW.
+ \item (14 points) Now say that your friend is smart and, also, clairvoyant:
+   she will magically know the exact probabilities you are using and will
+   respond optimally.  Write another linear program to calculate the
+   probabilities you should now use in order to maximize your expected
+   winnings.  Hint 1: If your opponent knows your strategy, her strategy will
+   be to choose one of the three objects with probability $1$.  Hint 2: Review
+   the LP for shortest paths in the last HW.
  
 \ans{
-Let $p_{1}, p_{2}, p_{3}$ be variables associated with you choosing Rock, Scissors and Paper respectively.
-Maximize: $w$\\
+Let $p_{1}, p_{2}, p_{3}$ be variables associated with you choosing Rock,
+Scissors and Paper respectively.  Maximize: $w$\\
 Subject to:\\
 $0 \leq p_{1} \leq 1$, $0 \leq p_{2} \leq 1$, $0 \leq p_{3} \leq 1$\\ $p_{1} + p_{2} + p_{3} = 1$
 $ w \leq 1*p_{3} -10 * p_{2}$ - opponent always chooses rock\\
@@ -205,7 +282,21 @@ $ w \leq 1*p_{2} - 1*p_{1}$ - opponent always chooses paper\\
  
  \problem{File Movement}
  
- In the File Movement problem, you want to move files from an initial configuration to a goal configuration in a network of $n$ completely connected computers, as quickly as possible.  The files are all of equal size, and in any one round, a computer can be involved in either sending a file or receiving a file, {\bf but not both} \footnote{The files are so large that they must be read or written to disk directly.  Thus, either sending or receiving a file requires complete control of the disk.}.  You've decided that you can recast this problem as a problem in graph theory as follows.  You  are given a graph $G=(V,E)$, where $V$ is the set of all computers, and there is an edge from $x$ to $y$ in $E$ for each file that starts at $x$ and wants to go to $y$.  {\bf Note that there may be multiple edges in $G$ from $x$ to $y$ if multiple files want to move from $x$ to $y$.}  Your goal is to label each edge in $G$ with a positive integer such that: 1) for every node $v$ in $G$, all edges touching $v$ have unique numbers; and 2) the largest integer used is as small as possible.  
+ In the File Movement problem, you want to move files from an initial
+ configuration to a goal configuration in a network of $n$ completely connected
+ computers, as quickly as possible.  The files are all of equal size, and in
+ any one round, a computer can be involved in either sending a file or
+ receiving a file, {\bf but not both} \footnote{The files are so large that
+ they must be read or written to disk directly.  Thus, either sending or
+ receiving a file requires complete control of the disk.}.  You've decided that
+ you can recast this problem as a problem in graph theory as follows.  You  are
+ given a graph $G=(V,E)$, where $V$ is the set of all computers, and there is
+ an edge from $x$ to $y$ in $E$ for each file that starts at $x$ and wants to
+ go to $y$.  {\bf Note that there may be multiple edges in $G$ from $x$ to $y$
+ if multiple files want to move from $x$ to $y$.}  Your goal is to label each
+ edge in $G$ with a positive integer such that: 1) for every node $v$ in $G$,
+ all edges touching $v$ have unique numbers; and 2) the largest integer used is
+ as small as possible.  
  
 See the figure below for an example.
  
@@ -252,9 +343,21 @@ See the figure below for an example.
 
 \problem{Shortest Paths, Commodities and the Moral Torpidity of American Enterprise}
  
- \emph{``A million dollars isn't cool.  You know what's cool?  A billion dollars'' - Sean Parker in The Social Network}
+ \emph{``A million dollars isn't cool.  You know what's cool?  A billion
+ dollars'' - Sean Parker in The Social Network}
  
-What if we change the all-pairs, shortest paths problem so there is some cost associated with each intermediate vertex that is traversed in a path?  In particular, we are given a graph $G$ that has weights, $w$, on all the edges and also weights, $w'$, on all the vertices.  The weight of a path is the sum of the weights of all edges in that path and the weights of all vertices in the path except for the start and end vertex.  For example, the weight of the path $v_{1}, v_{2}, v_{3}, v_{4}$ is $w(v_{1} \rightarrow v_{2}) + w(v_{2} \rightarrow v_{3}) + w(v_{3} \rightarrow v_{4}) + w'(2) + w'(3)$.  The weights of both edges and vertices may be negative.  Your first goal is to design an algorithm that either computes the weight of the shortest path between every pair of vertices if there is no negative weight cycle in the graph, or else if there is a negative weight cycle, correctly returns that this is the case.
+What if we change the all-pairs, shortest paths problem so there is some cost
+associated with each intermediate vertex that is traversed in a path?  In
+particular, we are given a graph $G$ that has weights, $w$, on all the edges
+and also weights, $w'$, on all the vertices.  The weight of a path is the sum
+of the weights of all edges in that path and the weights of all vertices in the
+path except for the start and end vertex.  For example, the weight of the path
+$v_{1}, v_{2}, v_{3}, v_{4}$ is $w(v_{1} \rightarrow v_{2}) + w(v_{2}
+\rightarrow v_{3}) + w(v_{3} \rightarrow v_{4}) + w'(2) + w'(3)$.  The weights
+of both edges and vertices may be negative.  Your first goal is to design an
+algorithm that either computes the weight of the shortest path between every
+pair of vertices if there is no negative weight cycle in the graph, or else if
+there is a negative weight cycle, correctly returns that this is the case.
 
 You will show how to modify the Floyd Warshall algorithm to solve this new variant of all pairs shortest paths.  As in lecture, let $dist(u,v,r)$ be the shortest path from $u$ to $v$ that traverses vertices numbered $r$ or less.  Also, assume that the vertices are uniquely labelled from $1$ to $n$
 

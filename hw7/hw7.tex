@@ -56,7 +56,7 @@
 \usepackage{url}
 \usepackage[unicode=true,pdfusetitle,
   bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
-breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false, hidelinks]
 {hyperref}
 \hypersetup{pdfstartview={XYZ null null 1}}
 \usepackage{float}
@@ -84,7 +84,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 
 \title{Homework 7, CS561, Fall 2014}
 \author{Aaron Gonzales}
-%\maketitle
+\maketitle
 
 
 %%%% useful align for this
@@ -100,9 +100,13 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
     \includegraphics[scale=0.40]{26.6a.png}\\*
     \includegraphics[scale=0.40]{26.6b.png}\\*
   \end{center}
+  \label{fig:26.6a}
+  \caption{Figure 26.6 a-f from CLRS 3rd edition pdf}
   \end{figure}
   \subsubsection{Answer:}
-  \vspace{9cm}
+  Our cut will partition the graph into two sets:
+  \[ \{s, v_1, v_2, v_4\}, \{v_3, t\} \]
+  which respect the total augmenting flow in 26.6(c) of 23.
 
 
 \section{26.2 - 11 : connectivity}
@@ -117,7 +121,27 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
   \end{quote}
 
   \subsubsection{Answer:}
-  \vspace{9cm}
+  As a reminder, a min cut can be stated as finding a subset $S \in V$ of a graph $G =
+  (V,E)$such that $S \neq 0$ with edges $C$ crossing from $A$ to $V-A$ minimized.
+  For this problem, the cost of the cut can be the number of edges $||C||$ that
+  cross the cut. Here, we want to find the min cut of some cost equal to $k$.
+  Removing the edge set  $C$ from the graph clearly disconnects the graph. 
+
+  Our algorithm can be described as follows:
+  Let $s$ be some vertex in $V$ chosen at random. give a weight of 1 to every
+  edge in the graph. For every other vertex $t_i$ in $G$, find the min cut from $s$
+  to $t_i$ and save the number of edges that cross the min cut. Upon
+  completion, return minimum number $k$ from the process and you have the
+  edge connectivity value of the graph. The algorithm examines $\Theta(V-1) =
+  \Theta(V)$ nodes and using Ford-Fulkerson gives us a total runnig time of
+    $O(E\times V^2)$.
+
+  Note that Karger's algorithm can answer this question as well in a
+  randomized way of contracting edges in a graph by merging nodes together
+  into a series of multigraphs until two nodes remain that represent a cut in
+  the original graph. It can run with total time $O(V^2\, log\, V)$
+  depending on implementation and would work far more quickly than the above
+  answer\footnote{\url{http://en.wikipedia.org/wiki/Karger\%27s_algorithm}}. 
 
 
 \section{Perfect Matchings}
@@ -138,7 +162,32 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
     Hint: Use the Max flow/Min Cut Theorem}
   \end{quote}
   \subsubsection{Answer:}
-  \vspace{9cm}
+    If we let assign unit (1) weight to each edge in the graph and add a source
+    vertex $s$ that is connected from itself to each vertex in $L$ and a sink vertex $t$
+    that takes a directed edge from each vertex in $R$, we can model this as a
+    network flow problem. (In other words, direct all the edges from the source
+    on the left to the sink of the right). Let this restructured graph be
+    called $G'$. 
+  \begin{proof}
+    Given that our graph has $|L| = |R|$, let $n = |L|$. 
+    Suppose for sake of contridiction that $G$ contains no perfect matching. If
+    this is true, then the size of the maximum match in $G$ is at most $\leq n
+    -1$ and as such the max flow in $G'$ is $\leq n-1$. As such, $G'$ must have
+    a cut $C$ with at least capacity $n-1$. 
+
+    Let $L_a$ be the left vertices in cut $C$, $L_b$ be the remaining vertices
+    in $L$. Let $R_a$ and $R_b$ be defined the same for the right side. The
+    flow capacity of the edges crossing $C$ is the same as the number of edges
+    crossing $C$, which is $|L_b| + |R_a| + |L_a,R_b|$. 
+    We now have 
+    \[n-1 \geq |L_b| + |R_a| + |L_1, R_2|\]
+    and this reduces to 
+    \[ |N(L_a) \leq |R_a| + |L_a,R_2| \] because our $L_a$ neighboorhood can
+    only have edges from $L_a, R_b$ in $R_2$. 
+    \[ L_a \leq N(L_a) + 1 \] and we conclude the proof.
+  \end{proof}
+
+  
 
 
 
@@ -172,26 +221,25 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
 
   \subsubsection{Answer:}
 
-  This maximization problem stated in \ref{imgseg_max} can be formulated as a minimization problem instead,
-  that is,
+  This maximization problem stated in \ref{imgseg_max} can be formulated as a
+  minimization problem instead, that is,
   \begin{align}
     \label{imgseq_min}
     \max(a) = \sum_{i \in A}  a_i + \sum_{i \in B} b_i − \sum_{(i,j) \in E, | A \cap \{i,j\} | = 1} p_{i,j} 
   \end{align}
-
+is equivalent to
   \begin{align}
     \label{blah}
-    \min (g') = \sum_{i \in Q} f_i + \sum_{i \in P} b_i + \sum_{i \in P| j \in Q j \in P|i \in Q } p_{ij}. 
+    \min (g') = \sum_{i \in B} f_i + \sum_{i \in A} b_i + \sum_{i \in P| j \in Q j \in P|i \in Q } p_{ij}. 
   \end{align}
 
 The above minimization problem can be formulated as a minimum-cut problem by
-constructing a network where the source is connected to all the
-pixels with capacity $f_i$ and the sink is connected by all the pixels with
-capacity $b_i$
-Two edges $i,j$ and $j,i$
-with $p_{ij}$ capacity are added between two adjacent
+constructing a network where the source is connected to all the pixels with
+capacity $a_i$ and the sink is connected by all the pixels with capacity $b_i$
+Two directed edges $i,j$ and $j,i$ with $p_{ij}$ capacity are added between two adjacent
 pixels. The s-t cut-set then represents the pixels assigned to the foreground
-in $A$ and pixels assigned to background in $B$.
+in $A$ and pixels assigned to background in $B$ as we have minimized our
+desired quantity from equation \ref{blah}.
 
 
 
@@ -233,23 +281,74 @@ in $A$ and pixels assigned to background in $B$.
 \caption{Figure 24.2 from CLRS}
 \label{fig:figure1}
 \end{figure}
-
   \subsubsection{Answer:}
-  \vspace{9cm}
-
+  We have several constraints for our linear program. Let $d_a$ be the
+  distance up to a node $a$. Our constraints follow:
+  \begin{align*}
+    d_s = & 0 \\
+    d_t \leq & d_s + 3 \\
+    d_t \leq & d_y + 1 \\
+    d_y \leq & d_s + 5 \\
+    d_y \leq & d_t + 2 \\
+    d_x \leq & d_t + 6 \\
+    d_x \leq & d_z + 7 \\
+    d_z \leq & d_y + 6 \\
+    d_z \leq & d_x + 2 
+  \end{align*}
 \section{Exercise 29.2-4 (Network Flow as an LP)}
   \begin{quote}
     \textbf{Write out explicitly the linear program corresponding to finding
-    the maximum flow in Figure 26.1(a).}
+      the maximum flow in Figure 26.1(a) (Figure \ref{fig:26a} on page
+      \pageref{fig:26a}.}
   \end{quote}
   \begin{figure}
     \begin{center}
     \includegraphics[scale=0.40]{26.1a.png}\\*
     \end{center}
+    \caption{Figure 26.1a from CLRS 3rd edition PDF}
+    \label{fig:26a}
   \end{figure}
-
   \subsubsection{Answer:}
-  \vspace{9cm}
+  Note that a network flow problem would have the following global constraints:
+  Conservation of Flow
+  \begin{align}
+    \sum_{\text{outflow}} x_j - \sum_{\text{inflow}}x_j = 0
+  \end{align}
+  Our program would have the following constraints:
+  Let $f{i \to j} $ be a path from node $i$ to node $j$. Note that we must
+  preserve conservation of flow and that our program will have constraints
+  respecting flow and capacity of edges.
+
+  \begin{equation}
+    \begin{aligned}
+      f_{s \to s} &= 0 \\
+      f_{s \to v_1} &\leq 16  \\
+      f_{s \to v_2} &\leq 13   \\
+      f_{v_1 \to v_3} &\leq 12  \\
+      f_{v_2 \to v_1} &\leq 4  \\
+      f_{v_2 \to v_4} &\leq 14  \\
+      f_{v_3 \to v_2} &\leq 9  \\
+      f_{v_3 \to t} &\leq 20  \\
+      f_{v_4 \to v_3} &\leq  7 \\
+      f_{v_4 \to t} &\leq  4 
+    \end{aligned}
+  \end{equation}
+
+  we also have the following constraints on capacity:
+  \begin{equation}
+    \begin{aligned}
+      f_{s \to v_1} + f_{v_2 \to v_1} &=  f_{v_1 \to v_3} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
+      f_{s \to s} + f_{s \to s} &=  f_{s \to s}
+    \end{aligned}
+  \end{equation}
+
 \section{Rock, Paper, Scissors}
   \begin{quote}
     \textbf{Rock, Paper, Scissors is a simple 2 person game. In a given round,
@@ -271,10 +370,16 @@ in $A$ and pixels assigned to background in $B$.
         linear program solvers on the Internets: check the Wikipedia page on linear
         programming.} 
   \subsubsection{Answer:}
+
+  Let $\rho = \{p_{r}, p_{s}, p_{p}\}$ be the set of variables associated with us choosing Rock,
+ Scissors and Paper respectively. Maximize: 
   if $p_1, p_2, p_3$ are the probabilities of choosing the 
   \begin{align}
     \label{rps:a}
-    \sum_{blah}^{blah} = winnings \\
+    & \frac{1}{3}\left(10*p_{r} - 1*p_{s} - 10*p_{s} + 1*p_{s} +  1*p_{p} - 1*p_{p}\right) \\ 
+    & \text{ with the following constraints:} \\ 
+       & 0 \leq p_r, p_s, p_p \leq 1 \\ 
+       & \sum \rho = 1  \text{  (abuse of notation, sorry)}
   \end{align}
 
 
@@ -287,11 +392,11 @@ in $A$ and pixels assigned to background in $B$.
         strategy will be to choose one of the three objects with probability 1.
       \\* Hint 2: Review the LP you wrote for the shortest paths problem.}
   \subsubsection{Answer:}
-  Let $P = $ our profit and $Q = $ our friend's profit. Let $P_r, P_p, P_s$ be
+  Let $P = $ our profit and $Q = $ our friend's profit. Let $\rho = \{P_r, P_p, P_s\}$ be
   our probabilities of choosing rock, paper, or scissors. Let $Q_r, Q_p, Q_s$
   be our friend's winnings when she chooses rock, paper, or scissors,
   respectively.
-  Then let her winnings  be defined as
+  Then let her winnings be defined as
   \begin{equation}
     \begin{aligned}
       Q_r =& P_p - 10P_s &\text{she picks rock} \\
@@ -312,7 +417,7 @@ in $A$ and pixels assigned to background in $B$.
                     Q_s =& 10P_r - P_p \\
                   \end{cases} \\
        0 \leq p_1, p_2, p_3 &\leq 1 \\ 
-      \sum_{i=1}^p p_i &= 1 
+       \sum \rho  &= 1  \text{  (abuse of notation, sorry)}
     \end{aligned}
   \end{equation}
 
@@ -373,10 +478,18 @@ in $A$ and pixels assigned to background in $B$.
   exist such that vertices $v_1, v_2 \in E_0 \Leftrightarrow (f(v_1), f(v_2))
   \in E'$?
   \begin{proof}
+    \subsubsection{SI is in NP}
+    there can be $O(n^2)$ pairs in the list of nodes comprising $G_1$ and the
+    subgraph of $G_2$ that we must check to verify that it is isomorphic. This
+    polynomial time check verifies that SI is in NP.
+    \subsubsection{SI is NP-Complete}
     By reduction from CLIQUE. \\
     CLIQUE $\leq_P$ SUBGRAPH ISOMORPHISM. Let $(G = (V,E)k)$ be an input for
     CLIQUE and let $G_1$ to be the complete graph on $k$ vertices and $G_2$ to
     be the graph $G$. $G_1,G_2 \in$ SUBGRAPH ISOMORPHISM iff $G,k \in CLIQUE$.
+    If $G$ has a $k$-clique, then $G$ has the $k$-graph as a subgraph and
+    $G,G_k$ is a yes instance of the problem. As this is at least as hard as
+    Clique, we conclude that SUBGRAPH-ISOMORPHISM is NP-Hard $\implies$ NP-Complete.
   \end{proof}
 
 

@@ -177,8 +177,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
 
     A recurrence relation follows:
     \begin{align*}
-      p(k) & = \frac{1}{4}\left(1 - p(k-1)\right) + \frac{3}{4}\left(p\left(k-1\right)\right) \\*
-      p(k) & = \frac{1}{4} - \frac{1}{4}p(k-1) + \frac{3}{4}p(k-1) \\*
+      p(k) & = \frac{1}{4}\left(1 - p(k-1)\right) + \frac{3}{4}\left(p\left(k-1\right)\right) \\
+      p(k) & = \frac{1}{4} - \frac{1}{4}p(k-1) + \frac{3}{4}p(k-1) \\
       p(k) & = \frac{1}{2}p(k-1) + \frac{1}{4} 
     \end{align*}
 
@@ -190,10 +190,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     First, we solve the recurrence.
 
     \begin{align*}
-      p(k) & = 1/2 p(k -1) + 1/4 \\*
-      p(k+1) & = 1/2 p(k) \\*
-      p(k) - 1/2 p(k) & =  0  \\*
-      Lp - 1/2 p & = 0 \\* 
+      p(k) & = 1/2 p(k -1) + 1/4 \\
+      p(k+1) & = 1/2 p(k) \\
+      p(k) - 1/2 p(k) & =  0  \\
+      Lp - 1/2 p & = 0 \\
       \left( L - 1/2 \right) & = 0 \text{annihilates the sequences homogeneous part} \\
     \end{align*}
       $ \left(L - 1\right) $ annihilates the sequences non-homogeneous part,
@@ -202,19 +202,19 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
     Solving for the constants gives us:
     \[ f(n) = c_1 * (1/2)^n + c_2 \]
     \begin{align*}
-      \text{base cases}: \\*
-      p(1) = 1: & f(1) = c_1 (1/2)^1 + c_2 = 1  \\*
+      \text{base cases}: \\
+      p(1) = 1: & f(1) = c_1 (1/2)^1 + c_2 = 1  \\
       p(2) = 3/4: & f(2) = c_1 (1/2)^2 + c_2 = 3/4
     \end{align*}
     \begin{align*}
-      c_1 &= (1/2)^2 + (1 - 1/2 c_1) = 3/4 \\*
-      c_1 &= \left( (1/2)^2 - (1/2)\right) \\*
-          &= 3/4 - 1 \\*
-          &= 1 \\*
+      c_1 &= (1/2)^2 + (1 - 1/2 c_1) = 3/4 \\
+      c_1 &= \left( (1/2)^2 - (1/2)\right) \\
+          &= 3/4 - 1 \\
+          &= 1 \\
     \end{align*}
     \begin{align*}
-      c_2 &= 1 - 1/2 c_1 \\*
-      c_2 &= 1 - 1/2 * 1 \\*
+      c_2 &= 1 - 1/2 c_1 \\
+      c_2 &= 1 - 1/2 * 1 \\
       c_2 = 1/2
     \end{align*}
   We can say that 
@@ -233,10 +233,10 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false,hidelinks]
 
     Inductive step:
     \begin{align*}
-      f(n) &= 1/2 f(n-1) + 1/4 \\*
-      &= 1/2\left( (1/2)^{n-1} + 1/2 \right) + 1/4 \\*
-      &= 1/2 \left( \frac{\left(1/2\right)^j}{1/2} + 1/2 \right) + 1/4 \\*
-      &= (1/2)^j + 1/4 + 1/4 \\*
+      f(n) &= 1/2 f(n-1) + 1/4 \\
+      &= 1/2\left( (1/2)^{n-1} + 1/2 \right) + 1/4 \\
+      &= 1/2 \left( \frac{\left(1/2\right)^j}{1/2} + 1/2 \right) + 1/4 \\
+      &= (1/2)^j + 1/4 + 1/4 \\
       &= (1/2)^j + 1/2 \qedhere
     \end{align*}
   \end{proof}
