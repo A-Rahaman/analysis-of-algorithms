@@ -54,11 +54,8 @@
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 \usepackage{url}
-\usepackage[unicode=true,pdfusetitle,
-  bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
-breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false, hidelinks]
-{hyperref}
-\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{hyperref}
+\hypersetup{pdfborder = {0 0 0}}
 \usepackage{float}
 \usepackage{bm}
 \usepackage{tikz}
@@ -97,8 +94,8 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false, hidelinks]
 
   \begin{figure}
     \begin{center}
-    \includegraphics[scale=0.40]{26.6a.png}\\*
-    \includegraphics[scale=0.40]{26.6b.png}\\*
+    \includegraphics[scale=0.40]{266a.png}\\*
+    \includegraphics[scale=0.40]{266b.png}\\*
   \end{center}
   \label{fig:26.6a}
   \caption{Figure 26.6 a-f from CLRS 3rd edition pdf}
@@ -106,7 +103,7 @@ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false, hidelinks]
   \subsubsection{Answer:}
   Our cut will partition the graph into two sets:
   \[ \{s, v_1, v_2, v_4\}, \{v_3, t\} \]
-  which respect the total augmenting flow in 26.6(c) of 23.
+  which respects the total augmenting flow in 26.6(e) of 23.
 
 
 \section{26.2 - 11 : connectivity}
@@ -303,7 +300,7 @@ desired quantity from equation \ref{blah}.
   \end{quote}
   \begin{figure}
     \begin{center}
-    \includegraphics[scale=0.40]{26.1a.png}\\*
+    \includegraphics[scale=0.40]{261a.png}\\*
     \end{center}
     \caption{Figure 26.1a from CLRS 3rd edition PDF}
     \label{fig:26a}
@@ -342,14 +339,8 @@ desired quantity from equation \ref{blah}.
   \begin{equation}
     \begin{aligned}
       f_{s \to v_1} + f_{v_2 \to v_1} &=  f_{v_1 \to v_3} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s} \\
-      f_{s \to s} + f_{s \to s} &=  f_{s \to s}
+      f_{s \to v_2} + f_{v_3 \to v_2} &=  f_{v_2 \to v_4} + f_{v_2 \to v_1}\\
+      f_{v_1 \to v_3} + f_{v_4 \to v_3} &=  f_{v_3 \to t} + f_{v_3 \to v_2}\\
     \end{aligned}
   \end{equation}
 
@@ -357,8 +348,8 @@ desired quantity from equation \ref{blah}.
   \begin{quote}
     \textbf{Rock, Paper, Scissors is a simple 2 person game. In a given round,
     both players simultaneously choose either Rock, Paper or Scissors. If they
-    both choose the same object, it’s a tie. Otherwise, Rock beats Scissors;
-    Scissors beats Paper; and Paper beats Rock. Imagine you’re playing the
+    both choose the same object, it's a tie. Otherwise, Rock beats Scissors;
+    Scissors beats Paper; and Paper beats Rock. Imagine you're playing the
     following betting variant of this game with a friend. When Scissors beats
     Paper, or Paper beats Rock, the loser gives the winner \$1. However, in the case
     when Rock beats Scissors, this is called a \textbf{smash}, and the loser must give the
