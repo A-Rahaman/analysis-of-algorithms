@@ -309,15 +309,19 @@ desired quantity from equation \ref{blah}.
     \label{fig:26a}
   \end{figure}
   \subsubsection{Answer:}
-  Note that a network flow problem would have the following global constraints:
-  Conservation of Flow
-  \begin{align}
-    \sum_{\text{outflow}} x_j - \sum_{\text{inflow}}x_j = 0
-  \end{align}
-  Our program would have the following constraints:
-  Let $f{i \to j} $ be a path from node $i$ to node $j$. Note that we must
+  Defining flow as a linear program can be done as such. 
+  Let $f{u \to v} $ be a path from node $u$ to node $v$. Note that we must
   preserve conservation of flow and that our program will have constraints
   respecting flow and capacity of edges.
+  The problem then is 
+  \begin{align}
+    \text{ maximize } \sum_{v:(s,v) \in E} f_{s \to v} &\\
+    \text{ subject to } \\
+    \sum{u:(u,v)\in E} f_{u \to v} & = \sum_{w:(v,w) \in E} f_{v \to w} \forall v \in V - \{s,t\} \\
+    f_{u \to v} \leq c(u,v)& \forall (u,v) \in E\\
+    f_{u \to v} \geq 0 & \forall (u,v) \in E
+  \end{align}
+  Our program would have the following constraints:
 
   \begin{equation}
     \begin{aligned}
